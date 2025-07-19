@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 """
-Simplified Single-Run Stock Data Scraper using Selenium
-Author: AI Assistant
-Date: 2025-07-18
-
 This script performs a single scrape of real-time stock data and exports to JSON.
 No menu, no continuous monitoring - just scrape once and exit.
 """
