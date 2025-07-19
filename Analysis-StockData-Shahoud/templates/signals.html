@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trading Signals</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Active Trading Signals</h2>
+    <a href="/" class="btn btn-secondary mb-3">Back to Home</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Stock Code</th>
+                <th>Signal Type</th>
+                <th>Confidence</th>
+                <th>Reason</th>
+                <th>Target Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for signal in signals %}
+            <tr>
+                <td>{{ signal.stock_code }}</td>
+                <td>{{ signal.signal_type }}</td>
+                <td>{{ '%.0f'|format(signal.confidence * 100) }}%</td>
+                <td>{{ signal.reason }}</td>
+                <td>${{ '%.2f'|format(signal.target_price) }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="5">No active signals.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html> 
