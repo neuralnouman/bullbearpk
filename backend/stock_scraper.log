@@ -1,0 +1,1162 @@
+2025-07-22 17:13:32,730 - INFO - Database initialized successfully
+2025-07-22 17:13:32,784 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-22 17:13:32,785 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-22 17:13:32,800 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 17:13:33,558 - INFO - Database initialized successfully
+2025-07-22 17:13:33,571 - WARNING -  * Debugger is active!
+2025-07-22 17:13:33,578 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 17:13:44,715 - INFO - 127.0.0.1 - - [22/Jul/2025 17:13:44] "[33mGET / HTTP/1.1[0m" 404 -
+2025-07-22 17:13:44,938 - INFO - 127.0.0.1 - - [22/Jul/2025 17:13:44] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-07-22 17:15:35,192 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 17:15:35,193 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 17:15:35,398 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 17:15:36,183 - INFO - Database initialized successfully
+2025-07-22 17:15:36,196 - WARNING -  * Debugger is active!
+2025-07-22 17:15:36,202 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 17:15:44,242 - INFO - 127.0.0.1 - - [22/Jul/2025 17:15:44] "GET / HTTP/1.1" 200 -
+2025-07-22 17:23:18,377 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-22 17:23:18,378 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-22 17:23:19,277 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 17:23:20,125 - INFO - Database initialized successfully
+2025-07-22 17:23:20,138 - WARNING -  * Debugger is active!
+2025-07-22 17:23:20,143 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 17:28:39,539 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-22 17:28:39,543 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-22 17:28:39,958 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 17:28:41,293 - INFO - Database initialized successfully
+2025-07-22 18:15:40,231 - INFO - Database initialized successfully
+2025-07-22 18:17:16,261 - INFO - Database initialized successfully
+2025-07-22 18:18:16,216 - INFO - Database initialized successfully
+2025-07-22 18:18:16,296 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-22 18:18:16,296 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-22 18:18:16,322 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 18:18:17,190 - INFO - Database initialized successfully
+2025-07-22 18:18:17,210 - WARNING -  * Debugger is active!
+2025-07-22 18:18:17,221 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 19:13:53,735 - INFO - Database initialized successfully
+2025-07-22 19:13:53,805 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-22 19:13:53,805 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-22 19:13:53,825 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 19:13:55,067 - INFO - Database initialized successfully
+2025-07-22 19:13:55,090 - WARNING -  * Debugger is active!
+2025-07-22 19:13:55,100 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 19:15:52,952 - WARNING - No stock data files found
+2025-07-22 19:15:52,957 - INFO - 127.0.0.1 - - [22/Jul/2025 19:15:52] "[33mGET /api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 19:15:53,191 - WARNING - No stock data files found
+2025-07-22 19:15:53,193 - INFO - 127.0.0.1 - - [22/Jul/2025 19:15:53] "[33mGET /api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 19:16:03,722 - WARNING - No stock data files found
+2025-07-22 19:16:03,724 - INFO - 127.0.0.1 - - [22/Jul/2025 19:16:03] "[33mGET /api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 19:16:04,840 - WARNING - No stock data files found
+2025-07-22 19:16:04,841 - INFO - 127.0.0.1 - - [22/Jul/2025 19:16:04] "[33mGET /api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 19:26:45,289 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-22 19:26:45,291 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-22 19:26:45,595 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-22 19:26:45,597 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-22 19:26:46,566 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 19:26:48,413 - INFO - Database initialized successfully
+2025-07-22 19:26:48,468 - WARNING -  * Debugger is active!
+2025-07-22 19:26:48,477 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 19:34:47,482 - INFO - Database initialized successfully
+2025-07-22 19:34:47,577 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-22 19:34:47,578 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-22 19:34:47,598 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 19:34:49,961 - INFO - Database initialized successfully
+2025-07-22 19:34:49,983 - WARNING -  * Debugger is active!
+2025-07-22 19:34:49,995 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 19:41:22,486 - WARNING - No stock data files found
+2025-07-22 19:41:22,488 - INFO - 127.0.0.1 - - [22/Jul/2025 19:41:22] "[33mGET /api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 19:43:45,395 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api\\market_routes.py', reloading
+2025-07-22 19:43:45,398 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api\\market_routes.py', reloading
+2025-07-22 19:43:45,696 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 19:43:47,236 - INFO - Database initialized successfully
+2025-07-22 19:43:47,269 - WARNING -  * Debugger is active!
+2025-07-22 19:43:47,276 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 19:43:49,600 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api\\market_routes.py', reloading
+2025-07-22 19:43:49,602 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api\\market_routes.py', reloading
+2025-07-22 19:43:49,603 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api\\market_routes.py', reloading
+2025-07-22 19:43:50,535 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 19:43:51,762 - INFO - Database initialized successfully
+2025-07-22 19:43:51,794 - WARNING -  * Debugger is active!
+2025-07-22 19:43:51,802 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 19:47:26,858 - INFO - Database initialized successfully
+2025-07-22 19:47:26,901 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-22 19:47:26,901 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-22 19:47:26,910 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 19:47:28,251 - INFO - Database initialized successfully
+2025-07-22 19:47:28,285 - WARNING -  * Debugger is active!
+2025-07-22 19:47:28,289 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 19:48:55,418 - WARNING - No stock data files found
+2025-07-22 19:48:55,418 - INFO - 127.0.0.1 - - [22/Jul/2025 19:48:55] "[33mGET /api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 19:58:26,382 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-22 19:58:26,383 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-22 19:58:26,383 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-22 19:58:26,776 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-22 19:58:26,778 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-22 19:58:26,780 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-22 19:58:27,426 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 19:58:29,272 - INFO - Database initialized successfully
+2025-07-22 19:58:29,323 - WARNING -  * Debugger is active!
+2025-07-22 19:58:29,339 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 21:16:41,114 - INFO - Database initialized successfully
+2025-07-22 21:16:41,225 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-22 21:16:41,225 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-22 21:16:41,256 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 21:16:42,959 - INFO - Database initialized successfully
+2025-07-22 21:16:42,989 - WARNING -  * Debugger is active!
+2025-07-22 21:16:43,000 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 21:47:26,558 - INFO - 127.0.0.1 - - [22/Jul/2025 21:47:26] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 21:56:21,826 - INFO - 127.0.0.1 - - [22/Jul/2025 21:56:21] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 21:56:22,078 - INFO - 127.0.0.1 - - [22/Jul/2025 21:56:22] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 21:56:22,156 - INFO - 127.0.0.1 - - [22/Jul/2025 21:56:22] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 21:56:27,014 - INFO - 127.0.0.1 - - [22/Jul/2025 21:56:27] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 21:56:29,660 - INFO - 127.0.0.1 - - [22/Jul/2025 21:56:29] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 21:57:28,578 - INFO - 127.0.0.1 - - [22/Jul/2025 21:57:28] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 21:57:29,998 - INFO - 127.0.0.1 - - [22/Jul/2025 21:57:29] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:05:45,010 - INFO - 127.0.0.1 - - [22/Jul/2025 22:05:45] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:05:45,270 - INFO - 127.0.0.1 - - [22/Jul/2025 22:05:45] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:05:45,330 - INFO - 127.0.0.1 - - [22/Jul/2025 22:05:45] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:05:55,112 - INFO - 127.0.0.1 - - [22/Jul/2025 22:05:55] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:05:55,378 - INFO - 127.0.0.1 - - [22/Jul/2025 22:05:55] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:05:56,858 - INFO - 127.0.0.1 - - [22/Jul/2025 22:05:56] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:05:57,820 - INFO - 127.0.0.1 - - [22/Jul/2025 22:05:57] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:05:58,620 - INFO - 127.0.0.1 - - [22/Jul/2025 22:05:58] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:06:00,550 - INFO - 127.0.0.1 - - [22/Jul/2025 22:06:00] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:06:01,235 - INFO - 127.0.0.1 - - [22/Jul/2025 22:06:01] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:06:02,189 - INFO - 127.0.0.1 - - [22/Jul/2025 22:06:02] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:09:09,669 - INFO - Database initialized successfully
+2025-07-22 22:09:09,839 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-22 22:09:09,840 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-22 22:09:09,875 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 22:09:11,628 - INFO - Database initialized successfully
+2025-07-22 22:09:11,663 - WARNING -  * Debugger is active!
+2025-07-22 22:09:11,671 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 22:10:39,701 - INFO - 127.0.0.1 - - [22/Jul/2025 22:10:39] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:10:39,960 - INFO - 127.0.0.1 - - [22/Jul/2025 22:10:39] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:12:50,829 - INFO - 127.0.0.1 - - [22/Jul/2025 22:12:50] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:31:32,617 - INFO - Database initialized successfully
+2025-07-22 22:31:32,654 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-22 22:31:32,654 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-22 22:31:32,668 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 22:31:33,554 - INFO - Database initialized successfully
+2025-07-22 22:31:33,575 - WARNING -  * Debugger is active!
+2025-07-22 22:31:33,587 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 22:36:13,815 - INFO - 127.0.0.1 - - [22/Jul/2025 22:36:13] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:38:26,834 - INFO - 127.0.0.1 - - [22/Jul/2025 22:38:26] "[33mGET /api/market-data HTTP/1.1[0m" 404 -
+2025-07-22 22:43:01,943 - INFO - 127.0.0.1 - - [22/Jul/2025 22:43:01] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:43:24,650 - INFO - 127.0.0.1 - - [22/Jul/2025 22:43:24] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:43:26,280 - INFO - 127.0.0.1 - - [22/Jul/2025 22:43:26] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:43:27,390 - INFO - 127.0.0.1 - - [22/Jul/2025 22:43:27] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:43:30,326 - INFO - 127.0.0.1 - - [22/Jul/2025 22:43:30] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:46:38,691 - INFO - Database initialized successfully
+2025-07-22 22:46:38,738 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-22 22:46:38,738 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-22 22:46:38,750 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 22:46:39,473 - INFO - Database initialized successfully
+2025-07-22 22:46:39,492 - WARNING -  * Debugger is active!
+2025-07-22 22:46:39,497 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 22:46:52,686 - INFO - 127.0.0.1 - - [22/Jul/2025 22:46:52] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:46:54,896 - INFO - 127.0.0.1 - - [22/Jul/2025 22:46:54] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:46:54,899 - INFO - 127.0.0.1 - - [22/Jul/2025 22:46:54] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:46:59,017 - INFO - 127.0.0.1 - - [22/Jul/2025 22:46:59] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:46:59,268 - INFO - 127.0.0.1 - - [22/Jul/2025 22:46:59] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:47:05,843 - INFO - 127.0.0.1 - - [22/Jul/2025 22:47:05] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:47:06,872 - INFO - 127.0.0.1 - - [22/Jul/2025 22:47:06] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:52:32,788 - INFO - 127.0.0.1 - - [22/Jul/2025 22:52:32] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:52:33,054 - INFO - 127.0.0.1 - - [22/Jul/2025 22:52:33] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:52:36,485 - INFO - 127.0.0.1 - - [22/Jul/2025 22:52:36] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:52:36,810 - INFO - 127.0.0.1 - - [22/Jul/2025 22:52:36] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:53:05,493 - INFO - 127.0.0.1 - - [22/Jul/2025 22:53:05] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:53:05,829 - INFO - 127.0.0.1 - - [22/Jul/2025 22:53:05] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:53:12,482 - INFO - 127.0.0.1 - - [22/Jul/2025 22:53:12] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:53:12,808 - INFO - 127.0.0.1 - - [22/Jul/2025 22:53:12] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 22:58:25,797 - INFO - 127.0.0.1 - - [22/Jul/2025 22:58:25] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:58:26,059 - INFO - 127.0.0.1 - - [22/Jul/2025 22:58:26] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:58:58,480 - INFO - 127.0.0.1 - - [22/Jul/2025 22:58:58] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 22:58:58,791 - INFO - 127.0.0.1 - - [22/Jul/2025 22:58:58] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:00:19,783 - INFO - 127.0.0.1 - - [22/Jul/2025 23:00:19] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:00:20,047 - INFO - 127.0.0.1 - - [22/Jul/2025 23:00:20] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:01:13,418 - INFO - 127.0.0.1 - - [22/Jul/2025 23:01:13] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:03:08,785 - INFO - 127.0.0.1 - - [22/Jul/2025 23:03:08] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:03:09,049 - INFO - 127.0.0.1 - - [22/Jul/2025 23:03:09] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:03:11,485 - INFO - 127.0.0.1 - - [22/Jul/2025 23:03:11] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:03:11,794 - INFO - 127.0.0.1 - - [22/Jul/2025 23:03:11] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:03:31,467 - INFO - 127.0.0.1 - - [22/Jul/2025 23:03:31] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:03:31,783 - INFO - 127.0.0.1 - - [22/Jul/2025 23:03:31] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:04:29,497 - INFO - 127.0.0.1 - - [22/Jul/2025 23:04:29] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:04:29,806 - INFO - 127.0.0.1 - - [22/Jul/2025 23:04:29] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:04:31,210 - INFO - 127.0.0.1 - - [22/Jul/2025 23:04:31] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:04:32,114 - INFO - 127.0.0.1 - - [22/Jul/2025 23:04:32] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:04:37,058 - INFO - 127.0.0.1 - - [22/Jul/2025 23:04:37] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:04:37,964 - INFO - 127.0.0.1 - - [22/Jul/2025 23:04:37] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:04:37,971 - INFO - 127.0.0.1 - - [22/Jul/2025 23:04:37] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:04:42,307 - INFO - 127.0.0.1 - - [22/Jul/2025 23:04:42] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:04:46,940 - INFO - 127.0.0.1 - - [22/Jul/2025 23:04:46] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:07:08,169 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:07:08,170 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:07:08,174 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:07:08,176 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:07:08,176 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:07:09,228 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:07:09,433 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:07:10,681 - INFO - Database initialized successfully
+2025-07-22 23:07:10,681 - INFO - Database initialized successfully
+2025-07-22 23:07:10,685 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:07:10,685 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:07:10,728 - WARNING -  * Debugger is active!
+2025-07-22 23:07:10,737 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:07:10,737 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:07:12,403 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:07:12,403 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:07:12,404 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:07:12,404 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:07:12,407 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:07:12,407 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:07:12,989 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:07:12,996 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:07:14,146 - INFO - Database initialized successfully
+2025-07-22 23:07:14,152 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:07:14,170 - WARNING -  * Debugger is active!
+2025-07-22 23:07:14,175 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:07:14,177 - INFO - Database initialized successfully
+2025-07-22 23:07:14,182 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:07:14,205 - WARNING -  * Debugger is active!
+2025-07-22 23:07:14,211 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:07:26,695 - INFO - Database initialized successfully
+2025-07-22 23:07:26,698 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:07:26,739 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-22 23:07:26,739 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-22 23:07:26,752 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:07:27,576 - INFO - Database initialized successfully
+2025-07-22 23:07:27,581 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:07:27,601 - WARNING -  * Debugger is active!
+2025-07-22 23:07:27,607 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:07:45,374 - INFO - 127.0.0.1 - - [22/Jul/2025 23:07:45] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:07:45,636 - INFO - 127.0.0.1 - - [22/Jul/2025 23:07:45] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:10:17,507 - INFO - Database initialized successfully
+2025-07-22 23:10:17,510 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:10:17,545 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-22 23:10:17,545 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-22 23:10:17,557 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:10:18,373 - INFO - Database initialized successfully
+2025-07-22 23:10:18,376 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:10:18,399 - WARNING -  * Debugger is active!
+2025-07-22 23:10:18,405 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:12:10,082 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:12:10,082 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:12:10,083 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:12:10,083 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:12:10,084 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:12:10,084 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:12:11,037 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:12:11,216 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:12:11,936 - INFO - Database initialized successfully
+2025-07-22 23:12:11,940 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:12:11,958 - WARNING -  * Debugger is active!
+2025-07-22 23:12:11,962 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:12:12,055 - INFO - Database initialized successfully
+2025-07-22 23:12:12,059 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:12:12,071 - WARNING -  * Debugger is active!
+2025-07-22 23:12:12,077 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:12:17,279 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:12:17,279 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:12:17,280 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:12:17,280 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:12:17,281 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:12:17,281 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:12:18,147 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:12:18,249 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:12:19,337 - INFO - Database initialized successfully
+2025-07-22 23:12:19,343 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:12:19,369 - WARNING -  * Debugger is active!
+2025-07-22 23:12:19,381 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:12:19,460 - INFO - Database initialized successfully
+2025-07-22 23:12:19,468 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:12:19,496 - WARNING -  * Debugger is active!
+2025-07-22 23:12:19,501 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:12:25,899 - INFO - Database initialized successfully
+2025-07-22 23:12:25,902 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:12:25,941 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-22 23:12:25,941 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-22 23:12:25,950 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:12:26,977 - INFO - Database initialized successfully
+2025-07-22 23:12:26,980 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:12:26,999 - WARNING -  * Debugger is active!
+2025-07-22 23:12:27,006 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:12:39,032 - INFO - 127.0.0.1 - - [22/Jul/2025 23:12:39] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:12:39,291 - INFO - 127.0.0.1 - - [22/Jul/2025 23:12:39] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:12:41,987 - INFO - 127.0.0.1 - - [22/Jul/2025 23:12:41] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:12:42,303 - INFO - 127.0.0.1 - - [22/Jul/2025 23:12:42] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:12:45,905 - INFO - 127.0.0.1 - - [22/Jul/2025 23:12:45] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:12:46,219 - INFO - 127.0.0.1 - - [22/Jul/2025 23:12:46] "[33mGET /api/api/market/data HTTP/1.1[0m" 404 -
+2025-07-22 23:18:04,838 - INFO - 127.0.0.1 - - [22/Jul/2025 23:18:04] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 23:18:31,176 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask_cors\\__init__.py', reloading
+2025-07-22 23:18:31,176 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask_cors\\__init__.py', reloading
+2025-07-22 23:18:31,178 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask_cors\\__init__.py', reloading
+2025-07-22 23:18:31,178 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask_cors\\__init__.py', reloading
+2025-07-22 23:18:31,179 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask_cors\\core.py', reloading
+2025-07-22 23:18:31,179 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask_cors\\core.py', reloading
+2025-07-22 23:18:31,180 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask_cors\\decorator.py', reloading
+2025-07-22 23:18:31,181 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask_cors\\decorator.py', reloading
+2025-07-22 23:18:31,182 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask_cors\\extension.py', reloading
+2025-07-22 23:18:31,183 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask_cors\\extension.py', reloading
+2025-07-22 23:18:31,184 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask_cors\\version.py', reloading
+2025-07-22 23:18:31,184 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask_cors\\version.py', reloading
+2025-07-22 23:18:32,082 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:18:33,366 - INFO - Database initialized successfully
+2025-07-22 23:18:33,373 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:18:33,400 - WARNING -  * Debugger is active!
+2025-07-22 23:18:33,410 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:18:42,799 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:18:42,800 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:18:42,800 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-22 23:18:43,680 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:18:45,123 - INFO - Database initialized successfully
+2025-07-22 23:18:45,133 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:18:45,181 - WARNING -  * Debugger is active!
+2025-07-22 23:18:45,196 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:19:38,424 - INFO - Database initialized successfully
+2025-07-22 23:19:38,428 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:19:38,473 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-22 23:19:38,474 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-22 23:19:38,485 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-22 23:19:39,449 - INFO - Database initialized successfully
+2025-07-22 23:19:39,452 - INFO - Starting Flask API server on port 5000
+2025-07-22 23:19:39,468 - WARNING -  * Debugger is active!
+2025-07-22 23:19:39,474 - INFO -  * Debugger PIN: 956-807-532
+2025-07-22 23:19:57,704 - INFO - 127.0.0.1 - - [22/Jul/2025 23:19:57] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 23:19:57,954 - INFO - 127.0.0.1 - - [22/Jul/2025 23:19:57] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 23:20:01,399 - INFO - 127.0.0.1 - - [22/Jul/2025 23:20:01] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 23:20:01,727 - INFO - 127.0.0.1 - - [22/Jul/2025 23:20:01] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 23:24:09,200 - INFO - 127.0.0.1 - - [22/Jul/2025 23:24:09] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 23:24:09,461 - INFO - 127.0.0.1 - - [22/Jul/2025 23:24:09] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 23:24:09,920 - INFO - 127.0.0.1 - - [22/Jul/2025 23:24:09] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 23:27:47,104 - INFO - 127.0.0.1 - - [22/Jul/2025 23:27:47] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-22 23:27:49,624 - INFO - 127.0.0.1 - - [22/Jul/2025 23:27:49] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 13:51:54,918 - INFO - Database initialized successfully
+2025-07-23 13:51:54,939 - INFO - Starting Flask API server on port 5000
+2025-07-23 13:51:55,258 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-23 13:51:55,263 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-23 13:51:55,337 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 13:52:01,374 - INFO - Database initialized successfully
+2025-07-23 13:52:01,395 - INFO - Starting Flask API server on port 5000
+2025-07-23 13:52:01,509 - WARNING -  * Debugger is active!
+2025-07-23 13:52:01,564 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 13:52:47,518 - INFO - 127.0.0.1 - - [23/Jul/2025 13:52:47] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 13:52:47,741 - INFO - 127.0.0.1 - - [23/Jul/2025 13:52:47] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 13:53:13,730 - INFO - 127.0.0.1 - - [23/Jul/2025 13:53:13] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 13:55:11,637 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask\\__init__.py', reloading
+2025-07-23 13:55:11,645 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask\\app.py', reloading
+2025-07-23 13:55:11,716 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask\\sansio\\app.py', reloading
+2025-07-23 13:55:11,734 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask\\sansio\\scaffold.py', reloading
+2025-07-23 13:55:11,772 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask\\globals.py', reloading
+2025-07-23 13:55:11,776 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask\\wrappers.py', reloading
+2025-07-23 13:55:11,782 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\werkzeug\\wrappers\\__init__.py', reloading
+2025-07-23 13:55:11,783 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\werkzeug\\wrappers\\request.py', reloading
+2025-07-23 13:55:11,802 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\werkzeug\\sansio\\request.py', reloading
+2025-07-23 13:55:11,819 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask\\json\\__init__.py', reloading
+2025-07-23 13:55:11,823 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\werkzeug\\wrappers\\response.py', reloading
+2025-07-23 13:55:11,848 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\werkzeug\\sansio\\response.py', reloading
+2025-07-23 13:55:12,538 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 13:55:13,960 - INFO - Database initialized successfully
+2025-07-23 13:55:13,965 - INFO - Starting Flask API server on port 5000
+2025-07-23 13:55:13,985 - WARNING -  * Debugger is active!
+2025-07-23 13:55:13,990 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 13:55:43,799 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-23 13:55:43,801 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-23 13:55:43,802 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-23 13:55:44,419 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 13:55:46,168 - INFO - Database initialized successfully
+2025-07-23 13:55:46,177 - INFO - Starting Flask API server on port 5000
+2025-07-23 13:55:46,205 - WARNING -  * Debugger is active!
+2025-07-23 13:55:46,218 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 13:58:27,238 - INFO - Database initialized successfully
+2025-07-23 13:58:27,243 - INFO - Starting Flask API server on port 5000
+2025-07-23 13:58:27,288 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-23 13:58:27,288 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-23 13:58:27,300 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 13:58:28,111 - INFO - Database initialized successfully
+2025-07-23 13:58:28,115 - INFO - Starting Flask API server on port 5000
+2025-07-23 13:58:28,130 - WARNING -  * Debugger is active!
+2025-07-23 13:58:28,140 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:00:09,120 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:00:09,213 - ERROR - fin_scraper.py failed: python: can't open file 'C:\\stock\\bullbearpk\\backend\\fin_scraper.py': [Errno 2] No such file or directory
+
+2025-07-23 14:00:09,214 - INFO - 127.0.0.1 - - [23/Jul/2025 14:00:09] "[35m[1mPOST /api/scrape HTTP/1.1[0m" 500 -
+2025-07-23 14:00:09,391 - INFO - 127.0.0.1 - - [23/Jul/2025 14:00:09] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:00:31,200 - INFO - Database initialized successfully
+2025-07-23 14:00:31,205 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:00:31,243 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-23 14:00:31,243 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-23 14:00:31,252 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:00:32,100 - INFO - Database initialized successfully
+2025-07-23 14:00:32,105 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:00:32,124 - WARNING -  * Debugger is active!
+2025-07-23 14:00:32,130 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:00:41,688 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:00:41,693 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:00:41,819 - ERROR - fin_scraper.py failed: python: can't open file 'C:\\stock\\bullbearpk\\backend\\fin_scraper.py': [Errno 2] No such file or directory
+
+2025-07-23 14:00:41,820 - INFO - 127.0.0.1 - - [23/Jul/2025 14:00:41] "[35m[1mPOST /api/scrape HTTP/1.1[0m" 500 -
+2025-07-23 14:00:41,841 - ERROR - fin_scraper.py failed: python: can't open file 'C:\\stock\\bullbearpk\\backend\\fin_scraper.py': [Errno 2] No such file or directory
+
+2025-07-23 14:00:41,842 - INFO - 127.0.0.1 - - [23/Jul/2025 14:00:41] "[35m[1mPOST /api/scrape HTTP/1.1[0m" 500 -
+2025-07-23 14:00:41,959 - INFO - 127.0.0.1 - - [23/Jul/2025 14:00:41] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:00:42,195 - INFO - 127.0.0.1 - - [23/Jul/2025 14:00:42] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:00:45,328 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:00:45,391 - ERROR - fin_scraper.py failed: python: can't open file 'C:\\stock\\bullbearpk\\backend\\fin_scraper.py': [Errno 2] No such file or directory
+
+2025-07-23 14:00:45,392 - INFO - 127.0.0.1 - - [23/Jul/2025 14:00:45] "[35m[1mPOST /api/scrape HTTP/1.1[0m" 500 -
+2025-07-23 14:00:45,760 - INFO - 127.0.0.1 - - [23/Jul/2025 14:00:45] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:00:58,227 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:00:58,335 - ERROR - fin_scraper.py failed: python: can't open file 'C:\\stock\\bullbearpk\\backend\\fin_scraper.py': [Errno 2] No such file or directory
+
+2025-07-23 14:00:58,336 - INFO - 127.0.0.1 - - [23/Jul/2025 14:00:58] "[35m[1mPOST /api/scrape HTTP/1.1[0m" 500 -
+2025-07-23 14:00:58,669 - INFO - 127.0.0.1 - - [23/Jul/2025 14:00:58] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:01:01,394 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:01:01,460 - ERROR - fin_scraper.py failed: python: can't open file 'C:\\stock\\bullbearpk\\backend\\fin_scraper.py': [Errno 2] No such file or directory
+
+2025-07-23 14:01:01,461 - INFO - 127.0.0.1 - - [23/Jul/2025 14:01:01] "[35m[1mPOST /api/scrape HTTP/1.1[0m" 500 -
+2025-07-23 14:01:01,820 - INFO - 127.0.0.1 - - [23/Jul/2025 14:01:01] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:08:36,682 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-23 14:08:36,684 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-23 14:08:36,991 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:08:38,275 - INFO - Database initialized successfully
+2025-07-23 14:08:38,279 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:08:38,295 - WARNING -  * Debugger is active!
+2025-07-23 14:08:38,301 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:08:46,519 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:08:46,524 - ERROR - Error running fin_scraper.py: [WinError 267] The directory name is invalid
+Traceback (most recent call last):
+  File "C:\stock\bullbearpk\backend\api_server.py", line 55, in run_scraper
+    result = subprocess.run(
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NotADirectoryError: [WinError 267] The directory name is invalid
+2025-07-23 14:08:46,533 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\subprocess.py', reloading
+2025-07-23 14:08:46,536 - INFO - 127.0.0.1 - - [23/Jul/2025 14:08:46] "[35m[1mPOST /api/scrape HTTP/1.1[0m" 500 -
+2025-07-23 14:08:46,788 - INFO - 127.0.0.1 - - [23/Jul/2025 14:08:46] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:08:47,525 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:08:48,909 - INFO - Database initialized successfully
+2025-07-23 14:08:48,915 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:08:48,946 - WARNING -  * Debugger is active!
+2025-07-23 14:08:48,953 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:09:04,074 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:09:04,076 - ERROR - Error running fin_scraper.py: [WinError 267] The directory name is invalid
+Traceback (most recent call last):
+  File "C:\stock\bullbearpk\backend\api_server.py", line 55, in run_scraper
+    result = subprocess.run(
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NotADirectoryError: [WinError 267] The directory name is invalid
+2025-07-23 14:09:04,084 - INFO - 127.0.0.1 - - [23/Jul/2025 14:09:04] "[35m[1mPOST /api/scrape HTTP/1.1[0m" 500 -
+2025-07-23 14:09:04,354 - INFO - 127.0.0.1 - - [23/Jul/2025 14:09:04] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:09:09,950 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:09:09,953 - ERROR - Error running fin_scraper.py: [WinError 267] The directory name is invalid
+Traceback (most recent call last):
+  File "C:\stock\bullbearpk\backend\api_server.py", line 55, in run_scraper
+    result = subprocess.run(
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NotADirectoryError: [WinError 267] The directory name is invalid
+2025-07-23 14:09:09,959 - INFO - 127.0.0.1 - - [23/Jul/2025 14:09:09] "[35m[1mPOST /api/scrape HTTP/1.1[0m" 500 -
+2025-07-23 14:09:10,392 - INFO - 127.0.0.1 - - [23/Jul/2025 14:09:10] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:09:13,864 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:09:13,865 - ERROR - Error running fin_scraper.py: [WinError 267] The directory name is invalid
+Traceback (most recent call last):
+  File "C:\stock\bullbearpk\backend\api_server.py", line 55, in run_scraper
+    result = subprocess.run(
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NotADirectoryError: [WinError 267] The directory name is invalid
+2025-07-23 14:09:13,868 - INFO - 127.0.0.1 - - [23/Jul/2025 14:09:13] "[35m[1mPOST /api/scrape HTTP/1.1[0m" 500 -
+2025-07-23 14:09:14,248 - INFO - 127.0.0.1 - - [23/Jul/2025 14:09:14] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:09:21,629 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:09:21,632 - ERROR - Error running fin_scraper.py: [WinError 267] The directory name is invalid
+Traceback (most recent call last):
+  File "C:\stock\bullbearpk\backend\api_server.py", line 55, in run_scraper
+    result = subprocess.run(
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NotADirectoryError: [WinError 267] The directory name is invalid
+2025-07-23 14:09:21,639 - INFO - 127.0.0.1 - - [23/Jul/2025 14:09:21] "[35m[1mPOST /api/scrape HTTP/1.1[0m" 500 -
+2025-07-23 14:09:22,084 - INFO - 127.0.0.1 - - [23/Jul/2025 14:09:22] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:09:25,197 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:09:25,199 - ERROR - Error running fin_scraper.py: [WinError 267] The directory name is invalid
+Traceback (most recent call last):
+  File "C:\stock\bullbearpk\backend\api_server.py", line 55, in run_scraper
+    result = subprocess.run(
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Users\shaho\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+NotADirectoryError: [WinError 267] The directory name is invalid
+2025-07-23 14:09:25,202 - INFO - 127.0.0.1 - - [23/Jul/2025 14:09:25] "[35m[1mPOST /api/scrape HTTP/1.1[0m" 500 -
+2025-07-23 14:09:25,589 - INFO - 127.0.0.1 - - [23/Jul/2025 14:09:25] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:10:44,425 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-23 14:10:44,428 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-23 14:10:44,429 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-23 14:10:44,732 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:10:45,832 - INFO - Database initialized successfully
+2025-07-23 14:10:45,836 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:10:45,854 - WARNING -  * Debugger is active!
+2025-07-23 14:10:45,861 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:10:53,221 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:11:05,041 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 14:11:05,041 - INFO - Scraping attempt 1/3
+2025-07-23 14:11:05,041 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 14:11:29,533 - INFO - Successfully navigated to stock data page
+2025-07-23 14:11:31,542 - INFO - Stock data loaded successfully
+2025-07-23 14:12:19,366 - INFO - Successfully extracted 265 stock records
+2025-07-23 14:12:19,366 - INFO - Successfully scraped 265 stocks
+2025-07-23 14:12:19,375 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_141219.json
+2025-07-23 14:12:21,681 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-23 14:12:21,686 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-23 14:12:21,686 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-23 14:12:21,696 - INFO - WebDriver closed successfully
+2025-07-23 14:12:21,754 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\threading.py', reloading
+2025-07-23 14:12:21,760 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\encodings\\cp1252.py', reloading
+2025-07-23 14:12:21,761 - INFO - fin_scraper.py completed successfully.
+2025-07-23 14:12:21,763 - INFO - 127.0.0.1 - - [23/Jul/2025 14:12:21] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 14:12:22,095 - INFO - 127.0.0.1 - - [23/Jul/2025 14:12:22] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:12:22,471 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:12:23,368 - INFO - Database initialized successfully
+2025-07-23 14:12:23,372 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:12:23,385 - WARNING -  * Debugger is active!
+2025-07-23 14:12:23,392 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:12:41,431 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:12:44,527 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 14:12:44,528 - INFO - Scraping attempt 1/3
+2025-07-23 14:12:44,528 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 14:13:07,867 - INFO - Successfully navigated to stock data page
+2025-07-23 14:13:09,896 - INFO - Stock data loaded successfully
+2025-07-23 14:13:43,674 - INFO - Successfully extracted 265 stock records
+2025-07-23 14:13:43,675 - INFO - Successfully scraped 265 stocks
+2025-07-23 14:13:43,680 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_141343.json
+2025-07-23 14:13:46,072 - INFO - WebDriver closed successfully
+2025-07-23 14:13:46,146 - INFO - fin_scraper.py completed successfully.
+2025-07-23 14:13:46,148 - INFO - 127.0.0.1 - - [23/Jul/2025 14:13:46] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 14:13:46,739 - INFO - 127.0.0.1 - - [23/Jul/2025 14:13:46] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:16:57,472 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:16:59,786 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 14:16:59,786 - INFO - Scraping attempt 1/3
+2025-07-23 14:16:59,786 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 14:17:23,319 - INFO - Successfully navigated to stock data page
+2025-07-23 14:17:25,331 - INFO - Stock data loaded successfully
+2025-07-23 14:18:05,413 - INFO - Successfully extracted 265 stock records
+2025-07-23 14:18:05,413 - INFO - Successfully scraped 265 stocks
+2025-07-23 14:18:05,434 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_141805.json
+2025-07-23 14:18:08,082 - INFO - WebDriver closed successfully
+2025-07-23 14:18:08,162 - INFO - fin_scraper.py completed successfully.
+2025-07-23 14:18:08,163 - INFO - 127.0.0.1 - - [23/Jul/2025 14:18:08] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 14:18:08,509 - INFO - 127.0.0.1 - - [23/Jul/2025 14:18:08] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:19:25,826 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-23 14:19:25,831 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api_server.py', reloading
+2025-07-23 14:19:26,470 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:19:27,530 - INFO - Database initialized successfully
+2025-07-23 14:19:27,534 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:19:27,561 - WARNING -  * Debugger is active!
+2025-07-23 14:19:27,567 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:19:31,210 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:19:33,528 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 14:19:33,528 - INFO - Scraping attempt 1/3
+2025-07-23 14:19:33,528 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 14:19:56,709 - INFO - Successfully navigated to stock data page
+2025-07-23 14:19:58,738 - INFO - Stock data loaded successfully
+2025-07-23 14:20:28,256 - INFO - Successfully extracted 265 stock records
+2025-07-23 14:20:28,256 - INFO - Successfully scraped 265 stocks
+2025-07-23 14:20:28,261 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_142028.json
+2025-07-23 14:20:30,524 - INFO - WebDriver closed successfully
+2025-07-23 14:20:30,577 - INFO - fin_scraper.py completed successfully.
+2025-07-23 14:20:30,578 - INFO - 127.0.0.1 - - [23/Jul/2025 14:20:30] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 14:20:30,600 - INFO - 127.0.0.1 - - [23/Jul/2025 14:20:30] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:21:47,714 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:21:49,890 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 14:21:49,890 - INFO - Scraping attempt 1/3
+2025-07-23 14:21:49,890 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 14:22:43,594 - INFO - Successfully navigated to stock data page
+2025-07-23 14:22:45,619 - INFO - Stock data loaded successfully
+2025-07-23 14:23:21,713 - INFO - Successfully extracted 265 stock records
+2025-07-23 14:23:21,713 - INFO - Successfully scraped 265 stocks
+2025-07-23 14:23:21,718 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_142321.json
+2025-07-23 14:23:24,013 - INFO - WebDriver closed successfully
+2025-07-23 14:23:24,056 - INFO - fin_scraper.py completed successfully.
+2025-07-23 14:23:24,056 - INFO - 127.0.0.1 - - [23/Jul/2025 14:23:24] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 14:23:24,377 - ERROR - Scraper directory not found: C:\stock\bullbearpk\backend\scraped
+2025-07-23 14:23:24,378 - INFO - 127.0.0.1 - - [23/Jul/2025 14:23:24] "[33mGET /api/market/data HTTP/1.1[0m" 404 -
+2025-07-23 14:24:51,419 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask\\blueprints.py', reloading
+2025-07-23 14:24:51,423 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask\\sansio\\blueprints.py', reloading
+2025-07-23 14:24:51,450 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask\\typing.py', reloading
+2025-07-23 14:24:51,458 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\werkzeug\\datastructures\\__init__.py', reloading
+2025-07-23 14:24:51,463 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\werkzeug\\datastructures\\headers.py', reloading
+2025-07-23 14:24:51,976 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:24:53,036 - INFO - Database initialized successfully
+2025-07-23 14:24:53,042 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:24:53,062 - WARNING -  * Debugger is active!
+2025-07-23 14:24:53,069 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:25:35,893 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\glob.py', reloading
+2025-07-23 14:25:36,415 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:25:37,235 - INFO - Database initialized successfully
+2025-07-23 14:25:37,243 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:25:37,258 - WARNING -  * Debugger is active!
+2025-07-23 14:25:37,264 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:28:43,389 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-23 14:28:43,392 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-23 14:28:43,393 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-23 14:28:44,265 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:28:45,997 - INFO - Database initialized successfully
+2025-07-23 14:28:46,005 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:28:46,046 - WARNING -  * Debugger is active!
+2025-07-23 14:28:46,053 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:28:50,062 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-23 14:28:50,065 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-23 14:28:50,066 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-23 14:28:50,336 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:28:51,281 - INFO - Database initialized successfully
+2025-07-23 14:28:51,284 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:28:51,296 - WARNING -  * Debugger is active!
+2025-07-23 14:28:51,301 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:28:54,570 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:28:56,706 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 14:28:56,706 - INFO - Scraping attempt 1/3
+2025-07-23 14:28:56,706 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 14:29:19,885 - INFO - Successfully navigated to stock data page
+2025-07-23 14:29:21,911 - INFO - Stock data loaded successfully
+2025-07-23 14:30:08,311 - INFO - Successfully extracted 265 stock records
+2025-07-23 14:30:08,312 - INFO - Successfully scraped 265 stocks
+2025-07-23 14:30:08,330 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_143008.json
+2025-07-23 14:30:10,934 - INFO - WebDriver closed successfully
+2025-07-23 14:30:11,008 - INFO - fin_scraper.py completed successfully.
+2025-07-23 14:30:11,011 - INFO - 127.0.0.1 - - [23/Jul/2025 14:30:11] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 14:30:11,342 - WARNING - No stock data files found
+2025-07-23 14:30:11,343 - INFO - 127.0.0.1 - - [23/Jul/2025 14:30:11] "[33mGET /api/market/data HTTP/1.1[0m" 404 -
+2025-07-23 14:35:03,187 - INFO - Database initialized successfully
+2025-07-23 14:35:03,190 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:35:03,230 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-23 14:35:03,231 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-23 14:35:03,237 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:35:03,923 - INFO - Database initialized successfully
+2025-07-23 14:35:03,926 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:35:03,939 - WARNING -  * Debugger is active!
+2025-07-23 14:35:03,944 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:35:15,947 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:35:15,949 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:35:18,804 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 14:35:18,805 - INFO - Scraping attempt 1/3
+2025-07-23 14:35:18,805 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 14:35:18,811 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 14:35:18,812 - INFO - Scraping attempt 1/3
+2025-07-23 14:35:18,812 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 14:35:29,323 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:35:29,640 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 14:35:31,680 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 14:35:31,680 - INFO - Scraping attempt 1/3
+2025-07-23 14:35:31,680 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 14:35:32,261 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 14:35:32,261 - INFO - Scraping attempt 1/3
+2025-07-23 14:35:32,261 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 14:35:42,842 - INFO - Successfully navigated to stock data page
+2025-07-23 14:35:43,356 - INFO - Successfully navigated to stock data page
+2025-07-23 14:35:44,855 - INFO - Stock data loaded successfully
+2025-07-23 14:35:45,366 - INFO - Stock data loaded successfully
+2025-07-23 14:35:55,148 - INFO - Successfully navigated to stock data page
+2025-07-23 14:35:56,413 - INFO - Successfully navigated to stock data page
+2025-07-23 14:35:57,169 - INFO - Stock data loaded successfully
+2025-07-23 14:35:58,434 - INFO - Stock data loaded successfully
+2025-07-23 14:36:50,876 - INFO - Successfully extracted 265 stock records
+2025-07-23 14:36:50,876 - INFO - Successfully scraped 265 stocks
+2025-07-23 14:36:50,891 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_143650.json
+2025-07-23 14:36:51,246 - INFO - Successfully extracted 265 stock records
+2025-07-23 14:36:51,247 - INFO - Successfully scraped 265 stocks
+2025-07-23 14:36:51,259 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_143651.json
+2025-07-23 14:36:53,484 - INFO - WebDriver closed successfully
+2025-07-23 14:36:53,569 - INFO - fin_scraper.py completed successfully.
+2025-07-23 14:36:53,571 - INFO - 127.0.0.1 - - [23/Jul/2025 14:36:53] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 14:36:53,840 - INFO - WebDriver closed successfully
+2025-07-23 14:36:53,958 - INFO - fin_scraper.py completed successfully.
+2025-07-23 14:36:53,960 - INFO - 127.0.0.1 - - [23/Jul/2025 14:36:53] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 14:37:10,141 - INFO - Successfully extracted 265 stock records
+2025-07-23 14:37:10,141 - INFO - Successfully scraped 265 stocks
+2025-07-23 14:37:10,151 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_143710.json
+2025-07-23 14:37:11,014 - INFO - Successfully extracted 265 stock records
+2025-07-23 14:37:11,015 - INFO - Successfully scraped 265 stocks
+2025-07-23 14:37:11,031 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_143711.json
+2025-07-23 14:37:12,596 - INFO - WebDriver closed successfully
+2025-07-23 14:37:12,655 - INFO - fin_scraper.py completed successfully.
+2025-07-23 14:37:12,656 - INFO - 127.0.0.1 - - [23/Jul/2025 14:37:12] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 14:37:12,995 - INFO - 127.0.0.1 - - [23/Jul/2025 14:37:12] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:37:13,564 - INFO - WebDriver closed successfully
+2025-07-23 14:37:13,609 - INFO - fin_scraper.py completed successfully.
+2025-07-23 14:37:13,610 - INFO - 127.0.0.1 - - [23/Jul/2025 14:37:13] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 14:37:13,933 - INFO - 127.0.0.1 - - [23/Jul/2025 14:37:13] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 14:44:55,545 - INFO -  * Detected change in 'C:\\Users\\shaho\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\flask\\config.py', reloading
+2025-07-23 14:44:56,223 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:44:57,102 - INFO - Database initialized successfully
+2025-07-23 14:44:57,105 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:44:57,118 - WARNING -  * Debugger is active!
+2025-07-23 14:44:57,122 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:50:40,282 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-23 14:50:40,284 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-23 14:50:40,285 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\stock_agent.py', reloading
+2025-07-23 14:50:40,986 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:50:42,619 - INFO - DB path: C:\stock\bullbearpk\backend\agents\data\stocks.db
+2025-07-23 14:50:42,621 - INFO - Database initialized successfully
+2025-07-23 14:50:42,626 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:50:42,650 - WARNING -  * Debugger is active!
+2025-07-23 14:50:42,655 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 14:53:47,712 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\fin_scraper.py', reloading
+2025-07-23 14:53:48,827 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 14:53:49,779 - INFO - DB path: C:\stock\bullbearpk\backend\agents\data\stocks.db
+2025-07-23 14:53:49,780 - INFO - Database initialized successfully
+2025-07-23 14:53:49,783 - INFO - Starting Flask API server on port 5000
+2025-07-23 14:53:49,796 - WARNING -  * Debugger is active!
+2025-07-23 14:53:49,800 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 15:02:40,687 - INFO - DB path: C:\stock\bullbearpk\backend\agents\data\stocks.db
+2025-07-23 15:02:40,688 - INFO - Database initialized successfully
+2025-07-23 15:02:40,691 - INFO - Starting Flask API server on port 5000
+2025-07-23 15:02:40,723 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-07-23 15:02:40,723 - INFO - [33mPress CTRL+C to quit[0m
+2025-07-23 15:02:40,736 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 15:02:41,435 - INFO - DB path: C:\stock\bullbearpk\backend\agents\data\stocks.db
+2025-07-23 15:02:41,436 - INFO - Database initialized successfully
+2025-07-23 15:02:41,439 - INFO - Starting Flask API server on port 5000
+2025-07-23 15:02:41,452 - WARNING -  * Debugger is active!
+2025-07-23 15:02:41,458 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 15:02:48,770 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 15:02:51,041 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 15:02:51,041 - INFO - Scraping attempt 1/3
+2025-07-23 15:02:51,041 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 15:03:14,574 - INFO - Successfully navigated to stock data page
+2025-07-23 15:03:16,603 - INFO - Stock data loaded successfully
+2025-07-23 15:04:40,193 - INFO - Successfully extracted 265 stock records
+2025-07-23 15:04:40,194 - INFO - Successfully scraped 265 stocks
+2025-07-23 15:04:40,208 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_150440.json
+2025-07-23 15:04:42,822 - INFO - WebDriver closed successfully
+2025-07-23 15:04:42,895 - INFO - fin_scraper.py completed successfully.
+2025-07-23 15:04:42,897 - INFO - 127.0.0.1 - - [23/Jul/2025 15:04:42] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 15:04:43,255 - INFO - 127.0.0.1 - - [23/Jul/2025 15:04:43] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 15:08:09,498 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-23 15:08:09,529 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\agent_c_news_scraper.py', reloading
+2025-07-23 15:08:09,544 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\agent_d_sentiment.py', reloading
+2025-07-23 15:08:09,558 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\agent_e_portfolio_updater.py', reloading
+2025-07-23 15:08:09,574 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\agent_g_risk_profiler.py', reloading
+2025-07-23 15:08:09,590 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\agent_h_history.py', reloading
+2025-07-23 15:08:09,621 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\input_parser.py', reloading
+2025-07-23 15:08:09,623 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\agents\\llm_chatbot.py', reloading
+2025-07-23 15:08:09,654 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api\\market_routes.py', reloading
+2025-07-23 15:08:09,668 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\api\\__init__.py', reloading
+2025-07-23 15:08:10,427 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 15:08:11,236 - INFO - DB path: C:\stock\bullbearpk\backend\agents\data\stocks.db
+2025-07-23 15:08:11,237 - INFO - Database initialized successfully
+2025-07-23 15:08:11,241 - INFO - Starting Flask API server on port 5000
+2025-07-23 15:08:11,257 - WARNING -  * Debugger is active!
+2025-07-23 15:08:11,262 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 15:19:37,221 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-23 15:19:37,222 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-23 15:19:37,223 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-23 15:19:37,976 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 15:19:38,831 - INFO - DB path: C:\stock\bullbearpk\backend\agents\data\stocks.db
+2025-07-23 15:19:38,834 - INFO - Database initialized successfully
+2025-07-23 15:19:38,838 - INFO - Starting Flask API server on port 5000
+2025-07-23 15:19:38,870 - WARNING -  * Debugger is active!
+2025-07-23 15:19:38,879 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 15:19:48,068 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-23 15:19:48,070 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-23 15:19:48,070 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-23 15:19:49,119 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 15:19:50,002 - INFO - DB path: C:\stock\bullbearpk\backend\agents\data\stocks.db
+2025-07-23 15:19:50,004 - INFO - Database initialized successfully
+2025-07-23 15:19:50,007 - INFO - Starting Flask API server on port 5000
+2025-07-23 15:19:50,024 - WARNING -  * Debugger is active!
+2025-07-23 15:19:50,032 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 15:20:06,534 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-23 15:20:06,536 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-23 15:20:06,537 - INFO -  * Detected change in 'C:\\stock\\bullbearpk\\backend\\manager_agent.py', reloading
+2025-07-23 15:20:07,252 - INFO -  * Restarting with watchdog (windowsapi)
+2025-07-23 15:20:08,142 - INFO - DB path: C:\stock\bullbearpk\backend\agents\data\stocks.db
+2025-07-23 15:20:08,143 - INFO - Database initialized successfully
+2025-07-23 15:20:08,148 - INFO - Starting Flask API server on port 5000
+2025-07-23 15:20:08,164 - WARNING -  * Debugger is active!
+2025-07-23 15:20:08,169 - INFO -  * Debugger PIN: 956-807-532
+2025-07-23 15:20:22,442 - INFO - DB path: c:\stock\bullbearpk\backend\agents\data\stocks.db
+2025-07-23 15:20:22,443 - INFO - Database initialized successfully
+2025-07-23 15:20:28,611 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 15:20:28,611 - INFO - Scraping attempt 1/3
+2025-07-23 15:20:28,611 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 15:20:53,105 - INFO - Successfully navigated to stock data page
+2025-07-23 15:20:55,119 - INFO - Stock data loaded successfully
+2025-07-23 15:21:29,986 - INFO - Successfully extracted 265 stock records
+2025-07-23 15:21:29,986 - INFO - Successfully scraped 265 stocks
+2025-07-23 15:21:29,993 - INFO - [SUCCESS] Exported 265 stocks to c:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_152129.json
+2025-07-23 15:21:32,367 - INFO - WebDriver closed successfully
+2025-07-23 15:21:32,384 - INFO - Saved latest data for HICL
+2025-07-23 15:21:32,397 - INFO - Saved latest data for HIFA
+2025-07-23 15:21:32,410 - INFO - Saved latest data for HINO
+2025-07-23 15:21:32,424 - INFO - Saved latest data for HINOON
+2025-07-23 15:21:32,436 - INFO - Saved latest data for HIRAT
+2025-07-23 15:21:32,445 - INFO - Saved latest data for HMB
+2025-07-23 15:21:32,453 - INFO - Saved latest data for HPL
+2025-07-23 15:21:32,462 - INFO - Saved latest data for HRPL
+2025-07-23 15:21:32,470 - INFO - Saved latest data for HTL
+2025-07-23 15:21:32,478 - INFO - Saved latest data for HUBC
+2025-07-23 15:21:32,488 - INFO - Saved latest data for HUMNL
+2025-07-23 15:21:32,498 - INFO - Saved latest data for HUSI
+2025-07-23 15:21:32,508 - INFO - Saved latest data for HWQS
+2025-07-23 15:21:32,518 - INFO - Saved latest data for IBFL
+2025-07-23 15:21:32,528 - INFO - Saved latest data for IBLHL
+2025-07-23 15:21:32,539 - INFO - Saved latest data for ICCI
+2025-07-23 15:21:32,551 - INFO - Saved latest data for ICIBL
+2025-07-23 15:21:32,560 - INFO - Saved latest data for ICL
+2025-07-23 15:21:32,570 - INFO - Saved latest data for IDRT
+2025-07-23 15:21:32,583 - INFO - Saved latest data for IDSM
+2025-07-23 15:21:32,593 - INFO - Saved latest data for IDYM
+2025-07-23 15:21:32,604 - INFO - Saved latest data for IGIHL
+2025-07-23 15:21:32,613 - INFO - Saved latest data for IGIL
+2025-07-23 15:21:32,624 - INFO - Saved latest data for ILP
+2025-07-23 15:21:32,634 - INFO - Saved latest data for IMAGE
+2025-07-23 15:21:32,644 - INFO - Saved latest data for IML
+2025-07-23 15:21:32,658 - INFO - Saved latest data for IMS
+2025-07-23 15:21:32,669 - INFO - Saved latest data for INDU
+2025-07-23 15:21:32,680 - INFO - Saved latest data for INIL
+2025-07-23 15:21:32,689 - INFO - Saved latest data for INKL
+2025-07-23 15:21:32,698 - INFO - Saved latest data for IPAK
+2025-07-23 15:21:32,708 - INFO - Saved latest data for ISIL
+2025-07-23 15:21:32,718 - INFO - Saved latest data for ISL
+2025-07-23 15:21:32,728 - INFO - Saved latest data for ITTEFAQ
+2025-07-23 15:21:32,738 - INFO - Saved latest data for JATM
+2025-07-23 15:21:32,748 - INFO - Saved latest data for JDMT
+2025-07-23 15:21:32,758 - INFO - Saved latest data for JDWS
+2025-07-23 15:21:32,770 - INFO - Saved latest data for JGICL
+2025-07-23 15:21:32,780 - INFO - Saved latest data for JKSM
+2025-07-23 15:21:32,788 - INFO - Saved latest data for JLICL
+2025-07-23 15:21:32,798 - INFO - Saved latest data for JSBL
+2025-07-23 15:21:32,808 - INFO - Saved latest data for JSCL
+2025-07-23 15:21:32,819 - INFO - Saved latest data for JSGCL
+2025-07-23 15:21:32,829 - INFO - Saved latest data for JSIL
+2025-07-23 15:21:32,841 - INFO - Saved latest data for JSML
+2025-07-23 15:21:32,854 - INFO - Saved latest data for JUBS
+2025-07-23 15:21:32,866 - INFO - Saved latest data for JVDC
+2025-07-23 15:21:32,947 - INFO - Saved latest data for KAPCO
+2025-07-23 15:21:32,961 - INFO - Saved latest data for KCL
+2025-07-23 15:21:32,971 - INFO - Saved latest data for KEL
+2025-07-23 15:21:32,985 - INFO - Saved latest data for KHTC
+2025-07-23 15:21:32,998 - INFO - Saved latest data for KHYT
+2025-07-23 15:21:33,016 - INFO - Saved latest data for KML
+2025-07-23 15:21:33,027 - INFO - Saved latest data for KOHC
+2025-07-23 15:21:33,040 - INFO - Saved latest data for KOHE
+2025-07-23 15:21:33,051 - INFO - Saved latest data for KOHP
+2025-07-23 15:21:33,064 - INFO - Saved latest data for KOHTM
+2025-07-23 15:21:33,077 - INFO - Saved latest data for KOIL
+2025-07-23 15:21:33,092 - INFO - Saved latest data for KOSM
+2025-07-23 15:21:33,105 - INFO - Saved latest data for KPUS
+2025-07-23 15:21:33,119 - INFO - Saved latest data for KSBP
+2025-07-23 15:21:33,129 - INFO - Saved latest data for KSTM
+2025-07-23 15:21:33,140 - INFO - Saved latest data for KTML
+2025-07-23 15:21:33,150 - INFO - Saved latest data for LCI
+2025-07-23 15:21:33,161 - INFO - Saved latest data for LEUL
+2025-07-23 15:21:33,171 - INFO - Saved latest data for LIVEN
+2025-07-23 15:21:33,184 - INFO - Saved latest data for LOADS
+2025-07-23 15:21:33,195 - INFO - Saved latest data for LOTCHEM
+2025-07-23 15:21:33,208 - INFO - Saved latest data for LPGL
+2025-07-23 15:21:33,218 - INFO - Saved latest data for LPL
+2025-07-23 15:21:33,228 - INFO - Saved latest data for LSECL
+2025-07-23 15:21:33,240 - INFO - Saved latest data for LSEFSL
+2025-07-23 15:21:33,252 - INFO - Saved latest data for LSEVL
+2025-07-23 15:21:33,263 - INFO - Saved latest data for LUCK
+2025-07-23 15:21:33,275 - INFO - Saved latest data for MACFL
+2025-07-23 15:21:33,293 - INFO - Saved latest data for MACTER
+2025-07-23 15:21:33,306 - INFO - Saved latest data for MARI
+2025-07-23 15:21:33,318 - INFO - Saved latest data for MCB
+2025-07-23 15:21:33,330 - INFO - Saved latest data for MCBIM
+2025-07-23 15:21:33,341 - INFO - Saved latest data for MDTL
+2025-07-23 15:21:33,353 - INFO - Saved latest data for MEBL
+2025-07-23 15:21:33,366 - INFO - Saved latest data for MEHT
+2025-07-23 15:21:33,376 - INFO - Saved latest data for MERIT
+2025-07-23 15:21:33,388 - INFO - Saved latest data for MFFL
+2025-07-23 15:21:33,403 - INFO - Saved latest data for MFL
+2025-07-23 15:21:33,414 - INFO - Saved latest data for MIRKS
+2025-07-23 15:21:33,424 - INFO - Saved latest data for MLCF
+2025-07-23 15:21:33,435 - INFO - Saved latest data for MQTM
+2025-07-23 15:21:33,445 - INFO - Saved latest data for MRNS
+2025-07-23 15:21:33,455 - INFO - Saved latest data for MSCL
+2025-07-23 15:21:33,466 - INFO - Saved latest data for MSOT
+2025-07-23 15:21:33,478 - INFO - Saved latest data for MTL
+2025-07-23 15:21:33,488 - INFO - Saved latest data for MUGHAL
+2025-07-23 15:21:33,500 - INFO - Saved latest data for MUGHALC
+2025-07-23 15:21:33,510 - INFO - Saved latest data for MUREB
+2025-07-23 15:21:33,519 - INFO - Saved latest data for MWMP
+2025-07-23 15:21:33,531 - INFO - Saved latest data for NAGC
+2025-07-23 15:21:33,543 - INFO - Saved latest data for NATF
+2025-07-23 15:21:33,555 - INFO - Saved latest data for NBP
+2025-07-23 15:21:33,566 - INFO - Saved latest data for NCL
+2025-07-23 15:21:33,578 - INFO - Saved latest data for NCPL
+2025-07-23 15:21:33,587 - INFO - Saved latest data for NESTLE
+2025-07-23 15:21:33,598 - INFO - Saved latest data for NETSOL
+2025-07-23 15:21:33,607 - INFO - Saved latest data for NEXT
+2025-07-23 15:21:33,619 - INFO - Saved latest data for NICL
+2025-07-23 15:21:33,631 - INFO - Saved latest data for NML
+2025-07-23 15:21:33,640 - INFO - Saved latest data for NONS
+2025-07-23 15:21:33,648 - INFO - Saved latest data for NPL
+2025-07-23 15:21:33,659 - INFO - Saved latest data for NRL
+2025-07-23 15:21:33,673 - INFO - Saved latest data for NRSL
+2025-07-23 15:21:33,688 - INFO - Saved latest data for NSRM
+2025-07-23 15:21:33,701 - INFO - Saved latest data for OBOY
+2025-07-23 15:21:33,715 - INFO - Saved latest data for OCTOPUS
+2025-07-23 15:21:33,726 - INFO - Saved latest data for OGDC
+2025-07-23 15:21:33,738 - INFO - Saved latest data for OLPL
+2025-07-23 15:21:33,749 - INFO - Saved latest data for OLPM
+2025-07-23 15:21:33,760 - INFO - Saved latest data for OML
+2025-07-23 15:21:33,770 - INFO - Saved latest data for ORM
+2025-07-23 15:21:33,782 - INFO - Saved latest data for OTSU
+2025-07-23 15:21:33,809 - INFO - Saved latest data for PABC
+2025-07-23 15:21:33,820 - INFO - Saved latest data for PACE
+2025-07-23 15:21:33,834 - INFO - Saved latest data for PAEL
+2025-07-23 15:21:33,957 - INFO - Saved latest data for PAKD
+2025-07-23 15:21:33,970 - INFO - Saved latest data for PAKL
+2025-07-23 15:21:33,983 - INFO - Saved latest data for PAKOXY
+2025-07-23 15:21:33,992 - INFO - Saved latest data for PAKRI
+2025-07-23 15:21:34,002 - INFO - Saved latest data for PAKT
+2025-07-23 15:21:34,015 - INFO - Saved latest data for PASL
+2025-07-23 15:21:34,024 - INFO - Saved latest data for PASM
+2025-07-23 15:21:34,036 - INFO - Saved latest data for PCAL
+2025-07-23 15:21:34,047 - INFO - Saved latest data for PECO
+2025-07-23 15:21:34,057 - INFO - Saved latest data for PGLC
+2025-07-23 15:21:34,070 - INFO - Saved latest data for PIAHCLA
+2025-07-23 15:21:34,084 - INFO - Saved latest data for PIAHCLB
+2025-07-23 15:21:34,096 - INFO - Saved latest data for PIBTL
+2025-07-23 15:21:34,110 - INFO - Saved latest data for PICT
+2025-07-23 15:21:34,124 - INFO - Saved latest data for PIL
+2025-07-23 15:21:34,135 - INFO - Saved latest data for PIM
+2025-07-23 15:21:34,147 - INFO - Saved latest data for PINL
+2025-07-23 15:21:34,160 - INFO - Saved latest data for PIOC
+2025-07-23 15:21:34,171 - INFO - Saved latest data for PKGI
+2025-07-23 15:21:34,182 - INFO - Saved latest data for PKGP
+2025-07-23 15:21:34,193 - INFO - Saved latest data for PKGS
+2025-07-23 15:21:34,206 - INFO - Saved latest data for PMI
+2025-07-23 15:21:34,224 - INFO - Saved latest data for PMRS
+2025-07-23 15:21:34,238 - INFO - Saved latest data for PNSC
+2025-07-23 15:21:34,250 - INFO - Saved latest data for POL
+2025-07-23 15:21:34,260 - INFO - Saved latest data for POML
+2025-07-23 15:21:34,271 - INFO - Saved latest data for POWER
+2025-07-23 15:21:34,282 - INFO - Saved latest data for PPL
+2025-07-23 15:21:34,292 - INFO - Saved latest data for PPP
+2025-07-23 15:21:34,302 - INFO - Saved latest data for PPVC
+2025-07-23 15:21:34,315 - INFO - Saved latest data for PREMA
+2025-07-23 15:21:34,326 - INFO - Saved latest data for PRET
+2025-07-23 15:21:34,335 - INFO - Saved latest data for PRL
+2025-07-23 15:21:34,345 - INFO - Saved latest data for PRWM
+2025-07-23 15:21:34,356 - INFO - Saved latest data for PSEL
+2025-07-23 15:21:34,367 - INFO - Saved latest data for PSO
+2025-07-23 15:21:34,378 - INFO - Saved latest data for PSX
+2025-07-23 15:21:34,392 - INFO - Saved latest data for PSYL
+2025-07-23 15:21:34,403 - INFO - Saved latest data for PTC
+2025-07-23 15:21:34,417 - INFO - Saved latest data for PTL
+2025-07-23 15:21:34,429 - INFO - Saved latest data for QUET
+2025-07-23 15:21:34,438 - INFO - Saved latest data for QUICE
+2025-07-23 15:21:34,449 - INFO - Saved latest data for RCML
+2025-07-23 15:21:34,460 - INFO - Saved latest data for REDCO
+2025-07-23 15:21:34,469 - INFO - Saved latest data for RICL
+2025-07-23 15:21:34,479 - INFO - Saved latest data for RMPL
+2025-07-23 15:21:34,490 - INFO - Saved latest data for RPL
+2025-07-23 15:21:34,498 - INFO - Saved latest data for RUBY
+2025-07-23 15:21:34,509 - INFO - Saved latest data for RUPL
+2025-07-23 15:21:34,522 - INFO - Saved latest data for SAIF
+2025-07-23 15:21:34,537 - INFO - Saved latest data for SANSM
+2025-07-23 15:21:34,547 - INFO - Saved latest data for SARC
+2025-07-23 15:21:34,557 - INFO - Saved latest data for SAZEW
+2025-07-23 15:21:34,569 - INFO - Saved latest data for SBL
+2025-07-23 15:21:34,579 - INFO - Saved latest data for SCBPL
+2025-07-23 15:21:34,588 - INFO - Saved latest data for SCL
+2025-07-23 15:21:34,600 - INFO - Saved latest data for SEARL
+2025-07-23 15:21:34,609 - INFO - Saved latest data for SEL
+2025-07-23 15:21:34,618 - INFO - Saved latest data for SEPL
+2025-07-23 15:21:34,627 - INFO - Saved latest data for SERT
+2025-07-23 15:21:34,638 - INFO - Saved latest data for SFL
+2025-07-23 15:21:34,647 - INFO - Saved latest data for SGF
+2025-07-23 15:21:34,662 - INFO - Saved latest data for SGPL
+2025-07-23 15:21:34,673 - INFO - Saved latest data for SHCM
+2025-07-23 15:21:34,686 - INFO - Saved latest data for SHDT
+2025-07-23 15:21:34,696 - INFO - Saved latest data for SHEZ
+2025-07-23 15:21:34,707 - INFO - Saved latest data for SHFA
+2025-07-23 15:21:34,718 - INFO - Saved latest data for SHJS
+2025-07-23 15:21:34,730 - INFO - Saved latest data for SHNI
+2025-07-23 15:21:34,741 - INFO - Saved latest data for SHSML
+2025-07-23 15:21:34,755 - INFO - Saved latest data for SIBL
+2025-07-23 15:21:34,768 - INFO - Saved latest data for SIEM
+2025-07-23 15:21:34,778 - INFO - Saved latest data for SINDM
+2025-07-23 15:21:34,788 - INFO - Saved latest data for SITC
+2025-07-23 15:21:34,799 - INFO - Saved latest data for SKRS
+2025-07-23 15:21:34,816 - INFO - Saved latest data for SLGL
+2025-07-23 15:21:34,828 - INFO - Saved latest data for SLYT
+2025-07-23 15:21:34,950 - INFO - Saved latest data for SMCPL
+2025-07-23 15:21:34,963 - INFO - Saved latest data for SML
+2025-07-23 15:21:34,974 - INFO - Saved latest data for SNAI
+2025-07-23 15:21:34,984 - INFO - Saved latest data for SNBL
+2025-07-23 15:21:34,994 - INFO - Saved latest data for SNGP
+2025-07-23 15:21:35,008 - INFO - Saved latest data for SPEL
+2025-07-23 15:21:35,018 - INFO - Saved latest data for SPL
+2025-07-23 15:21:35,029 - INFO - Saved latest data for SPWL
+2025-07-23 15:21:35,040 - INFO - Saved latest data for SRVI
+2025-07-23 15:21:35,050 - INFO - Saved latest data for SSGC
+2025-07-23 15:21:35,059 - INFO - Saved latest data for SSML
+2025-07-23 15:21:35,070 - INFO - Saved latest data for SSOM
+2025-07-23 15:21:35,087 - INFO - Saved latest data for STCL
+2025-07-23 15:21:35,098 - INFO - Saved latest data for STJT
+2025-07-23 15:21:35,110 - INFO - Saved latest data for STL
+2025-07-23 15:21:35,120 - INFO - Saved latest data for STML
+2025-07-23 15:21:35,129 - INFO - Saved latest data for STPL
+2025-07-23 15:21:35,140 - INFO - Saved latest data for STYLERS
+2025-07-23 15:21:35,151 - INFO - Saved latest data for SUHJ
+2025-07-23 15:21:35,161 - INFO - Saved latest data for SURC
+2025-07-23 15:21:35,172 - INFO - Saved latest data for SUTM
+2025-07-23 15:21:35,181 - INFO - Saved latest data for SYM
+2025-07-23 15:21:35,190 - INFO - Saved latest data for SYS
+2025-07-23 15:21:35,199 - INFO - Saved latest data for SZTM
+2025-07-23 15:21:35,207 - INFO - Saved latest data for TATM
+2025-07-23 15:21:35,217 - INFO - Saved latest data for TBL
+2025-07-23 15:21:35,233 - INFO - Saved latest data for TCORP
+2025-07-23 15:21:35,246 - INFO - Saved latest data for TELE
+2025-07-23 15:21:35,256 - INFO - Saved latest data for TGL
+2025-07-23 15:21:35,269 - INFO - Saved latest data for THALL
+2025-07-23 15:21:35,279 - INFO - Saved latest data for THCCL
+2025-07-23 15:21:35,290 - INFO - Saved latest data for TICL
+2025-07-23 15:21:35,302 - INFO - Saved latest data for TOMCL
+2025-07-23 15:21:35,314 - INFO - Saved latest data for TOWL
+2025-07-23 15:21:35,325 - INFO - Saved latest data for TPL
+2025-07-23 15:21:35,337 - INFO - Saved latest data for TPLI
+2025-07-23 15:21:35,347 - INFO - Saved latest data for TPLP
+2025-07-23 15:21:35,358 - INFO - Saved latest data for TPLRF1
+2025-07-23 15:21:35,374 - INFO - Saved latest data for TPLT
+2025-07-23 15:21:35,387 - INFO - Saved latest data for TREET
+2025-07-23 15:21:35,400 - INFO - Saved latest data for TRG
+2025-07-23 15:21:35,413 - INFO - Saved latest data for TRIPF
+2025-07-23 15:21:35,426 - INFO - Saved latest data for TRSM
+2025-07-23 15:21:35,437 - INFO - Saved latest data for TSBL
+2025-07-23 15:21:35,448 - INFO - Saved latest data for TSMF
+2025-07-23 15:21:35,459 - INFO - Saved latest data for TSML
+2025-07-23 15:21:35,470 - INFO - Saved latest data for TSPL
+2025-07-23 15:21:35,482 - INFO - Saved latest data for UBDL
+2025-07-23 15:21:35,493 - INFO - Saved latest data for UBL
+2025-07-23 15:21:35,504 - INFO - Saved latest data for UCAPM
+2025-07-23 15:21:35,516 - INFO - Saved latest data for UDLI
+2025-07-23 15:21:35,527 - INFO - Saved latest data for UDPL
+2025-07-23 15:21:35,537 - INFO - Saved latest data for UNIC
+2025-07-23 15:21:35,549 - INFO - Saved latest data for UNITY
+2025-07-23 15:21:35,560 - INFO - Saved latest data for UPFL
+2025-07-23 15:21:35,573 - INFO - Saved latest data for UVIC
+2025-07-23 15:21:35,585 - INFO - Saved latest data for WAFI
+2025-07-23 15:21:35,598 - INFO - Saved latest data for WAHN
+2025-07-23 15:21:35,607 - INFO - Saved latest data for WAVES
+2025-07-23 15:21:35,617 - INFO - Saved latest data for WAVESAPP
+2025-07-23 15:21:35,630 - INFO - Saved latest data for WTL
+2025-07-23 15:21:35,640 - INFO - Saved latest data for YOUW
+2025-07-23 15:21:35,651 - INFO - Saved latest data for ZAHID
+2025-07-23 15:21:35,665 - INFO - Saved latest data for ZAL
+2025-07-23 15:21:35,676 - INFO - Saved latest data for ZIL
+2025-07-23 15:21:35,686 - INFO - Saved latest data for ZTL
+2025-07-23 15:24:25,104 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 15:24:25,117 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 15:24:27,541 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 15:24:27,541 - INFO - Scraping attempt 1/3
+2025-07-23 15:24:27,541 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 15:24:27,628 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 15:24:27,629 - INFO - Scraping attempt 1/3
+2025-07-23 15:24:27,629 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 15:24:50,693 - INFO - Successfully navigated to stock data page
+2025-07-23 15:24:50,952 - INFO - Successfully navigated to stock data page
+2025-07-23 15:24:52,718 - INFO - Stock data loaded successfully
+2025-07-23 15:24:52,979 - INFO - Stock data loaded successfully
+2025-07-23 15:25:44,806 - INFO - Successfully extracted 265 stock records
+2025-07-23 15:25:44,806 - INFO - Successfully scraped 265 stocks
+2025-07-23 15:25:44,826 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_152544.json
+2025-07-23 15:25:45,104 - INFO - Successfully extracted 265 stock records
+2025-07-23 15:25:45,104 - INFO - Successfully scraped 265 stocks
+2025-07-23 15:25:45,123 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_152545.json
+2025-07-23 15:25:47,367 - INFO - WebDriver closed successfully
+2025-07-23 15:25:47,430 - INFO - fin_scraper.py completed successfully.
+2025-07-23 15:25:47,433 - INFO - 127.0.0.1 - - [23/Jul/2025 15:25:47] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 15:25:48,542 - INFO - WebDriver closed successfully
+2025-07-23 15:25:48,604 - INFO - fin_scraper.py completed successfully.
+2025-07-23 15:25:48,608 - INFO - 127.0.0.1 - - [23/Jul/2025 15:25:48] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 15:53:14,100 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 15:53:14,104 - INFO - Triggering fin_scraper.py for live data...
+2025-07-23 15:53:16,847 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 15:53:16,848 - INFO - Scraping attempt 1/3
+2025-07-23 15:53:16,848 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 15:53:16,957 - INFO - Chrome WebDriver initialized successfully
+2025-07-23 15:53:16,958 - INFO - Scraping attempt 1/3
+2025-07-23 15:53:16,958 - INFO - Navigating to: https://www.scstrade.com/MarketStatistics/MS_DailyActivity.aspx
+2025-07-23 15:54:38,907 - INFO - Successfully navigated to stock data page
+2025-07-23 15:54:40,932 - INFO - Stock data loaded successfully
+2025-07-23 15:54:40,933 - INFO - Stock data loaded successfully
+2025-07-23 15:55:51,951 - INFO - Successfully extracted 265 stock records
+2025-07-23 15:55:51,951 - INFO - Successfully scraped 265 stocks
+2025-07-23 15:55:51,959 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_155551.json
+2025-07-23 15:55:51,976 - INFO - Successfully extracted 265 stock records
+2025-07-23 15:55:51,976 - INFO - Successfully scraped 265 stocks
+2025-07-23 15:55:51,984 - INFO - [SUCCESS] Exported 265 stocks to C:\stock\bullbearpk\backend\agents\scraped\live_stocks_20250723_155551.json
+2025-07-23 15:55:54,306 - INFO - WebDriver closed successfully
+2025-07-23 15:55:54,318 - INFO - WebDriver closed successfully
+2025-07-23 15:55:54,355 - INFO - fin_scraper.py completed successfully.
+2025-07-23 15:55:54,356 - INFO - 127.0.0.1 - - [23/Jul/2025 15:55:54] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 15:55:54,360 - INFO - fin_scraper.py completed successfully.
+2025-07-23 15:55:54,361 - INFO - 127.0.0.1 - - [23/Jul/2025 15:55:54] "POST /api/scrape HTTP/1.1" 200 -
+2025-07-23 15:55:54,679 - INFO - 127.0.0.1 - - [23/Jul/2025 15:55:54] "GET /api/market/data HTTP/1.1" 200 -
+2025-07-23 15:55:54,948 - INFO - 127.0.0.1 - - [23/Jul/2025 15:55:54] "GET /api/market/data HTTP/1.1" 200 -
