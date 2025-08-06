@@ -67,6 +67,12 @@ def log_request():
     logging.info(f"Request: {request.method} {request.url}")
     logging.info(f"Headers: {dict(request.headers)}")
     
+    # Skip JSON parsing for specific endpoints that don't need it
+    skip_json_endpoints = ['/api/market/refresh', '/api/market/refresh-simple']
+    if request.path in skip_json_endpoints:
+        logging.info(f"Skipping JSON parsing for {request.path}")
+        return
+    
     # Only try to parse JSON for POST/PUT requests
     if request.method in ['POST', 'PUT'] and request.json:
         logging.info(f"Request JSON: {request.json}")
