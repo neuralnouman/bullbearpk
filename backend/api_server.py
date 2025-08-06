@@ -68,7 +68,11 @@ def log_request():
     logging.info(f"Headers: {dict(request.headers)}")
     
     # Skip JSON parsing for specific endpoints that don't need it
-    skip_json_endpoints = ['/api/market/refresh', '/api/market/refresh-simple']
+    skip_json_endpoints = [
+        '/api/market/refresh', 
+        '/api/market/refresh-simple',
+        '/api/auth/logout'
+    ]
     if request.path in skip_json_endpoints:
         logging.info(f"Skipping JSON parsing for {request.path}")
         return
