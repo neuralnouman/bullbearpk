@@ -13,17 +13,12 @@ This module provides advanced stock analysis using:
 - Market Position Analysis
 """
 
-import numpy as np
-import pandas as pd
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-import statistics
-import math
 import logging
 from scipy import stats
 from scipy.stats import norm
-import json
 
 logger = logging.getLogger(__name__)
 
@@ -136,21 +131,21 @@ class AdvancedStockAnalyzer:
         self.db_config = db_config
         self.analysis_version = "3.0"
         
-    def analyze_stock_comprehensive(self, stock_data: Dict, market_data: List[Dict] = None) -> AdvancedAnalysisResult:
+    def analyze_stock_comprehensive(self, stock_data: Dict[str, Any], market_data: Optional[List[Dict[str, Any]]] = None) -> AdvancedAnalysisResult:
         """Perform comprehensive stock analysis with advanced techniques"""
         try:
-            stock_code = stock_data['code']
-            stock_name = stock_data['name']
-            sector = stock_data['sector']
+            stock_code: str = stock_data['code']
+            stock_name: str = stock_data['name']
+            sector: str = stock_data['sector']
             
             # Extract basic data
-            current_price = float(stock_data['close_price'])
-            open_price = float(stock_data['open_price'])
-            high_price = float(stock_data['high_price'])
-            low_price = float(stock_data['low_price'])
-            volume = int(stock_data['volume'])
-            change_amount = float(stock_data['change_amount'])
-            change_percent = float(stock_data['change_percent'])
+            current_price: float = float(stock_data['close_price'])
+            open_price: float = float(stock_data['open_price'])
+            high_price: float = float(stock_data['high_price'])
+            low_price: float = float(stock_data['low_price'])
+            volume: int = int(stock_data['volume'])
+            change_amount: float = float(stock_data['change_amount'])
+            change_percent: float = float(stock_data['change_percent'])
             
             # Calculate advanced technical indicators
             technical_indicators = self._calculate_advanced_technical_indicators(stock_data)
@@ -227,13 +222,13 @@ class AdvancedStockAnalyzer:
             logger.error(f"Error in comprehensive analysis for {stock_data.get('code', 'Unknown')}: {e}")
             raise
     
-    def _calculate_advanced_technical_indicators(self, stock_data: Dict) -> Dict:
+    def _calculate_advanced_technical_indicators(self, stock_data: Dict[str, Any]) -> Dict[str, float]:
         """Calculate advanced technical indicators"""
         try:
-            close_price = float(stock_data['close_price'])
-            high_price = float(stock_data['high_price'])
-            low_price = float(stock_data['low_price'])
-            change_percent = float(stock_data['change_percent'])
+            close_price: float = float(stock_data['close_price'])
+            high_price: float = float(stock_data['high_price'])
+            low_price: float = float(stock_data['low_price'])
+            change_percent: float = float(stock_data['change_percent'])
             
             # RSI (Relative Strength Index)
             rsi = self._calculate_rsi(stock_data)
@@ -279,10 +274,10 @@ class AdvancedStockAnalyzer:
                 'macd': 0.0, 'macd_signal': 0.0, 'macd_histogram': 0.0
             }
     
-    def _calculate_moving_averages(self, stock_data: Dict) -> Dict:
+    def _calculate_moving_averages(self, stock_data: Dict[str, Any]) -> Dict[str, float]:
         """Calculate multiple moving averages"""
         try:
-            close_price = float(stock_data['close_price'])
+            close_price: float = float(stock_data['close_price'])
             
             # For now, use simplified calculations
             # In a real implementation, you'd use historical data
@@ -303,10 +298,10 @@ class AdvancedStockAnalyzer:
             logger.warning(f"Error calculating moving averages: {e}")
             return {'ma_5': 0.0, 'ma_10': 0.0, 'ma_20': 0.0, 'ma_50': 0.0, 'ma_200': 0.0}
     
-    def _calculate_bollinger_bands_with_position(self, stock_data: Dict) -> Dict:
+    def _calculate_bollinger_bands_with_position(self, stock_data: Dict[str, Any]) -> Dict[str, float]:
         """Calculate Bollinger Bands with position indicator"""
         try:
-            close_price = float(stock_data['close_price'])
+            close_price: float = float(stock_data['close_price'])
             
             # Simplified Bollinger Bands calculation
             # In real implementation, use historical data for proper calculation
@@ -334,12 +329,12 @@ class AdvancedStockAnalyzer:
                 'bollinger_middle': 0.0, 'bb_position': 50.0
             }
     
-    def _calculate_support_resistance_with_distances(self, stock_data: Dict) -> Dict:
+    def _calculate_support_resistance_with_distances(self, stock_data: Dict[str, Any]) -> Dict[str, float]:
         """Calculate support and resistance levels with distances"""
         try:
-            close_price = float(stock_data['close_price'])
-            high_price = float(stock_data['high_price'])
-            low_price = float(stock_data['low_price'])
+            close_price: float = float(stock_data['close_price'])
+            high_price: float = float(stock_data['high_price'])
+            low_price: float = float(stock_data['low_price'])
             
             # Simplified support/resistance calculation
             support_level = low_price * 0.98
@@ -362,10 +357,10 @@ class AdvancedStockAnalyzer:
                 'support_distance': 0.0, 'resistance_distance': 0.0
             }
     
-    def _calculate_advanced_trend_analysis(self, stock_data: Dict) -> Dict:
+    def _calculate_advanced_trend_analysis(self, stock_data: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate advanced trend analysis"""
         try:
-            change_percent = float(stock_data['change_percent'])
+            change_percent: float = float(stock_data['change_percent'])
             
             # Trend determination
             if change_percent > 5:
@@ -384,8 +379,8 @@ class AdvancedStockAnalyzer:
                 trend = 'sideways'
                 trend_strength = 0.0
             
-            # Momentum calculation
-            momentum = change_percent
+            # Momentum calculation (more realistic)
+            momentum = change_percent * 2  # Amplify the momentum for better visibility
             
             # Volatility calculation (simplified)
             high_price = float(stock_data['high_price'])
@@ -407,11 +402,11 @@ class AdvancedStockAnalyzer:
                 'momentum': 0.0, 'volatility': 0.0
             }
     
-    def _calculate_volume_analysis(self, stock_data: Dict) -> Dict:
+    def _calculate_volume_analysis(self, stock_data: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate comprehensive volume analysis"""
         try:
-            volume = int(stock_data['volume'])
-            change_percent = float(stock_data['change_percent'])
+            volume: int = int(stock_data['volume'])
+            change_percent: float = float(stock_data['change_percent'])
             
             # Volume SMA (simplified)
             volume_sma = volume * 1.1  # Assume average volume is 10% higher
@@ -454,11 +449,11 @@ class AdvancedStockAnalyzer:
                 'volume_trend': 'normal_volume', 'price_volume_trend': 'neutral'
             }
     
-    def _calculate_advanced_analytics(self, stock_data: Dict, market_data: List[Dict] = None) -> Dict:
+    def _calculate_advanced_analytics(self, stock_data: Dict[str, Any], market_data: Optional[List[Dict[str, Any]]] = None) -> Dict[str, float]:
         """Calculate advanced analytics using statistical methods"""
         try:
-            change_percent = float(stock_data['change_percent'])
-            volume = int(stock_data['volume'])
+            change_percent: float = float(stock_data['change_percent'])
+            volume: int = int(stock_data['volume'])
             
             # Beta coefficient (market correlation) - simplified
             beta_coefficient = 1.0 + (change_percent / 100)  # Simplified calculation
@@ -492,13 +487,13 @@ class AdvancedStockAnalyzer:
                 'sector_rank': 0, 'market_cap_rank': 0
             }
     
-    def _calculate_risk_metrics(self, stock_data: Dict) -> Dict:
+    def _calculate_risk_metrics(self, stock_data: Dict[str, Any]) -> Dict[str, float]:
         """Calculate comprehensive risk metrics"""
         try:
-            change_percent = float(stock_data['change_percent'])
-            high_price = float(stock_data['high_price'])
-            low_price = float(stock_data['low_price'])
-            close_price = float(stock_data['close_price'])
+            change_percent: float = float(stock_data['change_percent'])
+            high_price: float = float(stock_data['high_price'])
+            low_price: float = float(stock_data['low_price'])
+            close_price: float = float(stock_data['close_price'])
             
             # Value at Risk (VaR) - simplified
             volatility = ((high_price - low_price) / close_price) * 100
@@ -522,12 +517,12 @@ class AdvancedStockAnalyzer:
                 'value_at_risk': 0.0, 'maximum_drawdown': 0.0, 'downside_deviation': 0.0
             }
     
-    def _calculate_comprehensive_performance_score(self, stock_data: Dict, technical_indicators: Dict,
-                                                volume_analysis: Dict, advanced_analytics: Dict, risk_metrics: Dict = None) -> float:
+    def _calculate_comprehensive_performance_score(self, stock_data: Dict[str, Any], technical_indicators: Dict[str, float],
+                                                volume_analysis: Dict[str, Any], advanced_analytics: Dict[str, float], risk_metrics: Optional[Dict[str, float]] = None) -> float:
         """Calculate comprehensive performance score using multiple factors"""
         try:
-            change_percent = float(stock_data['change_percent'])
-            volume = int(stock_data['volume'])
+            change_percent: float = float(stock_data['change_percent'])
+            volume: int = int(stock_data['volume'])
             
             # Base performance (30%)
             base_score = abs(change_percent) * 0.3
@@ -565,13 +560,13 @@ class AdvancedStockAnalyzer:
             logger.warning(f"Error calculating performance score: {e}")
             return 50.0
     
-    def _generate_advanced_recommendations(self, stock_data: Dict, technical_indicators: Dict,
-                                         performance_score: float, risk_metrics: Dict) -> Dict:
+    def _generate_advanced_recommendations(self, stock_data: Dict[str, Any], technical_indicators: Dict[str, float],
+                                         performance_score: float, risk_metrics: Dict[str, float]) -> Dict[str, Any]:
         """Generate advanced recommendations with confidence scores"""
         try:
-            rsi = technical_indicators['rsi']
-            change_percent = float(stock_data['change_percent'])
-            current_price = float(stock_data['close_price'])
+            rsi: float = technical_indicators['rsi']
+            change_percent: float = float(stock_data['change_percent'])
+            current_price: float = float(stock_data['close_price'])
             
             # Determine recommendation based on multiple factors
             buy_signals = 0
@@ -651,14 +646,14 @@ class AdvancedStockAnalyzer:
                 'expected_return': 0.0, 'target_price': 0.0, 'stop_loss': 0.0
             }
     
-    def _create_comprehensive_summary(self, stock_data: Dict, technical_indicators: Dict,
-                                    performance_score: float, recommendations: Dict) -> Tuple[str, Dict, List, List]:
+    def _create_comprehensive_summary(self, stock_data: Dict[str, Any], technical_indicators: Dict[str, float],
+                                    performance_score: float, recommendations: Dict[str, Any]) -> Tuple[str, Dict[str, str], List[str], List[str]]:
         """Create comprehensive analysis summary and insights"""
         try:
-            stock_code = stock_data['code']
-            stock_name = stock_data['name']
-            sector = stock_data['sector']
-            change_percent = float(stock_data['change_percent'])
+            stock_code: str = stock_data['code']
+            stock_name: str = stock_data['name']
+            sector: str = stock_data['sector']
+            change_percent: float = float(stock_data['change_percent'])
             
             # Create analysis summary
             summary = f"""
@@ -720,10 +715,10 @@ class AdvancedStockAnalyzer:
             logger.warning(f"Error creating summary: {e}")
             return "Analysis summary unavailable", {}, [], []
     
-    def _calculate_data_quality_score(self, stock_data: Dict) -> float:
+    def _calculate_data_quality_score(self, stock_data: Dict[str, Any]) -> float:
         """Calculate data quality score"""
         try:
-            score = 1.0
+            score: float = 1.0
             
             # Check for missing values
             required_fields = ['close_price', 'open_price', 'high_price', 'low_price', 'volume']
@@ -745,24 +740,28 @@ class AdvancedStockAnalyzer:
             return 0.5
     
     # Helper methods for technical indicators
-    def _calculate_rsi(self, stock_data: Dict) -> float:
+    def _calculate_rsi(self, stock_data: Dict[str, Any]) -> float:
         """Calculate RSI"""
         try:
-            change_percent = float(stock_data['change_percent'])
-            # Simplified RSI calculation
+            change_percent: float = float(stock_data['change_percent'])
+            # More realistic RSI calculation based on change percentage
             if change_percent > 0:
-                return 50 + (change_percent * 2)
+                # Positive change: RSI between 50-100
+                rsi = 50 + min(change_percent * 3, 50)
+                return min(rsi, 100)  # Cap at 100
             else:
-                return 50 + (change_percent * 2)
+                # Negative change: RSI between 0-50
+                rsi = 50 + max(change_percent * 3, -50)
+                return max(rsi, 0)  # Floor at 0
         except:
             return 50.0
     
-    def _calculate_stochastic(self, stock_data: Dict) -> Tuple[float, float]:
+    def _calculate_stochastic(self, stock_data: Dict[str, Any]) -> Tuple[float, float]:
         """Calculate Stochastic Oscillator"""
         try:
-            high = float(stock_data['high_price'])
-            low = float(stock_data['low_price'])
-            close = float(stock_data['close_price'])
+            high: float = float(stock_data['high_price'])
+            low: float = float(stock_data['low_price'])
+            close: float = float(stock_data['close_price'])
             
             if high != low:
                 k_percent = ((close - low) / (high - low)) * 100
@@ -773,12 +772,12 @@ class AdvancedStockAnalyzer:
         except:
             return 50.0, 50.0
     
-    def _calculate_williams_r(self, stock_data: Dict) -> float:
+    def _calculate_williams_r(self, stock_data: Dict[str, Any]) -> float:
         """Calculate Williams %R"""
         try:
-            high = float(stock_data['high_price'])
-            low = float(stock_data['low_price'])
-            close = float(stock_data['close_price'])
+            high: float = float(stock_data['high_price'])
+            low: float = float(stock_data['low_price'])
+            close: float = float(stock_data['close_price'])
             
             if high != low:
                 williams_r = ((high - close) / (high - low)) * -100
@@ -789,12 +788,12 @@ class AdvancedStockAnalyzer:
         except:
             return -50.0
     
-    def _calculate_cci(self, stock_data: Dict) -> float:
+    def _calculate_cci(self, stock_data: Dict[str, Any]) -> float:
         """Calculate CCI"""
         try:
-            high = float(stock_data['high_price'])
-            low = float(stock_data['low_price'])
-            close = float(stock_data['close_price'])
+            high: float = float(stock_data['high_price'])
+            low: float = float(stock_data['low_price'])
+            close: float = float(stock_data['close_price'])
             
             typical_price = (high + low + close) / 3
             # Simplified CCI calculation
@@ -804,18 +803,18 @@ class AdvancedStockAnalyzer:
         except:
             return 0.0
     
-    def _calculate_atr(self, stock_data: Dict) -> float:
+    def _calculate_atr(self, stock_data: Dict[str, Any]) -> float:
         """Calculate ATR"""
         try:
-            high = float(stock_data['high_price'])
-            low = float(stock_data['low_price'])
+            high: float = float(stock_data['high_price'])
+            low: float = float(stock_data['low_price'])
             
             true_range = high - low
             return true_range
         except:
             return 0.0 
 
-async def analyze_stocks_advanced_agentic(stock_data: List[Dict], user_input: Dict = None, db_config=None) -> Dict:
+async def analyze_stocks_advanced_agentic(stock_data: List[Dict[str, Any]], user_input: Optional[Dict[str, Any]] = None, db_config=None) -> Dict[str, Any]:
     """
     Advanced agentic framework compatible stock analysis function
     Uses the AdvancedStockAnalyzer for comprehensive analysis
@@ -1030,7 +1029,7 @@ def _get_rank_description(rank: int, performance_score: float) -> str:
     else:
         return "Decent performer with acceptable risk profile"
 
-def _generate_advanced_summary(top_performers: List[Dict]) -> Dict:
+def _generate_advanced_summary(top_performers: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Generate comprehensive summary of advanced analysis"""
     if not top_performers:
         return {}

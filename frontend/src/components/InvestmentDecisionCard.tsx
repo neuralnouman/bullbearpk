@@ -13,11 +13,7 @@ import {
   TrendingUp, 
   TrendingDown, 
   Clock, 
-  DollarSign, 
-  BarChart3,
-  AlertCircle,
-  CheckCircle,
-  XCircle
+  CheckCircle
 } from 'lucide-react';
 
 interface InvestmentDecisionCardProps {
@@ -85,9 +81,10 @@ const InvestmentDecisionCard: React.FC<InvestmentDecisionCardProps> = ({
       } else {
         toast.error(result.message || 'Failed to process decision');
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error processing decision:', error);
-      toast.error(error.message || 'Failed to process decision');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to process decision';
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -108,7 +105,7 @@ const InvestmentDecisionCard: React.FC<InvestmentDecisionCardProps> = ({
       case 'hold':
         return <Clock className="w-5 h-5 text-yellow-600" />;
       default:
-        return <BarChart3 className="w-5 h-5 text-blue-600" />;
+        return <TrendingUp className="w-5 h-5 text-blue-600" />;
     }
   };
 
@@ -149,8 +146,8 @@ const InvestmentDecisionCard: React.FC<InvestmentDecisionCardProps> = ({
           </div>
         </div>
         <div className="text-right">
-          <div className={`font-bold ${getConfidenceColor(recommendation.confidence_score)}`}>
-            {recommendation.confidence_score}%
+          <div className={`font-bold ${getConfidenceColor(recommendation.confidence_score || 0)}`}>
+            {(recommendation.confidence_score || 0).toFixed(0)}%
           </div>
           <div className="text-xs text-gray-500">Confidence</div>
         </div>
@@ -159,12 +156,12 @@ const InvestmentDecisionCard: React.FC<InvestmentDecisionCardProps> = ({
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
           <div className="text-sm text-gray-600">Current Price</div>
-          <div className="font-semibold">₨{recommendation.technical_analysis.current_price}</div>
+          <div className="font-semibold">₨{(recommendation.technical_analysis?.current_price || 0).toFixed(2)}</div>
         </div>
         <div>
           <div className="text-sm text-gray-600">Expected Return</div>
           <div className="font-semibold text-green-600">
-            +{recommendation.expected_return}%
+            +{(recommendation.expected_return || 0).toFixed(1)}%
           </div>
         </div>
         <div>
@@ -173,7 +170,7 @@ const InvestmentDecisionCard: React.FC<InvestmentDecisionCardProps> = ({
         </div>
         <div>
           <div className="text-sm text-gray-600">Allocation</div>
-          <div className="font-semibold">{recommendation.allocation_percent}%</div>
+          <div className="font-semibold">{(recommendation.allocation_percent || 0).toFixed(1)}%</div>
         </div>
       </div>
 
@@ -226,7 +223,7 @@ const InvestmentDecisionCard: React.FC<InvestmentDecisionCardProps> = ({
           <div className="grid grid-cols-3 gap-2 text-xs">
             <div>
               <span className="text-gray-500">RSI:</span>
-              <span className="ml-1 font-medium">{recommendation.technical_analysis.rsi.toFixed(2)}</span>
+              <span className="ml-1 font-medium">{(recommendation.technical_analysis.rsi || 0).toFixed(2)}</span>
             </div>
             <div>
               <span className="text-gray-500">Trend:</span>
@@ -234,7 +231,7 @@ const InvestmentDecisionCard: React.FC<InvestmentDecisionCardProps> = ({
             </div>
             <div>
               <span className="text-gray-500">Momentum:</span>
-              <span className="ml-1 font-medium">{recommendation.technical_analysis.momentum.toFixed(2)}</span>
+              <span className="ml-1 font-medium">{(recommendation.technical_analysis.momentum || 0).toFixed(2)}</span>
             </div>
           </div>
         </div>

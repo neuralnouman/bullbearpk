@@ -1,13 +1,29 @@
+#!/usr/bin/env python3
+"""
+BullBearPK API Server
+=====================
+
+Main Flask application server for the BullBearPK investment platform.
+Provides REST API endpoints for market data, portfolio management, and AI recommendations.
+"""
+
+import asyncio
 import logging
 import subprocess
+from typing import Dict, Any, Optional
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+
 from agentic_framework import AgenticFramework
 from api.market_routes import market_routes
 from api.portfolio_routes import portfolio_routes
 from api.recommendation_routes import recommendation_routes
 from api.investment_routes import investment_bp
 from api.auth_routes import auth_bp
+from api.portfolio_history_routes import portfolio_history_bp
+
+from api.ai_assistant_routes import ai_assistant_routes
 
 # Configure logging to show debug output in the terminal
 logging.basicConfig(
@@ -23,11 +39,14 @@ app = Flask(__name__)
 CORS(app)
 
 # Register blueprints
-app.register_blueprint(market_routes)
-app.register_blueprint(portfolio_routes)
-app.register_blueprint(recommendation_routes)
+app.register_blueprint(market_routes, url_prefix='/api/market')
+app.register_blueprint(portfolio_routes, url_prefix='/api/portfolio')
+app.register_blueprint(recommendation_routes, url_prefix='/api/analysis')
 app.register_blueprint(investment_bp, url_prefix='/api/investment')
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
+app.register_blueprint(portfolio_history_bp, url_prefix='/api/portfolio')
+
+app.register_blueprint(ai_assistant_routes, url_prefix='/api/ai')
 
 # Log registered routes
 logging.info("Registered routes:")
@@ -36,28 +55,41 @@ for rule in app.url_map.iter_rules():
 
 # Add CORS headers to all responses
 @app.after_request
-def add_cors_headers(response):
+def add_cors_headers(response) -> Any:
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
     response.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,OPTIONS'
     return response
 
+# Add request logging
+@app.before_request
+def log_request():
+    logging.info(f"Request: {request.method} {request.url}")
+    logging.info(f"Headers: {dict(request.headers)}")
+    
+    # Only try to parse JSON for POST/PUT requests
+    if request.method in ['POST', 'PUT'] and request.json:
+        logging.info(f"Request JSON: {request.json}")
+    elif request.method in ['POST', 'PUT']:
+        logging.info(f"Request data: {request.get_data()}")
+    else:
+        logging.info(f"Request args: {dict(request.args)}")
+
 @app.route('/api/hybrid', methods=['POST'])
-def hybrid():
+def hybrid() -> tuple:
     logging.debug("Received /api/hybrid POST request with data: %s", request.json)
     try:
-        data = request.json
+        data: Optional[Dict[str, Any]] = request.json
         logging.debug("Parsed hybrid request data: %s", data)
         
         # Initialize agentic framework
-        framework = AgenticFramework()
+        framework: AgenticFramework = AgenticFramework()
         
         # Run async workflow
-        import asyncio
-        result = asyncio.run(framework.run_workflow(
-            user_input=data.get('user_input', {}),
-            chat_message=data.get('chat_message', ''),
-            user_id=data.get('user_id')
+        result: Dict[str, Any] = asyncio.run(framework.run_workflow(
+            user_input=data.get('user_input', {}) if data else {},
+            chat_message=data.get('chat_message', '') if data else '',
+            user_id=data.get('user_id') if data else None
         ))
         
         logging.debug("Agentic framework result: %s", result)
@@ -67,17 +99,17 @@ def hybrid():
         return jsonify({"success": False, "message": f"Error in hybrid: {str(e)}"}), 500
 
 @app.route('/api/feedback', methods=['POST'])
-def feedback():
+def feedback() -> tuple:
     logging.debug("Received /api/feedback POST request with data: %s", request.json)
     try:
-        data = request.json
+        data: Optional[Dict[str, Any]] = request.json
         logging.debug("Parsed feedback request data: %s", data)
         
         # Validate required fields
-        if not data.get('user_id'):
+        if not data or not data.get('user_id'):
             return jsonify({"success": False, "message": "user_id is required"}), 400
             
-        if not data.get('feedback'):
+        if not data or not data.get('feedback'):
             return jsonify({"success": False, "message": "feedback is required"}), 400
             
         # Store feedback in database (simplified for now)
@@ -87,11 +119,39 @@ def feedback():
         logging.error("Error in /api/feedback: %s", str(e), exc_info=True)
         return jsonify({"success": False, "message": f"Error in feedback: {str(e)}"}), 500
 
+@app.route('/api/test-agentic', methods=['POST'])
+def test_agentic() -> tuple:
+    """Simple test endpoint for agentic framework"""
+    try:
+        logging.info("Testing agentic framework...")
+        
+        # Test basic agentic framework initialization
+        framework: AgenticFramework = AgenticFramework()
+        
+        # Test with minimal data
+        result: Dict[str, Any] = asyncio.run(framework.run_workflow(
+            user_input={'budget': 10000},
+            chat_message='Test investment',
+            user_id='test_user'
+        ))
+        
+        return jsonify({
+            "success": True,
+            "message": "Agentic framework test successful",
+            "result": result
+        })
+    except Exception as e:
+        logging.error("Error in test_agentic: %s", str(e), exc_info=True)
+        return jsonify({
+            "success": False, 
+            "message": f"Agentic framework test failed: {str(e)}"
+        }), 500
+
 @app.route('/api/scrape', methods=['POST'])
-def run_scraper():
+def run_scraper() -> tuple:
     try:
         logging.info("Triggering fin_scraper.py for live data...")
-        result = subprocess.run(
+        result: subprocess.CompletedProcess[str] = subprocess.run(
             ['python', 'agents/fin_scraper.py'],
             capture_output=True,
             text=True,
@@ -109,24 +169,32 @@ def run_scraper():
         return jsonify({"success": False, "message": str(e)}), 500
 
 @app.route('/')
-def index():
+def index() -> str:
     logging.info("Health check on / endpoint")
     return "API server is running!"
 
 @app.errorhandler(500)
-def handle_500_error(e):
+def handle_500_error(e: Exception) -> tuple:
     logging.error(f"Internal server error: {str(e)}", exc_info=True)
+    import traceback
+    logging.error(f"Full traceback: {traceback.format_exc()}")
     return jsonify({
         "success": False,
-        "message": "Internal server error occurred. Check server logs for details."
+        "message": "Internal server error occurred. Check server logs for details.",
+        "error": str(e),
+        "error_type": type(e).__name__
     }), 500
 
 @app.errorhandler(Exception)
-def handle_exception(e):
+def handle_exception(e: Exception) -> tuple:
     logging.error(f"Unhandled exception: {str(e)}", exc_info=True)
+    import traceback
+    logging.error(f"Full traceback: {traceback.format_exc()}")
     return jsonify({
         "success": False,
-        "message": f"An unexpected error occurred: {str(e)}"
+        "message": f"An unexpected error occurred: {str(e)}",
+        "error": str(e),
+        "error_type": type(e).__name__
     }), 500
 
 if __name__ == "__main__":

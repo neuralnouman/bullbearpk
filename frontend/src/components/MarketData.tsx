@@ -26,6 +26,14 @@ interface MarketDataResponse {
   stocks: StockData[];
 }
 
+interface RefreshResponse {
+  success: boolean;
+  message?: string;
+  stocks?: StockData[];
+  market_summary?: MarketSummary;
+  scrape_info?: ScrapeInfo;
+}
+
 const MarketData: React.FC = () => {
   const [marketData, setMarketData] = useState<MarketDataResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -44,15 +52,37 @@ const MarketData: React.FC = () => {
       let data;
       if (refresh) {
         // Use the refresh endpoint to get fresh data
-        data = await marketService.refreshMarketData();
+        const refreshData = await marketService.refreshMarketData() as RefreshResponse;
+        // The refresh endpoint now returns the full market data
+        if (refreshData.success && refreshData.stocks) {
+          setMarketData({
+            stocks: refreshData.stocks,
+            market_summary: refreshData.market_summary!,
+            scrape_info: refreshData.scrape_info!
+          });
+        } else {
+          throw new Error(refreshData.message || 'Failed to refresh market data');
+        }
       } else {
         // Just get the latest data from the database
         data = await marketService.getMarketData();
+        setMarketData(data);
       }
-      setMarketData(data);
-    } catch (err) {
-      setError('Error fetching market data. Please try again.');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Error fetching market data. Please try again.';
+      setError(errorMessage);
       console.error('Error fetching market data:', err);
+      
+      // Show a more user-friendly message for common errors
+      if (errorMessage.includes('Database connection failed') || errorMessage.includes('MySQL')) {
+        setError('Database connection issue. Please check if MySQL is running and the backend is properly configured.');
+      } else if (errorMessage.includes('No market data available')) {
+        setError('No market data available. The database may be empty or not properly initialized.');
+      } else if (errorMessage.includes('Network error')) {
+        setError('Network error. Please check if the backend server is running on localhost:5000.');
+      } else if (errorMessage.includes('Server error')) {
+        setError('Server error occurred. Please try again later or contact support.');
+      }
     } finally {
       setLoading(false);
     }
@@ -98,22 +128,10 @@ const MarketData: React.FC = () => {
         }
       } catch (err) {
         console.error('Error searching stocks:', err);
-        // Fallback to client-side filtering if API search fails
-        setFilteredStocks(marketData.stocks
-          .filter(stock => 
-            stock.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-            stock.code.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-          .filter(stock => filterSector === 'All' || stock.sector === filterSector)
-          .sort((a, b) => {
-            const key = sortConfig.key as keyof StockData;
-            if (a[key] < b[key]) return sortConfig.direction === 'asc' ? -1 : 1;
-            if (a[key] > b[key]) return sortConfig.direction === 'asc' ? 1 : -1;
-            return 0;
-          }));
+        setFilteredStocks([]);
       }
     };
-    
+
     handleFiltering();
   }, [marketData, searchTerm, filterSector, sortConfig]);
 
@@ -126,12 +144,25 @@ const MarketData: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
         <div>
           <h2 className="text-2xl font-bold mb-2">Market Data</h2>
-          <p className="text-gray-600 dark:text-gray-400 flex items-center">
-            <Clock size={16} className="mr-1" />
-            Last updated: {marketData?.scrape_info.timestamp 
-              ? new Date(marketData.scrape_info.timestamp).toLocaleString() 
-              : 'Loading...'}
-          </p>
+                      <p className="text-gray-600 dark:text-gray-400 flex items-center">
+              <Clock size={16} className="mr-1" />
+              Last updated: {marketData?.scrape_info?.timestamp 
+                ? new Date(marketData.scrape_info.timestamp).toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                  })
+                : 'Loading...'}
+              {marketData?.scrape_info?.total_stocks && (
+                <span className="ml-2 text-sm text-gray-500">
+                  ({marketData.scrape_info.total_stocks} stocks)
+                </span>
+              )}
+            </p>
         </div>
         <div className="mt-4 md:mt-0 flex items-center">
           <button 
@@ -166,7 +197,9 @@ const MarketData: React.FC = () => {
             <div className="text-lg font-bold">{marketData.market_summary.top_gainer.code}</div>
             <div className="text-sm">{marketData.market_summary.top_gainer.name}</div>
             <div className="mt-2 text-green-600 font-semibold">
-              +{marketData.market_summary.top_gainer.change_percent.toFixed(2)}%
+              +{(typeof marketData.market_summary.top_gainer.change_percent === 'string' 
+                ? parseFloat(marketData.market_summary.top_gainer.change_percent) 
+                : marketData.market_summary.top_gainer.change_percent).toFixed(2)}%
             </div>
           </motion.div>
 
@@ -183,7 +216,9 @@ const MarketData: React.FC = () => {
             <div className="text-lg font-bold">{marketData.market_summary.top_loser.code}</div>
             <div className="text-sm">{marketData.market_summary.top_loser.name}</div>
             <div className="mt-2 text-red-600 font-semibold">
-              {marketData.market_summary.top_loser.change_percent.toFixed(2)}%
+              {(typeof marketData.market_summary.top_loser.change_percent === 'string' 
+                ? parseFloat(marketData.market_summary.top_loser.change_percent) 
+                : marketData.market_summary.top_loser.change_percent).toFixed(2)}%
             </div>
           </motion.div>
 
@@ -232,6 +267,7 @@ const MarketData: React.FC = () => {
           </div>
         </div>
 
+        {/* Stock Data Table */}
         <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -239,9 +275,9 @@ const MarketData: React.FC = () => {
                 <tr>
                   <th 
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
-                    onClick={() => handleSort('symbol')}
+                    onClick={() => handleSort('code')}
                   >
-                    Symbol {sortConfig.key === 'symbol' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                    Symbol {sortConfig.key === 'code' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                   </th>
                   <th 
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -257,9 +293,27 @@ const MarketData: React.FC = () => {
                   </th>
                   <th 
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
-                    onClick={() => handleSort('price')}
+                    onClick={() => handleSort('open_price')}
                   >
-                    Price {sortConfig.key === 'price' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                    Open {sortConfig.key === 'open_price' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th 
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
+                    onClick={() => handleSort('high_price')}
+                  >
+                    High {sortConfig.key === 'high_price' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th 
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
+                    onClick={() => handleSort('low_price')}
+                  >
+                    Low {sortConfig.key === 'low_price' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                  </th>
+                  <th 
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
+                    onClick={() => handleSort('close_price')}
+                  >
+                    Close {sortConfig.key === 'close_price' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                   </th>
                   <th 
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -278,7 +332,7 @@ const MarketData: React.FC = () => {
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                 {loading ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-4 text-center">
+                    <td colSpan={9} className="px-6 py-4 text-center">
                       <div className="flex justify-center items-center">
                         <div className="w-6 h-6 border-2 border-t-primary-600 rounded-full animate-spin mr-2"></div>
                         Loading market data...
@@ -298,26 +352,35 @@ const MarketData: React.FC = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm">{stock.name}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">{stock.sector}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        {typeof stock.close_price === 'number' ? stock.close_price.toFixed(2) : 'N/A'}
+                        {typeof stock.open_price === 'string' ? parseFloat(stock.open_price).toFixed(2) : stock.open_price.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        {typeof stock.high_price === 'string' ? parseFloat(stock.high_price).toFixed(2) : stock.high_price.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        {typeof stock.low_price === 'string' ? parseFloat(stock.low_price).toFixed(2) : stock.low_price.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        {typeof stock.close_price === 'string' ? parseFloat(stock.close_price).toFixed(2) : stock.close_price.toFixed(2)}
                       </td>
                       <td
                         className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${
-                          stock.change_percent > 0
+                          (typeof stock.change_percent === 'string' ? parseFloat(stock.change_percent) : stock.change_percent) > 0
                             ? 'text-green-600'
-                            : stock.change_percent < 0
+                            : (typeof stock.change_percent === 'string' ? parseFloat(stock.change_percent) : stock.change_percent) < 0
                             ? 'text-red-600'
                             : 'text-gray-500'
                         }`}
                       >
-                        {stock.change_percent > 0 ? '+' : ''}
-                        {typeof stock.change_percent === 'number' ? stock.change_percent.toFixed(2) : 'N/A'}%
+                        {(typeof stock.change_percent === 'string' ? parseFloat(stock.change_percent) : stock.change_percent) > 0 ? '+' : ''}
+                        {(typeof stock.change_percent === 'string' ? parseFloat(stock.change_percent) : stock.change_percent).toFixed(2)}%
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">{formatNumber(stock.volume)}</td>
                     </motion.tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={6} className="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                    <td colSpan={9} className="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                       No stocks found matching your criteria.
                     </td>
                   </tr>
@@ -328,7 +391,7 @@ const MarketData: React.FC = () => {
         </div>
 
         {marketData?.scrape_info && (
-          <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+          <div className="mt-6 text-sm text-gray-500 dark:text-gray-400">
             <div className="flex flex-wrap gap-4">
               <span>Total Stocks: {marketData.scrape_info.total_stocks}</span>
               <span className="text-green-600">Gainers: {marketData.scrape_info.gainers}</span>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RISK_LEVELS, TIME_HORIZONS, PSX_SECTORS } from '../constants';
+import { RISK_LEVELS, TIME_HORIZONS } from '../constants';
 
 interface InvestmentFormProps {
   onSubmit: (formData: InvestmentFormData) => void;
@@ -8,7 +8,6 @@ interface InvestmentFormProps {
 
 export interface InvestmentFormData {
   budget: number;
-  sector: string;
   risk_appetite: string;
   time_horizon: string;
   target_profit: number;
@@ -17,7 +16,6 @@ export interface InvestmentFormData {
 const InvestmentForm: React.FC<InvestmentFormProps> = ({ onSubmit, initialData }) => {
   const [formData, setFormData] = useState<InvestmentFormData>({
     budget: initialData?.budget || 10000,
-    sector: initialData?.sector || '',
     risk_appetite: initialData?.risk_appetite || RISK_LEVELS.MEDIUM,
     time_horizon: initialData?.time_horizon || TIME_HORIZONS.MEDIUM,
     target_profit: initialData?.target_profit || 15,
@@ -54,26 +52,7 @@ const InvestmentForm: React.FC<InvestmentFormProps> = ({ onSubmit, initialData }
         />
       </div>
 
-      <div className="form-group">
-        <label htmlFor="sector" className="block text-sm font-medium mb-1">
-          Preferred Sector
-        </label>
-        <select
-          id="sector"
-          name="sector"
-          value={formData.sector}
-          onChange={handleChange}
-          className="input w-full"
-          required
-        >
-          <option value="">Select a sector</option>
-          {PSX_SECTORS.map(sector => (
-            <option key={sector} value={sector}>
-              {sector}
-            </option>
-          ))}
-        </select>
-      </div>
+
 
       <div className="form-group">
         <label htmlFor="risk_appetite" className="block text-sm font-medium mb-1">

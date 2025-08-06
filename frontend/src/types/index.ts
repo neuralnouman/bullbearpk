@@ -64,15 +64,34 @@ export interface MarketIndex {
 // Investment Types
 export interface Investment {
   id: string
-  userId: string
-  stockSymbol: string
-  companyName: string
-  quantity: number
-  purchasePrice: number
-  currentPrice: number
-  purchaseDate: string
+  userId?: string
+  user_id?: string
+  stockSymbol?: string
+  stock_code?: string
+  companyName?: string
+  stock_name?: string
+  quantity?: number
+  currentQuantity?: number
+  current_quantity?: number
+  purchasePrice?: number
+  buyPrice?: number
+  buy_price?: number
+  currentPrice?: number
+  current_price?: number
+  purchaseDate?: string
+  buy_date?: string
   sector: string
-  status: 'active' | 'sold'
+  status: 'active' | 'sold' | 'partial_sold' | 'pending' | 'cancelled'
+}
+
+export interface PortfolioMetrics {
+  totalInvested: number
+  totalReturns: number
+  returnPercentage: number
+  cashBalance: number
+  totalHoldings: number
+  activeInvestments: number
+  totalValue: number
 }
 
 export interface Portfolio {
@@ -103,6 +122,7 @@ export interface NewsArticle {
   sentimentScore: number
   relevantCompanies: string[]
   url: string
+  link: string
   imageUrl?: string
 }
 
@@ -196,7 +216,6 @@ export interface UserHistory {
   total_investments: number
   preferred_sectors: string[]
   portfolio_summary: {
-    total_value: number
     total_invested: number
     total_returns: number
     return_percentage: number
@@ -208,27 +227,69 @@ export interface UserHistory {
 export interface PortfolioUpdate {
   user_id: string
   current_holdings: any[]
-  total_portfolio_value: number
   total_invested: number
   total_profit_loss: number
   profit_loss_percentage: number
   timestamp: string
 }
 
+export interface RecommendationChangeSummary {
+  new_recommendations: Array<{
+    stock_code: string;
+    recommendation: string;
+    confidence: number;
+    reason: string;
+  }>;
+  removed_recommendations: Array<{
+    stock_code: string;
+    old_recommendation: string;
+    reason: string;
+  }>;
+  changed_recommendations: Array<{
+    stock_code: string;
+    old_recommendation: string;
+    new_recommendation: string;
+    old_confidence: number;
+    new_confidence: number;
+    reason: string;
+  }>;
+  unchanged_recommendations: Array<{
+    stock_code: string;
+    recommendation: string;
+    confidence: number;
+  }>;
+}
+
+export interface PreviousForm {
+  id: number;
+  user_id: string;
+  budget: number;
+  sector_preference: string;
+  risk_tolerance: string;
+  time_horizon: string;
+  target_profit: number;
+  investment_goal: string;
+  submission_date: string;
+  recommendations_count: number;
+}
+
 export interface AgenticResponse {
-  success: boolean
-  message: string
+  success: boolean;
+  message?: string;
   data: {
-    recommendations: AgenticRecommendation[]
-    stock_analysis: TechnicalAnalysis[]
-    news_analysis: Record<string, NewsSentiment>
-    risk_profile: RiskProfile
-    portfolio_update: PortfolioUpdate
-    user_history: UserHistory
-  }
-  errors: string[]
-  timestamp: string
-  user_id: string
+    recommendations: AgenticRecommendation[];
+    stock_analysis: TechnicalAnalysis[];
+    news_analysis: Record<string, NewsSentiment>;
+    risk_profile: RiskProfile;
+    portfolio_update: PortfolioUpdate;
+    user_history: UserHistory;
+    previous_form?: PreviousForm;
+    previous_recommendations?: AgenticRecommendation[];
+    recommendation_changes?: RecommendationChangeSummary;
+  };
+  errors?: string[];
+  timestamp: string;
+  user_id: string;
 }
 
 // API Response Types
@@ -269,6 +330,14 @@ export interface InvestmentQuery {
   excludedSectors?: string[]
 }
 
+export interface InvestmentFormData {
+  budget: number
+  sector: string
+  risk_appetite: 'low' | 'medium' | 'high'
+  time_horizon: 'short' | 'medium' | 'long'
+  target_profit: number
+}
+
 // Theme Types
 export type Theme = 'light' | 'dark'
 
@@ -287,18 +356,7 @@ export interface LoadingState {
   error?: string
 }
 
-// Chart Data Types
-export interface ChartDataPoint {
-  timestamp: string
-  value: number
-  label?: string
-}
 
-export interface PriceHistory {
-  symbol: string
-  data: ChartDataPoint[]
-  timeframe: '1D' | '1W' | '1M' | '3M' | '6M' | '1Y' | 'ALL'
-}
 
 // Notification Types
 export interface Notification {

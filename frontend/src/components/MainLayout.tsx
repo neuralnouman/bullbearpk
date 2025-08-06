@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
-import { useTheme } from '../contexts/ThemeContext';
+
 import { 
   Menu, 
   X, 
   TrendingUp, 
-  BarChart3, 
   User, 
-  Settings, 
   LogOut,
   Sun,
   Moon,
-  Home
+  Home,
+  Brain,
+  FileText
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -22,7 +22,7 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { user, logout } = useAuthStore();
-  const { theme, toggleTheme } = useTheme();
+
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
 
@@ -34,6 +34,39 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const isActive = (path: string) => {
     return location.pathname === path;
   };
+
+  const navigationItems = [
+    {
+      path: '/dashboard',
+      label: 'Dashboard',
+      icon: Home,
+      description: 'Overview and insights'
+    },
+    {
+      path: '/investment-form',
+      label: 'AI Analysis',
+      icon: Brain,
+      description: 'Get investment recommendations'
+    },
+    {
+      path: '/portfolio',
+      label: 'Portfolio',
+      icon: TrendingUp,
+      description: 'Track your investments'
+    },
+    {
+      path: '/market-data',
+      label: 'Market Data',
+      icon: TrendingUp,
+      description: 'Live market information'
+    },
+    {
+      path: '/news',
+      label: 'News',
+      icon: FileText,
+      description: 'Market news and updates'
+    }
+  ];
 
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
@@ -55,58 +88,33 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         {/* Navigation */}
         <div className="flex-1 overflow-y-auto p-4">
           <div className="space-y-2">
-            <Link
-              to="/dashboard"
-              className={`w-full flex items-center p-3 rounded-lg transition-colors ${
-                isActive('/dashboard')
-                  ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400'
-                  : 'hover:bg-gray-100 dark:hover:bg-gray-700'
-              }`}
-            >
-              <Home size={20} className="mr-3" />
-              <span>Investment Recommendations</span>
-            </Link>
-            
-            <Link
-              to="/portfolio"
-              className={`w-full flex items-center p-3 rounded-lg transition-colors ${
-                isActive('/portfolio')
-                  ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400'
-                  : 'hover:bg-gray-100 dark:hover:bg-gray-700'
-              }`}
-            >
-              <BarChart3 size={20} className="mr-3" />
-              <span>Portfolio</span>
-            </Link>
-            
-            <Link
-              to="/market-data"
-              className={`w-full flex items-center p-3 rounded-lg transition-colors ${
-                isActive('/market-data')
-                  ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400'
-                  : 'hover:bg-gray-100 dark:hover:bg-gray-700'
-              }`}
-            >
-              <TrendingUp size={20} className="mr-3" />
-              <span>Market Data</span>
-            </Link>
+            {navigationItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`w-full flex items-center p-3 rounded-lg transition-colors ${
+                    isActive(item.path)
+                      ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400'
+                      : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  <Icon size={20} className="mr-3" />
+                  <div className="flex-1">
+                    <div className="font-medium">{item.label}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">{item.description}</div>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
 
         {/* User Menu */}
         <div className="p-4 border-t border-gray-200 dark:border-gray-700">
           <div className="space-y-2">
-            <button 
-              onClick={toggleTheme}
-              className="w-full flex items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
-            >
-              {theme === 'light' ? <Moon size={20} className="mr-3" /> : <Sun size={20} className="mr-3" />}
-              <span className="text-sm">Theme</span>
-            </button>
-            <button className="w-full flex items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
-              <Settings size={20} className="mr-3" />
-              <span className="text-sm">Settings</span>
-            </button>
+
             <button 
               onClick={handleLogout}
               className="w-full flex items-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-red-600"
@@ -143,9 +151,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 <Menu size={20} />
               </button>
               <h1 className="text-xl font-semibold">
-                {isActive('/dashboard') && 'Investment Recommendations'}
+                {isActive('/dashboard') && 'Dashboard'}
+                {isActive('/investment-form') && 'AI Investment Analysis'}
                 {isActive('/portfolio') && 'Portfolio'}
                 {isActive('/market-data') && 'Market Data'}
+                {isActive('/news') && 'Market News'}
+
               </h1>
             </div>
             <div className="flex items-center space-x-4">

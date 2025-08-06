@@ -208,7 +208,7 @@ CREATE TABLE investments (
     source VARCHAR(50) DEFAULT 'manual',  -- 'manual', 'recommendation', 'auto_invest'
     
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (stock_code) REFERENCES stocks(code) ON DELETE CASCADE,
+    FOREIGN KEY (stock_code) REFERENCES stocks(code) ON DELETE RESTRICT,
     INDEX idx_user_stock (user_id, stock_code),
     INDEX idx_status (status),
     INDEX idx_buy_date (buy_date),
@@ -482,6 +482,56 @@ INSERT INTO portfolios (user_id, total_value, total_invested, total_profit_loss,
 INSERT INTO investments (user_id, stock_code, quantity, buy_price, total_invested, current_value, profit_loss, profit_loss_percent) VALUES
 ('user001', 'HBL', 500, 100.00, 50000.00, 50600.00, 600.00, 1.20),
 ('user001', 'UBL', 300, 95.00, 28500.00, 29040.00, 540.00, 1.89);
+
+-- User form submissions for agentic workflow
+CREATE TABLE user_form_submissions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(50) NOT NULL,
+    budget DECIMAL(15,2),
+    sector_preference VARCHAR(50),
+    risk_tolerance VARCHAR(20),
+    time_horizon VARCHAR(20),
+    target_profit DECIMAL(5,2),
+    investment_goal VARCHAR(100),
+    submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    recommendations_count INT DEFAULT 0,
+    INDEX idx_user_id (user_id),
+    INDEX idx_submission_date (submission_date),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- User recommendations history
+CREATE TABLE user_recommendations_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(50) NOT NULL,
+    form_submission_id INT,
+    stock_code VARCHAR(20),
+    stock_name VARCHAR(100),
+    recommendation_type VARCHAR(20),
+    confidence_score DECIMAL(5,2),
+    expected_return DECIMAL(5,2),
+    reasoning TEXT,
+    technical_analysis JSON,
+    news_sentiment JSON,
+    recommendation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_user_id (user_id),
+    INDEX idx_stock_code (stock_code),
+    INDEX idx_recommendation_date (recommendation_date),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (form_submission_id) REFERENCES user_form_submissions(id) ON DELETE CASCADE
+);
+
+-- User settings table for storing user preferences and settings
+CREATE TABLE user_settings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(50) NOT NULL,
+    settings_data JSON NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_user_id (user_id),
+    INDEX idx_updated_at (updated_at),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
 
 -- Insert sample market summary
 INSERT INTO market_summary (summary_date, total_volume, total_trades, market_cap, kse_100_index, kse_100_change) VALUES

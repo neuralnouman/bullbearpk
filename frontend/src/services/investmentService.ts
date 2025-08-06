@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_BASE_URL, API_ENDPOINTS } from '../constants';
-import { InvestmentFormData, AgenticRecommendation } from '../types';
+import { InvestmentFormData } from '../types';
 
 // Create axios instance with base configuration
 const apiClient = axios.create({
@@ -68,7 +68,7 @@ export interface BatchDecisionResponse {
 /**
  * Submit investment form and get AI recommendations
  */
-export const submitInvestmentForm = async (formData: InvestmentFormData, userId: string, refreshData: boolean = false) => {
+export const submitInvestmentForm = async (formData: InvestmentFormData, userId: string) => {
   try {
     // Convert form data to match our agentic framework's expected input
     const userInput = {

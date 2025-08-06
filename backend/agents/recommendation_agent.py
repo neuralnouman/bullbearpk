@@ -97,6 +97,34 @@ class RecommendationAgent:
                 # Serialize news sentiment for display
                 serialized_news_sentiment = self._serialize_news_sentiment(news_sentiment)
                 
+                # Extract technical analysis data properly to match frontend interface
+                technical_analysis = {
+                    'stock_code': stock_code,
+                    'stock_name': analysis.get('stock_name', ''),
+                    'sector': analysis.get('sector', ''),
+                    'current_price': analysis.get('current_price', 0),
+                    'rsi': analysis.get('rsi', 0),
+                    'momentum': analysis.get('momentum', 0),
+                    'price_trend': analysis.get('trend', 'neutral'),
+                    'volatility': analysis.get('volatility', 0),
+                    'confidence_score': technical_score,
+                    'analysis_timestamp': datetime.now().isoformat(),
+                    'macd': {
+                        'macd': analysis.get('technical_analysis', {}).get('macd', 0),
+                        'signal': 0,
+                        'histogram': 0
+                    },
+                    'bollinger_bands': {
+                        'upper': analysis.get('technical_analysis', {}).get('resistance_level', 0),
+                        'middle': analysis.get('current_price', 0),
+                        'lower': analysis.get('technical_analysis', {}).get('support_level', 0)
+                    },
+                    'support_resistance': {
+                        'support': analysis.get('technical_analysis', {}).get('support_level', 0),
+                        'resistance': analysis.get('technical_analysis', {}).get('resistance_level', 0)
+                    }
+                }
+                
                 recommendation = {
                     'stock_code': stock_code,
                     'stock_name': analysis.get('stock_name', ''),
@@ -105,10 +133,11 @@ class RecommendationAgent:
                     'confidence_score': risk_adjusted_score,
                     'expected_return': expected_return,
                     'risk_level': risk_level,
-                    'technical_analysis': analysis,
+                    'allocation_percent': 20.0,  # Default allocation
+                    'technical_analysis': technical_analysis,
                     'news_sentiment': serialized_news_sentiment,
                     'fundamental_analysis': analysis.get('fundamental_analysis', {}),
-                    'reasoning_summary': reasoning_summary,
+                    'reasoning': reasoning_summary,
                     'key_factors': [
                         f"Technical Score: {technical_score:.1f}",
                         f"Sentiment Score: {sentiment_score:.1f}",

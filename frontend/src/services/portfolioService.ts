@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { API_BASE_URL, API_ENDPOINTS } from '../constants';
-import { Portfolio, Investment } from '../types';
 
 // Create axios instance with base configuration
 const apiClient = axios.create({
@@ -97,7 +96,7 @@ export const initializeUser = async (params: InitializeUserParams) => {
 /**
  * Get user portfolio
  */
-export const getUserPortfolio = async (userId: string): Promise<Portfolio> => {
+export const getUserPortfolio = async (userId: string): Promise<any> => {
   try {
     const response = await apiClient.get(API_ENDPOINTS.PORTFOLIO.GET.replace(':user_id', userId));
     return response.data;
@@ -312,6 +311,33 @@ export const updateInvestmentStatus = async (userId: string, stockCode: string, 
     return {
       success: false,
       message: error.message || 'Failed to update investment status'
+    };
+  }
+};
+
+/**
+ * Add cash to portfolio
+ */
+export const addCashToPortfolio = async (userId: string, amount: number) => {
+  try {
+    const response = await apiClient.post(
+      API_ENDPOINTS.PORTFOLIO.ADD_CASH.replace(':user_id', userId),
+      { amount }
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error('Error adding cash to portfolio:', error);
+    
+    if (error.response && error.response.data) {
+      return {
+        success: false,
+        message: error.response.data.message || 'Failed to add cash to portfolio'
+      };
+    }
+    
+    return {
+      success: false,
+      message: error.message || 'Failed to add cash to portfolio'
     };
   }
 };

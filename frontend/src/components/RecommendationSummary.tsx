@@ -7,8 +7,8 @@ interface AgenticRecommendation {
   sector: string;
   recommendation_type: 'buy' | 'hold' | 'sell';
   confidence_score: number;
-  technical_analysis: any;
-  news_sentiment: any;
+  technical_analysis: Record<string, unknown>;
+  news_sentiment: Record<string, unknown>;
   reasoning: string;
   risk_level: string;
   expected_return: number;
@@ -116,16 +116,16 @@ const RecommendationSummary: React.FC<RecommendationSummaryProps> = ({
                   
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
                     <TrendingUp size={12} className="mr-1" />
-                    {rec.expected_return.toFixed(1)}% Expected Return
+                    {(rec.expected_return || 0).toFixed(1)}% Expected Return
                   </span>
                   
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300">
-                    Confidence: {(rec.confidence_score * 100).toFixed(0)}%
+                    Confidence: {((rec.confidence_score || 0) * 100).toFixed(0)}%
                   </span>
                 </div>
                 
                 <div className="text-sm text-gray-500 dark:text-gray-400">
-                  <p>Suggested allocation: <span className="font-medium">{rec.allocation_percent.toFixed(1)}%</span></p>
+                  <p>Suggested allocation: <span className="font-medium">{(rec.allocation_percent || 0).toFixed(1)}%</span></p>
                   {rec.technical_analysis && (
                     <p className="mt-1">
                       Technical: <span className="font-medium">{rec.technical_analysis.price_trend}</span>

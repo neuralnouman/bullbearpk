@@ -113,16 +113,22 @@ export function truncateText(text: string, maxLength: number): string {
   return text.substr(0, maxLength) + '...'
 }
 
-// Debounce function for search inputs
-export function debounce<T extends (...args: unknown[]) => unknown>(
+/**
+ * Debounce function to limit the rate at which a function can fire
+ * @param func The function to debounce
+ * @param wait The number of milliseconds to delay
+ * @returns A debounced version of the function
+ */
+export function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
-  let timeout: ReturnType<typeof setTimeout>
+  let timeout: NodeJS.Timeout;
+  
   return (...args: Parameters<T>) => {
-    clearTimeout(timeout)
-    timeout = setTimeout(() => func(...args), wait)
-  }
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
 }
 
 // Calculate portfolio returns

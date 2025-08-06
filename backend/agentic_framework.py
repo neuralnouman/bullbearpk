@@ -469,27 +469,28 @@ class AgenticFramework:
         mock_analysis = []
         
         for i, stock in enumerate(stock_data[:5]):
+            current_price = stock.get('close_price', 100.0)
             mock_analysis.append({
                 'stock_code': stock.get('code', f'STOCK{i}'),
                 'stock_name': stock.get('name', f'Stock {i}'),
                 'sector': stock.get('sector', 'Unknown'),
-                'current_price': stock.get('close_price', 100.0),
+                'current_price': current_price,
                 'change_percent': stock.get('change_percent', 0.0),
                 'volume': stock.get('volume', 1000000),
                 'performance_score': 0.7 + (i * 0.05),
                 'rank': i + 1,
                 'rank_description': f'Top {i + 1}',
                 'confidence_score': 0.6 + (i * 0.08),
-                'rsi': 50 + (i * 5),
-                'momentum': 0.5 + (i * 0.1),
+                'rsi': 45 + (i * 8),  # More varied RSI values
+                'momentum': 2.5 + (i * 1.2),  # More realistic momentum values
                 'trend': 'bullish' if i % 2 == 0 else 'bearish',
                 'volatility': 0.2 + (i * 0.02),
                 'technical_analysis': {
-                    'rsi': 50 + (i * 5),
+                    'rsi': 45 + (i * 8),
                     'macd': 0.1 + (i * 0.02),
                     'bollinger_bands': 'neutral',
-                    'support_level': stock.get('close_price', 100.0) * 0.95,
-                    'resistance_level': stock.get('close_price', 100.0) * 1.05
+                    'support_level': current_price * 0.95,
+                    'resistance_level': current_price * 1.05
                 },
                 'fundamental_analysis': {
                     'pe_ratio': 15 + i,
@@ -540,11 +541,21 @@ class AgenticFramework:
         chat_message: str = '', 
         user_id: Optional[str] = None
     ) -> Dict:
-        """Run the complete agentic workflow"""
+        """Run the complete agentic workflow with returning user support"""
         try:
             logger.info(f"Starting agentic workflow for user: {user_id}")
-            
-            # Initialize state
+
+            # 1. Fetch previous form submission and recommendations
+            previous_form = None
+            previous_recommendations = []
+            comparison_summary = {}
+            if user_id:
+                prev_forms = db_config.get_user_previous_submissions(user_id)
+                if prev_forms:
+                    previous_form = prev_forms[0]
+                    previous_recommendations = db_config.get_user_previous_recommendations(user_id, previous_form['id'])
+
+            # 2. Initialize state
             initial_state = {
                 'user_input': user_input,
                 'user_id': user_id or 'default_user',
@@ -558,11 +569,21 @@ class AgenticFramework:
                 'portfolio_update': {},
                 'recommendations': []
             }
-            
-            # Run the workflow
+
+            # 3. Run the workflow
             final_state = await self.workflow.ainvoke(initial_state)
-            
-            # Extract results
+
+            # 4. Extract new recommendations
+            new_recommendations = final_state.get('recommendations', [])
+
+            # 5. Compare with previous recommendations if available
+            if previous_recommendations:
+                comparison_summary = db_config.compare_recommendations(previous_recommendations, new_recommendations)
+
+            # 6. Save new form submission and recommendations
+            db_config.save_user_form_submission(user_id, user_input, new_recommendations)
+
+            # 7. Build result
             result = {
                 'success': True,
                 'data': {
@@ -571,15 +592,17 @@ class AgenticFramework:
                     'risk_profile': final_state.get('risk_profile', {}),
                     'user_history': final_state.get('user_history', {}),
                     'portfolio_update': final_state.get('portfolio_update', {}),
-                    'recommendations': final_state.get('recommendations', [])
+                    'recommendations': new_recommendations,
+                    'previous_form': previous_form,
+                    'previous_recommendations': previous_recommendations,
+                    'recommendation_changes': comparison_summary
                 },
                 'user_id': final_state.get('user_id'),
                 'timestamp': datetime.now().isoformat()
             }
-            
+
             logger.info("Agentic workflow completed successfully")
             return result
-            
         except Exception as e:
             logger.error(f"Error running agentic workflow: {e}")
             return {

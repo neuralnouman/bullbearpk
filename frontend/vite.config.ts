@@ -11,8 +11,23 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3000,
+    port: 3001,
     host: true,
     open: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'framer-motion', 'lucide-react']
+  },
+  build: {
+    rollupOptions: {
+      external: []
+    }
+  }
 }) 

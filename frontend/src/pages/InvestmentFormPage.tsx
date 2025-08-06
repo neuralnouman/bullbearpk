@@ -1,271 +1,432 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthStore } from '../store/authStore';
+import { useAgenticStore } from '../store/agenticStore';
 import MainLayout from '../components/MainLayout';
 import InvestmentForm, { InvestmentFormData } from '../components/InvestmentForm';
 import RecommendationSummary from '../components/RecommendationSummary';
 import InvestmentDecisionCard from '../components/InvestmentDecisionCard';
-import { submitInvestmentForm, submitFeedback, DecisionResponse } from '../services/investmentService';
-import { AgenticRecommendation } from '../types';
+import { DecisionResponse } from '../services/investmentService';
 import { toast } from 'react-hot-toast';
-import { RefreshCw, TrendingUp, AlertCircle } from 'lucide-react';
-
-interface AgenticResponse {
-  success: boolean;
-  message: string;
-  data: {
-    recommendations: AgenticRecommendation[];
-    stock_analysis: any[];
-    news_analysis: any;
-    risk_profile: any;
-    portfolio_update: any;
-    user_history: any;
-  };
-  errors: string[];
-  timestamp: string;
-  user_id: string;
-}
+import { 
+  RefreshCw, 
+  AlertCircle, 
+  CheckCircle, 
+  Brain,
+  FileText,
+  Shield,
+  Users,
+  Briefcase,
+  ArrowLeft,
+  TrendingUp,
+  Target,
+  Clock
+} from 'lucide-react';
 
 const InvestmentFormPage: React.FC = () => {
   const { user } = useAuthStore();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [agenticResponse, setAgenticResponse] = useState<AgenticResponse | null>(null);
-  const [savedFormData, setSavedFormData] = useState<InvestmentFormData | null>(null);
+
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [analysisStep, setAnalysisStep] = useState<'form' | 'analyzing' | 'results'>('form');
   const [decisionsMade, setDecisionsMade] = useState<Set<string>>(new Set());
 
-  useEffect(() => {
-    // Check if user has previously submitted form data
-    const storedData = localStorage.getItem('investmentFormData');
-    if (storedData) {
-      try {
-        const parsedData = JSON.parse(storedData);
-        setSavedFormData(parsedData);
-        
-        // If we have saved form data, fetch recommendations automatically
-        fetchRecommendations(parsedData);
-      } catch (err) {
-        console.error('Error parsing stored form data:', err);
-      }
-    }
-  }, []);
+  // Agentic store
+  const {
+    currentAnalysis,
+    recommendations,
+    isLoading,
+    error,
+    savedFormData,
+    pastRecommendations,
+    submitForm,
+    loadUserHistory,
+    clearAnalysis,
+    setError,
+    previousForm,
+    previousRecommendations,
+    recommendationChanges
+  } = useAgenticStore();
 
-  const fetchRecommendations = async (formData: InvestmentFormData, refresh: boolean = false) => {
-    setLoading(true);
-    setError(null);
+  useEffect(() => {
+    // Check if user has previous data
+    if (user?.id && savedFormData) {
+      setShowOnboarding(false);
+      // Load user history if available
+      loadUserHistory(user.id);
+    } else if (user?.id) {
+      // New user or no saved data
+      setShowOnboarding(true);
+    }
     
+    // Check if there are existing recommendations to show
+    if (recommendations && recommendations.length > 0) {
+      setAnalysisStep('results');
+    }
+  }, [user, savedFormData, loadUserHistory, recommendations]);
+
+  // Restore analysis state when component mounts with existing data
+  useEffect(() => {
+    if (currentAnalysis && recommendations && recommendations.length > 0) {
+      setAnalysisStep('results');
+      setDecisionsMade(new Set()); // Reset decisions made
+    }
+  }, [currentAnalysis, recommendations]);
+
+  const handleFormSubmit = async (formData: InvestmentFormData) => {
+    if (!user?.id) {
+      toast.error('Please log in to submit investment analysis');
+      return;
+    }
+
+    setAnalysisStep('analyzing');
+    setDecisionsMade(new Set());
+
     try {
-      const result = await submitInvestmentForm(formData, user?.id || 'user001', refresh);
-      
-      if (!result.success) {
-        setError(result.error || result.message || 'Failed to get recommendations');
-        return;
-      }
-      
-      setAgenticResponse(result);
-      setDecisionsMade(new Set()); // Reset decisions when new recommendations are fetched
-    } catch (err: any) {
-      console.error('Error fetching recommendations:', err);
-      setError(err.response?.data?.message || err.message || 'Failed to get recommendations. Please try again.');
-    } finally {
-      setLoading(false);
+      await submitForm(formData, user.id);
+      setAnalysisStep('results');
+      toast.success('Investment analysis completed successfully!');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to process investment analysis';
+      setAnalysisStep('form');
+      toast.error(errorMessage);
     }
   };
 
-  const handleFormSubmit = async (formData: InvestmentFormData) => {
-    // Save form data to localStorage
-    localStorage.setItem('investmentFormData', JSON.stringify(formData));
-    setSavedFormData(formData);
-    
-    await fetchRecommendations(formData);
+  const handleRefreshAnalysis = async () => {
+    if (!user?.id || !savedFormData) {
+      toast.error('No previous analysis to refresh');
+      return;
+    }
+
+    setAnalysisStep('analyzing');
+    setDecisionsMade(new Set());
+
+    try {
+      await submitForm(savedFormData, user.id, true);
+      setAnalysisStep('results');
+      toast.success('Analysis refreshed with latest data!');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to refresh analysis';
+      setAnalysisStep('results');
+      toast.error(errorMessage);
+    }
   };
 
   const handleDecisionComplete = (result: DecisionResponse, stockCode: string) => {
     setDecisionsMade(prev => new Set([...prev, stockCode]));
-    
-    if (result.portfolio_updated) {
-      toast.success('Portfolio updated successfully!');
-    }
-  };
-
-  const handleRefreshRecommendations = () => {
-    if (savedFormData) {
-      fetchRecommendations(savedFormData, true);
-    }
+    toast.success(`Decision processed for ${stockCode}`);
   };
 
   const handleViewPortfolio = () => {
     navigate('/portfolio');
   };
 
-  // Extract recommendations from agentic response
-  const recommendations = agenticResponse?.data?.recommendations || [];
-  const hasRecommendations = recommendations.length > 0;
-  const allDecisionsMade = recommendations.length > 0 && decisionsMade.size === recommendations.length;
+  const handleNewAnalysis = () => {
+    navigate('/news');
+  };
+
+  const getAnalysisProgress = () => {
+    if (analysisStep === 'analyzing') {
+      return (
+        <div className="text-center">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full mx-auto mb-4"
+          />
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            Analyzing Your Investment Profile
+          </h3>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
+            Our AI is processing your preferences and market data...
+          </p>
+          <div className="space-y-2">
+            <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
+              <Brain className="w-4 h-4 text-blue-600" />
+              <span>Analyzing market trends and patterns</span>
+            </div>
+            <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
+              <Target className="w-4 h-4 text-green-600" />
+              <span>Evaluating risk and return profiles</span>
+            </div>
+            <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
+              <Shield className="w-4 h-4 text-purple-600" />
+              <span>Generating personalized recommendations</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <MainLayout>
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-1">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-              <h2 className="text-xl font-bold mb-4">Investment Preferences</h2>
-              <InvestmentForm 
-                onSubmit={handleFormSubmit} 
-                initialData={savedFormData || undefined}
-              />
-            </div>
+      <div className="max-w-7xl mx-auto p-6">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
+          <div className="flex items-center space-x-4 mb-4">
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>Back to Dashboard</span>
+            </button>
           </div>
           
-          <div className="lg:col-span-2">
-            {loading ? (
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-8 text-center">
-                <RefreshCw className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
-                <h3 className="text-lg font-semibold mb-2">Analyzing Market Data</h3>
-                <p className="text-gray-600">Our AI is analyzing stocks and generating personalized recommendations...</p>
-              </div>
-            ) : error ? (
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                <div className="flex items-center space-x-2 mb-4">
-                  <AlertCircle className="w-6 h-6 text-red-600" />
-                  <h3 className="text-lg font-semibold text-red-600">Error</h3>
-                </div>
-                <p className="text-gray-700 mb-4">{error}</p>
-                <button
-                  onClick={() => setError(null)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                Investment Analysis
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400">
+                Get AI-powered investment recommendations based on your preferences
+              </p>
+            </div>
+            
+            {analysisStep === 'results' && (
+              <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+                <motion.button
+                  onClick={handleRefreshAnalysis}
+                  disabled={isLoading}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
-                  Try Again
-                </button>
-              </div>
-            ) : hasRecommendations ? (
-              <div className="space-y-6">
-                {/* Header with actions */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                        AI Recommendations
-                      </h2>
-                      <p className="text-gray-600 dark:text-gray-400">
-                        Based on your investment preferences, here are our top recommendations
-                      </p>
-                    </div>
-                    <div className="flex space-x-2">
-                      <button
-                        onClick={handleRefreshRecommendations}
-                        className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                      >
-                        <RefreshCw className="w-4 h-4 inline mr-1" />
-                        Refresh
-                      </button>
-                      <button
-                        onClick={handleViewPortfolio}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-                      >
-                        View Portfolio
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Summary Stats */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                      <div className="flex items-center space-x-2">
-                        <TrendingUp className="w-5 h-5 text-green-600" />
-                        <div>
-                          <div className="text-sm text-green-600">Buy Recommendations</div>
-                          <div className="text-2xl font-bold text-green-700">
-                            {recommendations.filter(r => r.recommendation_type === 'buy').length}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                      <div className="flex items-center space-x-2">
-                        <AlertCircle className="w-5 h-5 text-yellow-600" />
-                        <div>
-                          <div className="text-sm text-yellow-600">Hold Recommendations</div>
-                          <div className="text-2xl font-bold text-yellow-700">
-                            {recommendations.filter(r => r.recommendation_type === 'hold').length}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                      <div className="flex items-center space-x-2">
-                        <TrendingUp className="w-5 h-5 text-red-600" />
-                        <div>
-                          <div className="text-sm text-red-600">Sell Recommendations</div>
-                          <div className="text-2xl font-bold text-red-700">
-                            {recommendations.filter(r => r.recommendation_type === 'sell').length}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Progress indicator */}
-                  {allDecisionsMade && (
-                    <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-4 h-4 bg-green-600 rounded-full"></div>
-                        <span className="text-green-800 font-medium">
-                          All recommendations processed! Check your portfolio for updates.
-                        </span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Recommendations Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {recommendations.map((recommendation, index) => (
-                    <InvestmentDecisionCard
-                      key={`${recommendation.stock_code}-${index}`}
-                      recommendation={recommendation}
-                      onDecisionComplete={(result) => handleDecisionComplete(result, recommendation.stock_code)}
-                      onRefresh={() => {
-                        // Optionally refresh portfolio data
-                        toast.success('Portfolio updated!');
-                      }}
-                    />
-                  ))}
-                </div>
-
-                {/* Risk Profile Summary */}
-                {agenticResponse?.data?.risk_profile && (
-                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-                    <h3 className="text-lg font-semibold mb-4">Risk Profile Analysis</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <div className="text-sm text-gray-600">Risk Level</div>
-                        <div className="font-semibold">{agenticResponse.data.risk_profile.risk_level}</div>
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-600">Risk Score</div>
-                        <div className="font-semibold">{agenticResponse.data.risk_profile.risk_score}/100</div>
-                      </div>
-                      <div className="md:col-span-2">
-                        <div className="text-sm text-gray-600 mb-2">Recommendations</div>
-                        <p className="text-sm text-gray-700">{agenticResponse.data.risk_profile.recommendations}</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-8 text-center">
-                <TrendingUp className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No Recommendations Yet</h3>
-                <p className="text-gray-600 mb-4">
-                  Submit your investment preferences to get personalized AI recommendations
-                </p>
+                  <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
+                  <span>Refresh Analysis</span>
+                </motion.button>
+                
+                <motion.button
+                  onClick={handleNewAnalysis}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  <Target className="w-4 h-4" />
+                  <span>New Analysis</span>
+                </motion.button>
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
+
+        {/* Error Display */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-6"
+          >
+            <div className="flex items-center space-x-2">
+              <AlertCircle className="w-5 h-5 text-red-600" />
+              <span className="text-red-800 dark:text-red-200">{error}</span>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Analysis Steps */}
+        <AnimatePresence mode="wait">
+          {analysisStep === 'form' && (
+            <motion.div
+              key="form"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="max-w-2xl mx-auto"
+            >
+              <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg p-8">
+                <div className="text-center mb-8">
+                  <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Brain className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                    Investment Profile
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Tell us about your investment goals and preferences
+                  </p>
+                </div>
+
+                <InvestmentForm onSubmit={handleFormSubmit} />
+
+                {previousForm && (
+                  <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Clock className="w-4 h-4 text-gray-500" />
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Previous Analysis
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Budget: ₨{previousForm.budget?.toLocaleString()}, 
+                      Risk: {previousForm.risk_tolerance}, 
+                      Goal: {previousForm.investment_goal}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+
+          {analysisStep === 'analyzing' && (
+            <motion.div
+              key="analyzing"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="max-w-2xl mx-auto"
+            >
+              <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg p-8">
+                {getAnalysisProgress()}
+              </div>
+            </motion.div>
+          )}
+
+          {analysisStep === 'results' && (
+            <motion.div
+              key="results"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="space-y-6"
+            >
+              {/* Analysis Summary */}
+              {currentAnalysis && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg p-6"
+                >
+                  <div className="flex items-center space-x-2 mb-4">
+                    <CheckCircle className="w-6 h-6 text-green-600" />
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                      Analysis Complete
+                    </h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <TrendingUp className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                      <div className="text-sm text-gray-600 dark:text-gray-400">Risk Profile</div>
+                      <div className="font-semibold text-gray-900 dark:text-white">
+                        {currentAnalysis.risk_profile?.risk_level || 'Moderate'}
+                      </div>
+                    </div>
+                    
+                    <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                      <Target className="w-8 h-8 text-green-600 mx-auto mb-2" />
+                      <div className="text-sm text-gray-600 dark:text-gray-400">Recommendations</div>
+                      <div className="font-semibold text-gray-900 dark:text-white">
+                        {recommendations?.length || 0}
+                      </div>
+                    </div>
+                    
+
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Recommendations */}
+              {recommendations && recommendations.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <RecommendationSummary 
+                    recommendations={recommendations}
+                    onBuyClick={(company) => {
+                      // Handle buy click
+                      console.log('Buy clicked for:', company);
+                    }}
+                  />
+                </motion.div>
+              )}
+
+              {/* Individual Recommendation Cards */}
+              {recommendations && recommendations.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="space-y-4"
+                >
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    Detailed Recommendations
+                  </h3>
+                  
+                  {recommendations.map((recommendation, index) => (
+                    <motion.div
+                      key={recommendation.stock_code}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.6 + index * 0.1 }}
+                    >
+                      <InvestmentDecisionCard
+                        recommendation={recommendation}
+                        onDecisionComplete={handleDecisionComplete}
+                        onRefresh={() => {
+                          // Handle refresh
+                          console.log('Refresh recommendations');
+                        }}
+                      />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+
+              {/* Action Buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+                className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4"
+              >
+                <motion.button
+                  onClick={handleViewPortfolio}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  <Briefcase className="w-5 h-5" />
+                  <span>View Portfolio</span>
+                </motion.button>
+                
+                <motion.button
+                  onClick={handleNewAnalysis}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center space-x-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  <FileText className="w-5 h-5" />
+                  <span>News Analysis</span>
+                </motion.button>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Loading State */}
+        {isLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex items-center justify-center py-12"
+          >
+            <div className="text-center">
+              <RefreshCw className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-4" />
+              <p className="text-gray-600 dark:text-gray-400">Processing your request...</p>
+            </div>
+          </motion.div>
+        )}
       </div>
     </MainLayout>
   );

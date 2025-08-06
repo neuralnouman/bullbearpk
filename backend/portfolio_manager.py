@@ -75,16 +75,43 @@ class PortfolioManager:
     ) -> bool:
         """Record a new investment transaction"""
         try:
-            # Get stock details
-            stock_details = self.db.fetch_one(
-                "SELECT name, sector FROM stocks WHERE code = %s",
+            logger.info(f"Recording investment transaction for user {user_id}, stock {stock_code}")
+            # Get stock details with current price
+            stock_result = self.db.execute_query(
+                "SELECT name, sector, close_price FROM stocks WHERE code = %s ORDER BY scraped_at DESC LIMIT 1",
                 (stock_code,)
             )
+            logger.info(f"Stock details found: {stock_result}")
             
+            stock_details = stock_result[0] if stock_result else {}
             stock_name = stock_details.get('name', '') if stock_details else ''
             sector = stock_details.get('sector', '') if stock_details else ''
+            current_price = stock_details.get('close_price', price) if stock_details else price
             
-            # Prepare investment data
+            if transaction_type == 'sell':
+                logger.info(f"Processing sell transaction for {stock_code}")
+                # For sell transactions, update existing buy record
+                success = self._handle_sell_transaction(user_id, stock_code, quantity, price, total_amount, **kwargs)
+                logger.info(f"Sell transaction result: {success}")
+                if success:
+                    # Update user's cash balance for sell transactions
+                    cash_update_query = """
+                        UPDATE users SET 
+                            cash_balance = cash_balance + %s,
+                            updated_at = %s
+                        WHERE user_id = %s
+                    """
+                    self.db.execute_query(cash_update_query, (total_amount, datetime.now(), user_id))
+                    logger.info(f"Updated cash balance for user {user_id}: increased by {total_amount}")
+                    
+                    # Update portfolio snapshot
+                    self.update_portfolio_snapshot(user_id)
+                    
+                    # Synchronize user table with portfolio data
+                    self._sync_user_portfolio_data(user_id)
+                return success
+            
+            # For buy transactions, create new record
             investment_data = {
                 'user_id': user_id,
                 'stock_code': stock_code,
@@ -94,11 +121,11 @@ class PortfolioManager:
                 'quantity': quantity,
                 'buy_price': price,
                 'total_invested': total_amount,
-                'current_quantity': quantity if transaction_type == 'buy' else 0,
-                'current_price': price,
-                'current_value': total_amount if transaction_type == 'buy' else 0,
-                'market_value': total_amount if transaction_type == 'buy' else 0,
-                'status': 'active' if transaction_type == 'buy' else 'sold',
+                'current_quantity': quantity,
+                'current_price': current_price,
+                'current_value': quantity * current_price,
+                'market_value': quantity * current_price,
+                'status': 'active',
                 'investment_duration_days': 0,
                 'created_by': kwargs.get('created_by', 'user'),
                 'source': kwargs.get('source', 'manual'),
@@ -106,48 +133,228 @@ class PortfolioManager:
                 'tags': json.dumps(kwargs.get('tags', []))
             }
             
-            # Add sell-specific data
-            if transaction_type == 'sell':
-                investment_data.update({
-                    'sell_price': price,
-                    'sell_quantity': quantity,
-                    'sell_reason': kwargs.get('sell_reason', 'manual'),
-                    'sell_date': datetime.now()
-                })
-            
             # Add analysis data if provided
-            if 'technical_analysis' in kwargs:
-                investment_data['technical_analysis_when_bought'] = json.dumps(kwargs['technical_analysis'])
-            if 'news_sentiment' in kwargs:
-                investment_data['news_sentiment_when_bought'] = json.dumps(kwargs['news_sentiment'])
-            if 'recommendation' in kwargs:
-                investment_data['recommendation_when_bought'] = kwargs['recommendation']
-            if 'confidence_score' in kwargs:
-                investment_data['confidence_score_when_bought'] = kwargs['confidence_score']
+            # Note: These fields are optional and will be handled separately if needed
+            # if 'technical_analysis' in kwargs:
+            #     investment_data['technical_analysis_when_bought'] = json.dumps(kwargs['technical_analysis'])
+            # if 'news_sentiment' in kwargs:
+            #     investment_data['news_sentiment_when_bought'] = json.dumps(kwargs['news_sentiment'])
+            # if 'recommendation' in kwargs:
+            #     investment_data['recommendation_when_bought'] = kwargs['recommendation']
+            # if 'confidence_score' in kwargs:
+            #     investment_data['confidence_score_when_bought'] = kwargs['confidence_score']
             
-            # Insert investment record
-            query = """
-                INSERT INTO investments (
-                    user_id, stock_code, stock_name, sector, transaction_type,
-                    quantity, buy_price, total_invested, current_quantity,
-                    current_price, current_value, market_value, status,
-                    investment_duration_days, created_by, source, user_notes,
-                    tags, sell_price, sell_quantity, sell_reason, sell_date,
-                    technical_analysis_when_bought, news_sentiment_when_bought,
-                    recommendation_when_bought, confidence_score_when_bought
-                ) VALUES (
-                    %(user_id)s, %(stock_code)s, %(stock_name)s, %(sector)s, %(transaction_type)s,
-                    %(quantity)s, %(buy_price)s, %(total_invested)s, %(current_quantity)s,
-                    %(current_price)s, %(current_value)s, %(market_value)s, %(status)s,
-                    %(investment_duration_days)s, %(created_by)s, %(source)s, %(user_notes)s,
-                    %(tags)s, %(sell_price)s, %(sell_quantity)s, %(sell_reason)s, %(sell_date)s,
-                    %(technical_analysis_when_bought)s, %(news_sentiment_when_bought)s,
-                    %(recommendation_when_bought)s, %(confidence_score_when_bought)s
-                )
+            # Insert investment record with error handling
+            logger.info(f"Executing investment insert with data: {investment_data}")
+            try:
+                query = """
+                    INSERT INTO investments (
+                        user_id, stock_code, stock_name, sector, transaction_type,
+                        quantity, buy_price, total_invested, current_quantity,
+                        current_price, current_value, market_value, status,
+                        investment_duration_days, created_by, source, user_notes,
+                        tags
+                    ) VALUES (
+                        %(user_id)s, %(stock_code)s, %(stock_name)s, %(sector)s, %(transaction_type)s,
+                        %(quantity)s, %(buy_price)s, %(total_invested)s, %(current_quantity)s,
+                        %(current_price)s, %(current_value)s, %(market_value)s, %(status)s,
+                        %(investment_duration_days)s, %(created_by)s, %(source)s, %(user_notes)s,
+                        %(tags)s
+                    )
+                """
+                self.db.execute_query(query, investment_data)
+                logger.info(f"Recorded {transaction_type} transaction for user {user_id}, stock {stock_code}")
+            except Exception as e:
+                logger.error(f"Error inserting investment record: {e}")
+                # Try with minimal required fields
+                minimal_query = """
+                    INSERT INTO investments (
+                        user_id, stock_code, stock_name, sector, transaction_type,
+                        quantity, buy_price, total_invested, current_quantity,
+                        current_price, current_value, market_value, status
+                    ) VALUES (
+                        %(user_id)s, %(stock_code)s, %(stock_name)s, %(sector)s, %(transaction_type)s,
+                        %(quantity)s, %(buy_price)s, %(total_invested)s, %(current_quantity)s,
+                        %(current_price)s, %(current_value)s, %(market_value)s, %(status)s
+                    )
+                """
+                minimal_data = {
+                    'user_id': investment_data['user_id'],
+                    'stock_code': investment_data['stock_code'],
+                    'stock_name': investment_data['stock_name'],
+                    'sector': investment_data['sector'],
+                    'transaction_type': investment_data['transaction_type'],
+                    'quantity': investment_data['quantity'],
+                    'buy_price': investment_data['buy_price'],
+                    'total_invested': investment_data['total_invested'],
+                    'current_quantity': investment_data['current_quantity'],
+                    'current_price': investment_data['current_price'],
+                    'current_value': investment_data['current_value'],
+                    'market_value': investment_data['market_value'],
+                    'status': investment_data['status']
+                }
+                self.db.execute_query(minimal_query, minimal_data)
+                logger.info(f"Recorded {transaction_type} transaction with minimal fields for user {user_id}, stock {stock_code}")
+            
+            # Update user's cash balance with safety checks
+            if transaction_type == 'buy':
+                # Check if user has sufficient cash before buying
+                current_cash_query = "SELECT cash_balance FROM users WHERE user_id = %s"
+                current_cash_result = self.db.execute_query(current_cash_query, (user_id,))
+                current_cash = float(current_cash_result[0]['cash_balance']) if current_cash_result else 0
+                
+                if current_cash < total_amount:
+                    logger.error(f"Insufficient cash for user {user_id}. Available: {current_cash}, Required: {total_amount}")
+                    return False
+                
+                # Decrease cash balance for buy transactions
+                cash_update_query = """
+                    UPDATE users SET 
+                        cash_balance = GREATEST(0, cash_balance - %s),
+                        updated_at = %s
+                    WHERE user_id = %s
+                """
+                self.db.execute_query(cash_update_query, (total_amount, datetime.now(), user_id))
+                logger.info(f"Updated cash balance for user {user_id}: decreased by {total_amount}")
+
+            
+            # Update portfolio snapshot
+            self.update_portfolio_snapshot(user_id)
+            
+            # Synchronize user table with portfolio data
+            self._sync_user_portfolio_data(user_id)
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error recording investment transaction: {e}", exc_info=True)
+            return False
+    
+    def _sync_user_portfolio_data(self, user_id: str) -> bool:
+        """Synchronize user table with current portfolio data"""
+        try:
+            # Get current portfolio data
+            investments = self.db.execute_query(
+                """
+                SELECT SUM(current_value) as total_value, SUM(total_invested) as total_invested
+                FROM investments 
+                WHERE user_id = %s AND status = 'active'
+                """,
+                (user_id,)
+            )
+            
+            # Get user's current cash balance
+            user_result = self.db.execute_query(
+                "SELECT cash_balance FROM users WHERE user_id = %s",
+                (user_id,)
+            )
+            
+            if not user_result:
+                logger.error(f"User {user_id} not found")
+                return False
+            
+            # Calculate portfolio values
+            total_value = float(investments[0]['total_value']) if investments and investments[0]['total_value'] else 0
+            total_invested = float(investments[0]['total_invested']) if investments and investments[0]['total_invested'] else 0
+            cash_balance = float(user_result[0]['cash_balance'])
+            
+            # Total portfolio value includes cash balance
+            total_portfolio_value = total_value + cash_balance
+            
+            # Update user table with current portfolio data
+            update_query = """
+                UPDATE users SET 
+                    portfolio_value = %s,
+                    updated_at = NOW()
+                WHERE user_id = %s
             """
             
-            self.db.execute_query(query, investment_data)
-            logger.info(f"Recorded {transaction_type} transaction for user {user_id}, stock {stock_code}")
+            self.db.execute_query(update_query, (total_portfolio_value, user_id))
+            logger.info(f"Synchronized user {user_id} portfolio data: total_value={total_portfolio_value}, cash_balance={cash_balance}")
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error synchronizing user portfolio data: {e}")
+            return False
+    
+    def _handle_sell_transaction(self, user_id: str, stock_code: str, quantity: int, price: float, total_amount: float, **kwargs) -> bool:
+        """Handle sell transaction by updating existing buy record"""
+        try:
+            logger.info(f"Starting sell transaction for user {user_id}, stock {stock_code}, quantity {quantity}, price {price}")
+            
+            # Find existing investment for this stock with remaining shares
+            existing_investment = self.db.execute_query(
+                "SELECT * FROM investments WHERE user_id = %s AND stock_code = %s AND current_quantity > 0",
+                (user_id, stock_code)
+            )
+            
+            if not existing_investment:
+                logger.error(f"No investment with remaining shares found for user {user_id}, stock {stock_code}")
+                return False
+            
+            investment = existing_investment[0]
+            logger.info(f"Found investment: {investment}")
+            
+            # Convert Decimal to float for calculations
+            current_quantity = float(investment['current_quantity'])
+            buy_price = float(investment['buy_price'])
+            
+            logger.info(f"Current quantity: {current_quantity}, Buy price: {buy_price}")
+            
+            if quantity > current_quantity:
+                logger.error(f"Insufficient shares to sell. Available: {current_quantity}, Requested: {quantity}")
+                return False
+            
+            # Calculate realized P&L
+            realized_pnl = (price - buy_price) * quantity
+            logger.info(f"Calculated realized P&L: {realized_pnl}")
+            
+            # Update the investment record
+            new_quantity = current_quantity - quantity
+            status = 'sold' if new_quantity == 0 else 'partial_sold'
+            
+            logger.info(f"New quantity: {new_quantity}, Status: {status}")
+            
+            # Convert existing realized_pnl to float if it exists
+            existing_realized_pnl = float(investment.get('realized_pnl', 0))
+            total_realized_pnl = existing_realized_pnl + realized_pnl
+            
+            update_data = {
+                'current_quantity': new_quantity,
+                'current_value': float(new_quantity * price),
+                'market_value': float(new_quantity * price),
+                'sell_price': float(price),
+                'sell_quantity': quantity,
+                'sell_reason': kwargs.get('sell_reason', 'manual'),
+                'sell_date': datetime.now(),
+                'realized_pnl': total_realized_pnl,
+                'status': status,
+                'last_updated': datetime.now()
+            }
+            
+            logger.info(f"Update data: {update_data}")
+            
+            query = """
+                UPDATE investments SET
+                    current_quantity = %(current_quantity)s,
+                    current_value = %(current_value)s,
+                    market_value = %(market_value)s,
+                    sell_price = %(sell_price)s,
+                    sell_quantity = %(sell_quantity)s,
+                    sell_reason = %(sell_reason)s,
+                    sell_date = %(sell_date)s,
+                    realized_pnl = %(realized_pnl)s,
+                    status = %(status)s,
+                    last_updated = %(last_updated)s
+                WHERE user_id = %(user_id)s AND stock_code = %(stock_code)s AND current_quantity > 0
+            """
+            
+            update_data['user_id'] = user_id
+            update_data['stock_code'] = stock_code
+            
+            self.db.execute_query(query, update_data)
+            logger.info(f"Updated sell transaction for user {user_id}, stock {stock_code}")
             
             # Update portfolio snapshot
             self.update_portfolio_snapshot(user_id)
@@ -155,31 +362,34 @@ class PortfolioManager:
             return True
             
         except Exception as e:
-            logger.error(f"Error recording investment transaction: {e}")
+            logger.error(f"Error handling sell transaction: {e}")
             return False
     
     def update_investment_status(self, user_id: str, stock_code: str) -> bool:
         """Update current status of an investment"""
         try:
             # Get current stock price
-            stock_data = self.db.fetch_one(
+            stock_result = self.db.execute_query(
                 "SELECT close_price FROM stocks WHERE code = %s",
                 (stock_code,)
             )
             
-            if not stock_data:
+            if not stock_result:
                 return False
             
+            stock_data = stock_result[0]
             current_price = stock_data['close_price']
             
             # Get investment details
-            investment = self.db.fetch_one(
+            investment_result = self.db.execute_query(
                 "SELECT * FROM investments WHERE user_id = %s AND stock_code = %s AND status = 'active'",
                 (user_id, stock_code)
             )
             
-            if not investment:
+            if not investment_result:
                 return False
+            
+            investment = investment_result[0]
             
             # Calculate updated values
             current_quantity = investment['current_quantity']
@@ -245,18 +455,18 @@ class PortfolioManager:
     def update_portfolio_snapshot(self, user_id: str) -> bool:
         """Create/update portfolio snapshot for user"""
         try:
-            # Get all active investments for user
-            investments = self.db.fetch_all(
+            # Get all investments with remaining shares for user
+            investments = self.db.execute_query(
                 """
                 SELECT * FROM investments 
-                WHERE user_id = %s AND status = 'active'
+                WHERE user_id = %s AND current_quantity > 0
                 """,
                 (user_id,)
             )
             
             # Calculate portfolio metrics
-            total_invested = sum(inv['total_invested'] for inv in investments)
-            total_value = sum(inv['current_value'] for inv in investments)
+            total_invested = float(sum(inv['total_invested'] for inv in investments))
+            total_value = float(sum(inv['current_value'] for inv in investments))
             total_pnl = total_value - total_invested
             pnl_percent = (total_pnl / total_invested * 100) if total_invested > 0 else 0
             
@@ -266,7 +476,7 @@ class PortfolioManager:
                 sector = inv['sector'] or 'Unknown'
                 if sector not in sector_allocation:
                     sector_allocation[sector] = 0
-                sector_allocation[sector] += inv['current_value']
+                sector_allocation[sector] += float(inv['current_value'])
             
             # Convert to percentages
             if total_value > 0:
@@ -276,27 +486,29 @@ class PortfolioManager:
             top_holdings = sorted(investments, key=lambda x: x['current_value'], reverse=True)[:5]
             top_holdings_data = {}
             for inv in top_holdings:
-                percentage = (inv['current_value'] / total_value * 100) if total_value > 0 else 0
+                percentage = (float(inv['current_value']) / total_value * 100) if total_value > 0 else 0
                 top_holdings_data[inv['stock_code']] = {
                     'name': inv['stock_name'],
-                    'value': inv['current_value'],
+                    'value': float(inv['current_value']),
                     'percentage': percentage
                 }
             
             # Get user preferences
-            user_data = self.db.fetch_one(
+            user_result = self.db.execute_query(
                 "SELECT risk_tolerance, investment_goal, preferred_sectors FROM users WHERE user_id = %s",
                 (user_id,)
             )
+            
+            user_data = user_result[0] if user_result else {}
             
             # Prepare portfolio data
             portfolio_data = {
                 'user_id': user_id,
                 'portfolio_date': date.today(),
-                'total_value': total_value,
-                'total_invested': total_invested,
-                'total_profit_loss': total_pnl,
-                'profit_loss_percent': pnl_percent,
+                'total_value': float(total_value),
+                'total_invested': float(total_invested),
+                'total_profit_loss': float(total_pnl),
+                'profit_loss_percent': float(pnl_percent),
                 'total_stocks_held': len(investments),
                 'active_investments': len(investments),
                 'sector_allocation': json.dumps(sector_allocation),
@@ -309,10 +521,12 @@ class PortfolioManager:
             }
             
             # Check if portfolio snapshot exists for today
-            existing = self.db.fetch_one(
+            existing_result = self.db.execute_query(
                 "SELECT id FROM portfolios WHERE user_id = %s AND portfolio_date = %s",
                 (user_id, date.today())
             )
+            
+            existing = existing_result[0] if existing_result else None
             
             if existing:
                 # Update existing snapshot
@@ -349,6 +563,10 @@ class PortfolioManager:
             
             self.db.execute_query(query, portfolio_data)
             logger.info(f"Updated portfolio snapshot for user {user_id}")
+            
+            # Synchronize user table with portfolio data
+            self._sync_user_portfolio_data(user_id)
+            
             return True
             
         except Exception as e:
@@ -365,7 +583,7 @@ class PortfolioManager:
                 LIMIT %s
             """
             
-            investments = self.db.fetch_all(query, (user_id, limit))
+            investments = self.db.execute_query(query, (user_id, limit))
             return investments
             
         except Exception as e:
@@ -373,9 +591,8 @@ class PortfolioManager:
             return []
     
     def get_portfolio_performance(self, user_id: str, days: int = 30) -> Dict:
-        """Get portfolio performance over time"""
+        """Get portfolio performance over specified days"""
         try:
-            # Get portfolio snapshots for the period
             start_date = date.today() - timedelta(days=days)
             
             query = """
@@ -384,7 +601,7 @@ class PortfolioManager:
                 ORDER BY portfolio_date ASC
             """
             
-            snapshots = self.db.fetch_all(query, (user_id, start_date))
+            snapshots = self.db.execute_query(query, (user_id, start_date))
             
             if not snapshots:
                 return {}
@@ -429,7 +646,7 @@ class PortfolioManager:
         """Get comprehensive investment analytics"""
         try:
             # Get all investments
-            investments = self.db.fetch_all(
+            investments = self.db.execute_query(
                 "SELECT * FROM investments WHERE user_id = %s",
                 (user_id,)
             )

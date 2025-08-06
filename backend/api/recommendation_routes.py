@@ -20,7 +20,7 @@ import asyncio
 logger = logging.getLogger(__name__)
 recommendation_routes = Blueprint('recommendation_routes', __name__)
 
-@recommendation_routes.route('/api/analysis/recommendations', methods=['POST'])
+@recommendation_routes.route('/recommendations', methods=['POST'])
 def get_recommendations():
     """
     Generate investment recommendations using the agentic framework
@@ -94,7 +94,7 @@ def get_recommendations():
             'message': f'Error generating recommendations: {str(e)}'
         }), 500
 
-@recommendation_routes.route('/api/analysis/recommendations/history', methods=['GET'])
+@recommendation_routes.route('/recommendations/history', methods=['GET'])
 def get_recommendation_history():
     """
     Get user's recommendation history
@@ -164,7 +164,7 @@ def get_recommendation_history():
             'message': f'Error getting recommendation history: {str(e)}'
         }), 500
 
-@recommendation_routes.route('/api/analysis/recommendations/<stock_code>', methods=['GET'])
+@recommendation_routes.route('/recommendations/<stock_code>', methods=['GET'])
 def get_stock_recommendation(stock_code):
     """
     Get specific recommendation for a stock
@@ -233,7 +233,7 @@ def get_stock_recommendation(stock_code):
             'message': f'Error getting stock recommendation: {str(e)}'
         }), 500
 
-@recommendation_routes.route('/api/analysis/recommendations/analytics', methods=['GET'])
+@recommendation_routes.route('/recommendations/analytics', methods=['GET'])
 def get_recommendation_analytics():
     """
     Get recommendation analytics and statistics

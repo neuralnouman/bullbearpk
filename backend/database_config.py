@@ -24,7 +24,7 @@ class DatabaseConfig:
         self.config = {
             'host': 'localhost',
             'user': 'root',
-            'password': '123456',
+            'password': '1234',
             'database': 'bullbearpk',
             'charset': 'utf8mb4',
             'autocommit': True,
@@ -85,7 +85,14 @@ class DatabaseConfig:
                 connection = mysql.connector.connect(**self.config)
             
             cursor = connection.cursor(dictionary=True)
-            cursor.execute(query, params or ())
+            
+            # Handle both tuple and dictionary parameters
+            if isinstance(params, dict):
+                # For dictionary parameters, we need to use cursor.execute with named parameters
+                cursor.execute(query, params)
+            else:
+                # For tuple parameters, use regular execute
+                cursor.execute(query, params or ())
             
             if query.strip().upper().startswith('SELECT'):
                 results = cursor.fetchall()
@@ -264,9 +271,9 @@ class DatabaseConfig:
     def get_user_investments(self, user_id: str) -> List[Dict]:
         """Get user investments"""
         query = """
-        SELECT i.*, s.name as stock_name, s.sector 
+        SELECT i.*, COALESCE(s.name, i.stock_name) as stock_name, COALESCE(s.sector, i.sector) as sector 
         FROM investments i 
-        JOIN stocks s ON i.stock_code = s.code 
+        LEFT JOIN stocks s ON i.stock_code = s.code 
         WHERE i.user_id = %s AND i.status = 'active'
         ORDER BY i.buy_date DESC
         """
@@ -741,6 +748,181 @@ class DatabaseConfig:
         except Exception as e:
             logger.error(f"Error saving recommendations: {e}")
             return False
+
+    def save_user_form_submission(self, user_id: str, form_data: Dict, recommendations: List[Dict]) -> bool:
+        """Save user form submission and associated recommendations"""
+        try:
+            # Save form submission
+            form_query = """
+                INSERT INTO user_form_submissions (
+                    user_id, budget, sector_preference, risk_tolerance, 
+                    time_horizon, target_profit, investment_goal,
+                    submission_date, recommendations_count
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            form_params = (
+                user_id,
+                form_data.get('budget', 0),
+                form_data.get('sector_preference', ''),
+                form_data.get('risk_tolerance', 'moderate'),
+                form_data.get('time_horizon', 'medium'),
+                form_data.get('target_profit', 0),
+                form_data.get('investment_goal', 'growth'),
+                datetime.now(),
+                len(recommendations)
+            )
+            self.execute_query(form_query, form_params)
+            # Get the form submission ID
+            form_id_query = "SELECT LAST_INSERT_ID() as form_id"
+            form_id_result = self.execute_query(form_id_query)
+            form_id = form_id_result[0]['form_id'] if form_id_result else None
+            if form_id:
+                # Save recommendations with form reference
+                for rec in recommendations:
+                    rec_query = """
+                        INSERT INTO user_recommendations_history (
+                            user_id, form_submission_id, stock_code, stock_name,
+                            recommendation_type, confidence_score, expected_return,
+                            reasoning, technical_analysis, news_sentiment,
+                            recommendation_date
+                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """
+                    rec_params = (
+                        user_id,
+                        form_id,
+                        rec.get('stock_code', ''),
+                        rec.get('stock_name', ''),
+                        rec.get('recommendation_type', 'hold'),
+                        rec.get('confidence_score', 0.5),
+                        rec.get('expected_return', 0),
+                        rec.get('reasoning', ''),
+                        json.dumps(rec.get('technical_analysis', {})),
+                        json.dumps(rec.get('news_sentiment', {})),
+                        datetime.now()
+                    )
+                    self.execute_query(rec_query, rec_params)
+            return True
+        except Exception as e:
+            logger.error(f"Error saving user form submission: {e}")
+            return False
+
+    def get_user_previous_submissions(self, user_id: str) -> List[Dict]:
+        """Get user's previous form submissions and recommendations"""
+        try:
+            query = """
+                SELECT 
+                    ufs.*,
+                    COUNT(urh.id) as recommendations_count,
+                    MAX(urh.recommendation_date) as last_recommendation_date
+                FROM user_form_submissions ufs
+                LEFT JOIN user_recommendations_history urh ON ufs.id = urh.form_submission_id
+                WHERE ufs.user_id = %s
+                GROUP BY ufs.id
+                ORDER BY ufs.submission_date DESC
+                LIMIT 5
+            """
+            results = self.execute_query(query, (user_id,))
+            return results if results else []
+        except Exception as e:
+            logger.error(f"Error getting user previous submissions: {e}")
+            return []
+
+    def get_user_previous_recommendations(self, user_id: str, form_submission_id: int = None) -> List[Dict]:
+        """Get user's previous recommendations"""
+        try:
+            if form_submission_id:
+                query = """
+                    SELECT * FROM user_recommendations_history 
+                    WHERE user_id = %s AND form_submission_id = %s
+                    ORDER BY recommendation_date DESC
+                """
+                params = (user_id, form_submission_id)
+            else:
+                query = """
+                    SELECT * FROM user_recommendations_history 
+                    WHERE user_id = %s
+                    ORDER BY recommendation_date DESC
+                    LIMIT 10
+                """
+                params = (user_id,)
+            results = self.execute_query(query, params)
+            return results if results else []
+        except Exception as e:
+            logger.error(f"Error getting user previous recommendations: {e}")
+            return []
+
+    def compare_recommendations(self, old_recommendations: List[Dict], new_recommendations: List[Dict]) -> Dict:
+        """Compare old and new recommendations to identify changes"""
+        try:
+            changes = {
+                'new_recommendations': [],
+                'removed_recommendations': [],
+                'changed_recommendations': [],
+                'unchanged_recommendations': []
+            }
+            old_lookup = {rec['stock_code']: rec for rec in old_recommendations}
+            new_lookup = {rec['stock_code']: rec for rec in new_recommendations}
+            for stock_code, new_rec in new_lookup.items():
+                if stock_code not in old_lookup:
+                    changes['new_recommendations'].append({
+                        'stock_code': stock_code,
+                        'recommendation': new_rec['recommendation_type'],
+                        'confidence': new_rec['confidence_score'],
+                        'reason': 'New recommendation based on updated analysis'
+                    })
+            for stock_code, old_rec in old_lookup.items():
+                if stock_code not in new_lookup:
+                    changes['removed_recommendations'].append({
+                        'stock_code': stock_code,
+                        'old_recommendation': old_rec['recommendation_type'],
+                        'reason': 'No longer recommended based on current analysis'
+                    })
+            for stock_code in set(old_lookup.keys()) & set(new_lookup.keys()):
+                old_rec = old_lookup[stock_code]
+                new_rec = new_lookup[stock_code]
+                if (old_rec['recommendation_type'] != new_rec['recommendation_type'] or
+                    abs(float(old_rec['confidence_score']) - float(new_rec['confidence_score'])) > 0.1):
+                    changes['changed_recommendations'].append({
+                        'stock_code': stock_code,
+                        'old_recommendation': old_rec['recommendation_type'],
+                        'new_recommendation': new_rec['recommendation_type'],
+                        'old_confidence': old_rec['confidence_score'],
+                        'new_confidence': new_rec['confidence_score'],
+                        'reason': self._generate_change_reason(old_rec, new_rec)
+                    })
+                else:
+                    changes['unchanged_recommendations'].append({
+                        'stock_code': stock_code,
+                        'recommendation': new_rec['recommendation_type'],
+                        'confidence': new_rec['confidence_score']
+                    })
+            return changes
+        except Exception as e:
+            logger.error(f"Error comparing recommendations: {e}")
+            return {
+                'new_recommendations': [],
+                'removed_recommendations': [],
+                'changed_recommendations': [],
+                'unchanged_recommendations': []
+            }
+
+    def _generate_change_reason(self, old_rec: Dict, new_rec: Dict) -> str:
+        old_type = old_rec['recommendation_type']
+        new_type = new_rec['recommendation_type']
+        old_conf = float(old_rec['confidence_score'])
+        new_conf = float(new_rec['confidence_score'])
+        if old_type == new_type:
+            if new_conf > old_conf:
+                return f"Confidence increased from {old_conf:.1%} to {new_conf:.1%}"
+            else:
+                return f"Confidence decreased from {old_conf:.1%} to {new_conf:.1%}"
+        else:
+            if new_type in ['strong_buy', 'buy'] and old_type in ['hold', 'sell']:
+                return f"Upgraded from {old_type} to {new_type} due to improved analysis"
+            elif new_type in ['hold', 'sell'] and old_type in ['strong_buy', 'buy']:
+                return f"Downgraded from {old_type} to {new_type} due to market changes"
+            else:
+                return f"Recommendation changed from {old_type} to {new_type}"
 
 # Global database instance
 db_config = DatabaseConfig() 

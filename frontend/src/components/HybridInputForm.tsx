@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 
+interface FormData {
+  budget: string;
+  sector_preference: string;
+  risk_tolerance: string;
+  time_horizon: string;
+  target_profit: string;
+}
+
 interface Props {
-  onSubmit: (form: any) => void;
+  onSubmit: (form: FormData) => void;
 }
 
 export default function HybridInputForm({ onSubmit }: Props) {

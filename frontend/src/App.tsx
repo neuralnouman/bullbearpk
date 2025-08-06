@@ -1,50 +1,35 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { ThemeProvider } from './contexts/ThemeContext'
-import { useAuthStore } from './store/authStore'
+
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import Dashboard from './pages/Dashboard'
 import MarketDataPage from './pages/MarketDataPage'
 import InvestmentFormPage from './pages/InvestmentFormPage'
-import PortfolioPage from './pages/PortfolioPage'
-import AuthDebug from './components/AuthDebug'
+import PortfolioPage from './pages/EnhancedPortfolioPage'
+import NewsPage from './pages/NewsPage'
+
+import ProtectedRoute from './components/ProtectedRoute'
 import { useEffect } from 'react'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
-  const { isAuthenticated, isLoading, user } = useAuthStore()
 
-  // Debug authentication state
+  // Global error boundary
   useEffect(() => {
-    console.log('🔍 Auth State Debug:', { 
-      isAuthenticated, 
-      isLoading, 
-      user: user?.name,
-      userId: user?.id 
-    })
-  }, [isAuthenticated, isLoading, user])
-
-  // Test render
-  console.log('🎯 App: Rendering app')
-
-  // Add error boundary
-  if (typeof window !== 'undefined') {
-    window.addEventListener('error', (event) => {
-      console.error('🚨 Global Error:', event.error)
-    })
-  }
+    if (typeof window !== 'undefined') {
+      window.addEventListener('error', (event) => {
+        console.error('🚨 Global Error:', event.error)
+      })
+      
+      window.addEventListener('unhandledrejection', (event) => {
+        console.error('🚨 Unhandled Promise Rejection:', event.reason)
+      })
+    }
+  }, [])
 
   return (
-    <ThemeProvider>
-      <div className="min-h-screen bg-background text-foreground">
-        {/* Test Banner */}
-        <div className="bg-green-600 text-white text-center py-1 text-sm">
-          ✅ App is Loading - BullBearPK Investment Platform
-        </div>
-        
-        {/* Debug component - remove in production */}
-        <AuthDebug />
-        
+    <div className="min-h-screen bg-background text-foreground">
         <Routes>
           {/* Landing Page - Always accessible as default */}
           <Route path="/" element={<LandingPage />} />
@@ -53,17 +38,63 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           
-          {/* Dashboard and Features - No authentication required */}
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/investment-form" element={<InvestmentFormPage />} />
-          <Route path="/market-data" element={<MarketDataPage />} />
-          <Route path="/portfolio" element={<PortfolioPage />} />
+          {/* Protected Routes - Require authentication */}
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/investment-form" element={
+            <ProtectedRoute>
+              <InvestmentFormPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/market-data" element={
+            <ProtectedRoute>
+              <MarketDataPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/portfolio" element={
+            <ProtectedRoute>
+              <PortfolioPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/news" element={
+            <ProtectedRoute>
+              <NewsPage />
+            </ProtectedRoute>
+          } />
+          
           
           {/* Fallback - Redirect to landing page */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        
+        {/* Global Toast Notifications */}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: 'var(--toast-bg)',
+              color: 'var(--toast-color)',
+              border: '1px solid var(--toast-border)',
+            },
+            success: {
+              iconTheme: {
+                primary: '#22c55e',
+                secondary: '#ffffff',
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: '#ef4444',
+                secondary: '#ffffff',
+              },
+            },
+          }}
+        />
       </div>
-    </ThemeProvider>
   )
 }
 

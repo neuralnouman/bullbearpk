@@ -23,7 +23,7 @@ A modern React TypeScript frontend for the BullBearPK investment analysis platfo
 #### 2. **Portfolio Management**
 - `PortfolioPage`: Complete portfolio overview with performance tracking
 - `PortfolioSummary`: Key portfolio metrics and summary
-- `PortfolioCharts`: Visual representation of portfolio performance
+
 
 #### 3. **Market Data**
 - `MarketDataPage`: Real-time market data and stock information
@@ -112,7 +112,7 @@ The frontend is fully aligned with the backend API structure:
 
 ### 3. Portfolio Management
 1. User can view their portfolio with real-time data
-2. Performance metrics and charts are displayed
+2. Performance metrics are displayed
 3. Investment history and transaction records are available
 4. Portfolio can be refreshed to get latest data
 
@@ -127,7 +127,7 @@ The frontend is fully aligned with the backend API structure:
 - **Zustand**: Lightweight state management
 - **Axios**: HTTP client for API calls
 - **React Hot Toast**: Toast notifications
-- **Recharts**: Data visualization
+
 
 ## 📁 Project Structure
 
@@ -228,7 +228,7 @@ const { theme, toggleTheme } = useTheme();
 ### Portfolio Tracking
 1. **Real-time Data**: Portfolio data is fetched from backend
 2. **Performance Metrics**: Total value, returns, allocation percentages
-3. **Visual Charts**: Performance charts and sector allocation
+3. **Portfolio Analytics**: Performance metrics and sector allocation
 4. **Transaction History**: Complete history of all transactions
 5. **Quick Actions**: Easy access to buy, sell, analyze, and recommend
 

@@ -76,16 +76,7 @@ export const TIME_HORIZON_DESCRIPTIONS = {
   [TIME_HORIZONS.LONG]: '2+ years',
 } as const
 
-// Chart Time Frames
-export const CHART_TIMEFRAMES = [
-  { label: '1D', value: '1D' },
-  { label: '1W', value: '1W' },
-  { label: '1M', value: '1M' },
-  { label: '3M', value: '3M' },
-  { label: '6M', value: '6M' },
-  { label: '1Y', value: '1Y' },
-  { label: 'ALL', value: 'ALL' },
-] as const
+
 
 // Currency Information
 export const CURRENCIES = {
@@ -149,6 +140,7 @@ export const API_ENDPOINTS = {
     REFRESH: '/market/refresh',
     SECTORS: '/market/sectors',
     TOP_MOVERS: '/market/top-movers',
+    ALL_STOCKS: '/market/data',
   },
   
   // Portfolio Management
@@ -157,9 +149,12 @@ export const API_ENDPOINTS = {
     GET: '/portfolio/:user_id',
     ADD_INVESTMENT: '/portfolio/:user_id/investments',
     UPDATE_INVESTMENT: '/portfolio/:user_id/investments/:investment_id',
+    ADD_CASH: '/portfolio/:user_id/add-cash',
     PERFORMANCE: '/portfolio/:user_id/performance',
     HISTORY: '/portfolio/:user_id/history',
     SNAPSHOT: '/portfolio/:user_id/snapshot',
+    HISTORY_PERFORMANCE: '/portfolio/:user_id/history/performance/:timeframe',
+    VALUE_HISTORY: '/portfolio/:user_id/history/value/:timeframe',
   },
   
   // Investment Decisions
@@ -224,19 +219,7 @@ export const SUCCESS_MESSAGES = {
   PORTFOLIO_UPDATED: 'Portfolio updated successfully!',
 } as const
 
-// Chart Colors
-export const CHART_COLORS = {
-  PRIMARY: '#0ea5e9',
-  SECONDARY: '#6366f1',
-  SUCCESS: '#22c55e',
-  DANGER: '#ef4444',
-  WARNING: '#f59e0b',
-  INFO: '#3b82f6',
-  LIGHT: '#e5e7eb',
-  DARK: '#374151',
-} as const
-
-// Sector Colors (for charts and visualizations)
+// Sector Colors
 export const SECTOR_COLORS = {
   Technology: '#0ea5e9',
   Banking: '#22c55e',
@@ -261,7 +244,6 @@ export const SECTOR_COLORS = {
 // Feature Flags
 export const FEATURES = {
   REAL_TIME_DATA: false,
-  ADVANCED_CHARTS: true,
   PORTFOLIO_TRACKING: true,
   NEWS_SENTIMENT: true,
   AI_RECOMMENDATIONS: true,
