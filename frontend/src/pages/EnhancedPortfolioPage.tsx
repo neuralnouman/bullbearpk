@@ -334,10 +334,25 @@ const EnhancedPortfolioPage: React.FC = () => {
   };
 
   const openSellModal = (investment: InvestmentTableData) => {
+    // Create a stock object from investment data for the transaction modal
+    const stockData: StockData = {
+      code: investment.stockSymbol || '',
+      name: investment.companyName || '',
+      sector: investment.sector || '',
+      open_price: investment.currentPrice || 0,
+      high_price: investment.currentPrice || 0,
+      low_price: investment.currentPrice || 0,
+      close_price: investment.currentPrice || 0,
+      volume: 0,
+      change: 0,
+      change_percent: 0,
+      timestamp: new Date().toISOString()
+    };
+
     setTransactionModal({
       isOpen: true,
       type: 'sell',
-      stock: null,
+      stock: stockData,
       investment
     });
     setTransactionForm({
@@ -375,6 +390,10 @@ const EnhancedPortfolioPage: React.FC = () => {
 
   const handleStockSelect = (stock: StockData) => {
     setSelectedStock(stock);
+    setTransactionModal(prev => ({
+      ...prev,
+      stock: stock
+    }));
     setTransactionForm(prev => ({
       ...prev,
       price: stock.close_price || 0,
@@ -466,14 +485,14 @@ const EnhancedPortfolioPage: React.FC = () => {
   };
 
   const executeTransaction = async () => {
-    if (!transactionModal.stock || !transactionForm.quantity || !transactionForm.price) {
-      toast.error('Please fill in all required fields');
+    // Use the comprehensive validation function instead of inline validation
+    if (!validateTransaction()) {
       return;
     }
 
     const transactionData = {
       user_id: user?.id || '',
-      stock_code: transactionModal.stock.code,
+      stock_code: transactionModal.stock?.code || selectedStock?.code || '',
       quantity: transactionForm.quantity || 0,
       price: transactionForm.price || 0,
       transaction_type: transactionModal.type || 'buy'
