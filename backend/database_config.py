@@ -634,7 +634,7 @@ class DatabaseConfig:
                     user_input.get('risk_tolerance', 'moderate') if user_input else 'moderate',
                     user_input.get('investment_goal', 'growth') if user_input else 'growth',
                     0.00,  # portfolio_value
-                    0.00,  # cash_balance
+                    0.00,  # cash_balance - changed from 10000 to 0
                     json.dumps([user_input.get('sector_preference', 'Any')]) if user_input else json.dumps(['Any']),
                     datetime.now(),
                     datetime.now()

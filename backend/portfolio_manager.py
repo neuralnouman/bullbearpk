@@ -236,7 +236,11 @@ class PortfolioManager:
             # Get current portfolio data
             investments = self.db.execute_query(
                 """
-                SELECT SUM(current_value) as total_value, SUM(total_invested) as total_invested
+                SELECT 
+                    SUM(current_value) as total_value, 
+                    SUM(total_invested) as total_invested,
+                    SUM(realized_pnl) as total_realized_pnl,
+                    SUM(current_value - total_invested) as total_unrealized_pnl
                 FROM investments 
                 WHERE user_id = %s AND status = 'active'
                 """,
@@ -256,21 +260,28 @@ class PortfolioManager:
             # Calculate portfolio values
             total_value = float(investments[0]['total_value']) if investments and investments[0]['total_value'] else 0
             total_invested = float(investments[0]['total_invested']) if investments and investments[0]['total_invested'] else 0
+            total_realized_pnl = float(investments[0]['total_realized_pnl']) if investments and investments[0]['total_realized_pnl'] else 0
+            total_unrealized_pnl = float(investments[0]['total_unrealized_pnl']) if investments and investments[0]['total_unrealized_pnl'] else 0
             cash_balance = float(user_result[0]['cash_balance'])
             
             # Total portfolio value includes cash balance
             total_portfolio_value = total_value + cash_balance
             
+            # Calculate total returns (realized + unrealized)
+            total_returns = total_realized_pnl + total_unrealized_pnl
+            
             # Update user table with current portfolio data
             update_query = """
                 UPDATE users SET 
                     portfolio_value = %s,
+                    total_invested = %s,
+                    total_returns = %s,
                     updated_at = NOW()
                 WHERE user_id = %s
             """
             
-            self.db.execute_query(update_query, (total_portfolio_value, user_id))
-            logger.info(f"Synchronized user {user_id} portfolio data: total_value={total_portfolio_value}, cash_balance={cash_balance}")
+            self.db.execute_query(update_query, (total_portfolio_value, total_invested, total_returns, user_id))
+            logger.info(f"Synchronized user {user_id} portfolio data: total_value={total_portfolio_value}, total_invested={total_invested}, total_returns={total_returns}, cash_balance={cash_balance}")
             
             return True
             

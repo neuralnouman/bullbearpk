@@ -109,8 +109,8 @@ def register():
             user_id,
             0.00,  # total_value
             0.00,  # total_invested
-            10000.00,  # cash_balance (starting cash)
-            10000.00,  # available_cash
+            0.00,  # cash_balance (starting cash - changed from 10000 to 0)
+            0.00,  # available_cash (changed from 10000 to 0)
             datetime.now().date(),
             datetime.now()
         )
@@ -139,8 +139,8 @@ def register():
                     'portfolio': {
                         'total_value': 0.00,
                         'total_invested': 0.00,
-                        'cash_balance': 10000.00,
-                        'available_cash': 10000.00
+                        'cash_balance': 0.00,
+                        'available_cash': 0.00
                     }
                 }
             }), 201

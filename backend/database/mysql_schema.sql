@@ -20,6 +20,8 @@ CREATE TABLE users (
     investment_goal VARCHAR(100),
     portfolio_value DECIMAL(15,2) DEFAULT 0.00,
     cash_balance DECIMAL(15,2) DEFAULT 0.00,
+    total_invested DECIMAL(15,2) DEFAULT 0.00,
+    total_returns DECIMAL(15,2) DEFAULT 0.00,
     preferred_sectors JSON NULL,
     blacklisted_stocks JSON NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

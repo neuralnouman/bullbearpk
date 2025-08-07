@@ -439,44 +439,47 @@ const EnhancedPortfolioPage: React.FC = () => {
     return true;
   };
 
-  const executeTransaction = async () => {
-    if (!validateTransaction() || !user?.id) return;
-
+  const handleTransaction = async (transactionData: any) => {
     try {
-      const stockCode = selectedStock?.code || transactionModal.investment?.stockSymbol;
-      if (!stockCode) {
-        toast.error('Invalid stock selection');
-        return;
-      }
-
-      // For sell transactions, use the current market price from the investment
-      let transactionPrice = transactionForm.price;
-      if (transactionModal.type === 'sell' && transactionModal.investment) {
-        transactionPrice = transactionModal.investment.currentPrice;
-      }
-
-      const result = await addInvestment({
-        user_id: user.id,
-        stock_code: stockCode,
-        quantity: transactionForm.quantity,
-        price: transactionPrice,
-        transaction_type: transactionModal.type as 'buy' | 'sell'
-      });
-
-      if (result.success) {
-        toast.success(`${transactionModal.type === 'buy' ? 'Bought' : 'Sold'} ${transactionForm.quantity} shares of ${stockCode}`);
-        closeModal();
-        console.log('Transaction successful, refreshing portfolio data...');
-        await fetchPortfolioData(); // Refresh portfolio data
-        console.log('Portfolio data refreshed');
-
+      setRefreshing(true);
+      
+      const response = await addInvestment(transactionData);
+      
+      if (response.success) {
+        toast.success(response.message || 'Transaction completed successfully');
+        
+        // Refresh portfolio data to show updated values
+        await fetchPortfolioData();
+        
+        // Close modal
+        setTransactionModal({ isOpen: false, type: null, stock: null, investment: null });
+        setTransactionForm({ quantity: 0, price: 0, total: 0 });
       } else {
-        toast.error(result.message || 'Transaction failed');
+        toast.error(response.message || 'Transaction failed');
       }
-    } catch (err: any) {
-      console.error('Error executing transaction:', err);
-      toast.error(err.message || 'Transaction failed');
+    } catch (error: any) {
+      console.error('Transaction error:', error);
+      toast.error('Transaction failed. Please try again.');
+    } finally {
+      setRefreshing(false);
     }
+  };
+
+  const executeTransaction = async () => {
+    if (!transactionModal.stock || !transactionForm.quantity || !transactionForm.price) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+
+    const transactionData = {
+      user_id: user?.id || '',
+      stock_code: transactionModal.stock.code,
+      quantity: transactionForm.quantity || 0,
+      price: transactionForm.price || 0,
+      transaction_type: transactionModal.type || 'buy'
+    };
+
+    await handleTransaction(transactionData);
   };
 
   const executeAddCash = async () => {
@@ -857,7 +860,7 @@ const EnhancedPortfolioPage: React.FC = () => {
                     <input
                       type="number"
                       value={transactionForm.quantity}
-                      onChange={(e) => handleQuantityChange(Number(e.target.value))}
+                      onChange={(e) => handleQuantityChange(Number(e.target.value) || 0)}
                       className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                       min="1"
                     />
@@ -869,7 +872,7 @@ const EnhancedPortfolioPage: React.FC = () => {
                     <input
                       type="number"
                       value={transactionForm.price}
-                      onChange={(e) => handlePriceChange(Number(e.target.value))}
+                      onChange={(e) => handlePriceChange(Number(e.target.value) || 0)}
                       className={`w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white ${
                         transactionModal.type === 'sell' ? 'bg-gray-100 dark:bg-gray-600 cursor-not-allowed' : ''
                       }`}

@@ -265,86 +265,121 @@ def refresh_market_data() -> tuple:
     try:
         logger.info("Triggering market data refresh")
         
-        # Check if Chrome WebDriver is available
+        # Try to run the stock scraper directly without WebDriver test
         try:
-            from selenium import webdriver
-            from selenium.webdriver.chrome.options import Options
-            chrome_options = Options()
-            chrome_options.add_argument('--headless')
-            chrome_options.add_argument('--no-sandbox')
-            chrome_options.add_argument('--disable-dev-shm-usage')
+            result: Dict[str, Any] = scrape_stocks_tool()
+            logger.info(f"Scraping result: {result.get('success', False)}")
             
-            # Test if Chrome WebDriver can be initialized
-            test_driver = webdriver.Chrome(options=chrome_options)
-            test_driver.quit()
-            logger.info("Chrome WebDriver is available")
-        except Exception as webdriver_error:
-            logger.warning(f"Chrome WebDriver not available: {webdriver_error}")
-            return jsonify({
-                'success': False,
-                'message': 'Chrome WebDriver is not available. Please install Chrome and ChromeDriver to enable market data refresh.',
-                'error': 'WEBDRIVER_NOT_AVAILABLE',
-                'details': str(webdriver_error)
-            }), 503
-        
-        # Run the stock scraper
-        result: Dict[str, Any] = scrape_stocks_tool()
-        
-        if result.get('success', False):
-            # Get the updated market data after scraping
-            updated_data_query: str = "SELECT * FROM stocks ORDER BY code"
-            updated_stocks: Optional[List[Dict[str, Any]]] = db_config.execute_query(updated_data_query)
-            
-            if updated_stocks:
-                total_stocks: int = len(updated_stocks)
-                gainers: int = len([s for s in updated_stocks if s.get('change_percent', 0) > 0])
-                losers: int = len([s for s in updated_stocks if s.get('change_percent', 0) < 0])
-                unchanged: int = total_stocks - gainers - losers
+            if result.get('success', False):
+                # Get the updated market data after scraping
+                updated_data_query: str = "SELECT * FROM stocks ORDER BY code"
+                updated_stocks: Optional[List[Dict[str, Any]]] = db_config.execute_query(updated_data_query)
                 
-                market_summary: Dict[str, Any] = {
-                    'total_stocks': total_stocks,
-                    'gainers': gainers,
-                    'losers': losers,
-                    'unchanged': unchanged,
-                    'top_gainer': max(updated_stocks, key=lambda x: x.get('change_percent', 0)) if updated_stocks else None,
-                    'top_loser': min(updated_stocks, key=lambda x: x.get('change_percent', 0)) if updated_stocks else None,
-                    'highest_volume': max(updated_stocks, key=lambda x: x.get('volume', 0)) if updated_stocks else None
-                }
-                
-                # Get the most recent scrape timestamp
-                timestamp_query: str = "SELECT MAX(scraped_at) as last_scrape FROM stocks WHERE scraped_at IS NOT NULL"
-                timestamp_result: Optional[List[Dict[str, Any]]] = db_config.execute_query(timestamp_query)
-                
-                # Use PKT timezone for consistency
-                pkt_timezone = pytz.timezone('Asia/Karachi')
-                current_time = datetime.now(pkt_timezone)
-                
-                last_scrape_time: str = timestamp_result[0].get('last_scrape') if timestamp_result and timestamp_result[0].get('last_scrape') else current_time.isoformat()
-                
-                return jsonify({
-                    'success': True,
-                    'message': 'Market data refreshed successfully',
-                    'stocks': updated_stocks,
-                    'market_summary': market_summary,
-                    'scrape_info': {
-                        'timestamp': last_scrape_time,
+                if updated_stocks:
+                    total_stocks: int = len(updated_stocks)
+                    gainers: int = len([s for s in updated_stocks if s.get('change_percent', 0) > 0])
+                    losers: int = len([s for s in updated_stocks if s.get('change_percent', 0) < 0])
+                    unchanged: int = total_stocks - gainers - losers
+                    
+                    market_summary: Dict[str, Any] = {
                         'total_stocks': total_stocks,
                         'gainers': gainers,
                         'losers': losers,
-                        'unchanged': unchanged
-                    },
-                    'scraped_stocks': len(result.get('data', [])),
-                    'timestamp': current_time.isoformat()
-                }), 200
+                        'unchanged': unchanged,
+                        'top_gainer': max(updated_stocks, key=lambda x: x.get('change_percent', 0)) if updated_stocks else None,
+                        'top_loser': min(updated_stocks, key=lambda x: x.get('change_percent', 0)) if updated_stocks else None,
+                        'highest_volume': max(updated_stocks, key=lambda x: x.get('volume', 0)) if updated_stocks else None
+                    }
+                    
+                    # Get the most recent scrape timestamp
+                    timestamp_query: str = "SELECT MAX(scraped_at) as last_scrape FROM stocks WHERE scraped_at IS NOT NULL"
+                    timestamp_result: Optional[List[Dict[str, Any]]] = db_config.execute_query(timestamp_query)
+                    
+                    # Use PKT timezone for consistency
+                    pkt_timezone = pytz.timezone('Asia/Karachi')
+                    current_time = datetime.now(pkt_timezone)
+                    
+                    last_scrape_time: str = timestamp_result[0].get('last_scrape') if timestamp_result and timestamp_result[0].get('last_scrape') else current_time.isoformat()
+                    
+                    return jsonify({
+                        'success': True,
+                        'message': 'Market data refreshed successfully',
+                        'stocks': updated_stocks,
+                        'market_summary': market_summary,
+                        'scrape_info': {
+                            'timestamp': last_scrape_time,
+                            'total_stocks': total_stocks,
+                            'gainers': gainers,
+                            'losers': losers,
+                            'unchanged': unchanged
+                        },
+                        'scraped_stocks': len(result.get('data', [])),
+                        'timestamp': current_time.isoformat()
+                    }), 200
+                else:
+                    return jsonify({
+                        'success': False,
+                        'message': 'Failed to retrieve updated market data'
+                    }), 500
             else:
-                return jsonify({
-                    'success': False,
-                    'message': 'Failed to retrieve updated market data'
-                }), 500
-        else:
+                # If scraping failed, return current data with a warning
+                logger.warning(f"Scraping failed: {result.get('message', 'Unknown error')}")
+                current_data_query: str = "SELECT * FROM stocks ORDER BY code"
+                current_stocks: Optional[List[Dict[str, Any]]] = db_config.execute_query(current_data_query)
+                
+                if current_stocks:
+                    total_stocks: int = len(current_stocks)
+                    gainers: int = len([s for s in current_stocks if s.get('change_percent', 0) > 0])
+                    losers: int = len([s for s in current_stocks if s.get('change_percent', 0) < 0])
+                    unchanged: int = total_stocks - gainers - losers
+                    
+                    market_summary: Dict[str, Any] = {
+                        'total_stocks': total_stocks,
+                        'gainers': gainers,
+                        'losers': losers,
+                        'unchanged': unchanged,
+                        'top_gainer': max(current_stocks, key=lambda x: x.get('change_percent', 0)) if current_stocks else None,
+                        'top_loser': min(current_stocks, key=lambda x: x.get('change_percent', 0)) if current_stocks else None,
+                        'highest_volume': max(current_stocks, key=lambda x: x.get('volume', 0)) if current_stocks else None
+                    }
+                    
+                    # Get the most recent scrape timestamp
+                    timestamp_query: str = "SELECT MAX(scraped_at) as last_scrape FROM stocks WHERE scraped_at IS NOT NULL"
+                    timestamp_result: Optional[List[Dict[str, Any]]] = db_config.execute_query(timestamp_query)
+                    
+                    # Use PKT timezone for consistency
+                    pkt_timezone = pytz.timezone('Asia/Karachi')
+                    current_time = datetime.now(pkt_timezone)
+                    
+                    last_scrape_time: str = timestamp_result[0].get('last_scrape') if timestamp_result and timestamp_result[0].get('last_scrape') else current_time.isoformat()
+                    
+                    return jsonify({
+                        'success': True,
+                        'message': f'Using existing data (scraping failed: {result.get("message", "Unknown error")})',
+                        'stocks': current_stocks,
+                        'market_summary': market_summary,
+                        'scrape_info': {
+                            'timestamp': last_scrape_time,
+                            'total_stocks': total_stocks,
+                            'gainers': gainers,
+                            'losers': losers,
+                            'unchanged': unchanged
+                        },
+                        'scraped_stocks': len(current_stocks),
+                        'timestamp': current_time.isoformat(),
+                        'warning': 'Using existing data due to scraping failure'
+                    }), 200
+                else:
+                    return jsonify({
+                        'success': False,
+                        'message': result.get('message', 'Failed to refresh market data')
+                    }), 500
+                
+        except Exception as scraping_error:
+            logger.error(f"Error during scraping: {str(scraping_error)}")
             return jsonify({
                 'success': False,
-                'message': result.get('message', 'Failed to refresh market data')
+                'message': f'Scraping error: {str(scraping_error)}'
             }), 500
     
     except Exception as e:

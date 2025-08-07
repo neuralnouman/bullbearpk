@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, TrendingDown, Clock, Search, Filter, RefreshCw } from 'lucide-react';
+import { 
+  RefreshCw, 
+  Search, 
+  Filter, 
+  TrendingUp, 
+  TrendingDown,
+  Clock,
+  AlertTriangle
+} from 'lucide-react';
 import { formatNumber } from '../utils';
 import { marketService } from '../services/marketService';
 import { StockData } from '../types';
+import { toast } from 'react-hot-toast';
 
 // Local interfaces for MarketSummary, ScrapeInfo, and MarketDataResponse
 interface MarketSummary {
@@ -32,6 +41,7 @@ interface RefreshResponse {
   stocks?: StockData[];
   market_summary?: MarketSummary;
   scrape_info?: ScrapeInfo;
+  warning?: string; // Added for refresh warnings
 }
 
 const MarketData: React.FC = () => {
@@ -60,6 +70,18 @@ const MarketData: React.FC = () => {
             market_summary: refreshData.market_summary!,
             scrape_info: refreshData.scrape_info!
           });
+          
+          // Show warning if scraping failed but we got existing data
+          if (refreshData.warning) {
+            console.warn('Refresh warning:', refreshData.warning);
+            toast.error(`Refresh failed: ${refreshData.warning}`, {
+              icon: <AlertTriangle className="text-red-500" />,
+            });
+          } else {
+            toast.success('Market data refreshed successfully!', {
+              icon: <RefreshCw className="text-green-500" />,
+            });
+          }
         } else {
           throw new Error(refreshData.message || 'Failed to refresh market data');
         }
@@ -68,20 +90,28 @@ const MarketData: React.FC = () => {
         data = await marketService.getMarketData();
         setMarketData(data);
       }
-    } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : 'Error fetching market data. Please try again.';
+    } catch (error: any) {
+      console.error('Error fetching market data:', error);
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch market data';
       setError(errorMessage);
-      console.error('Error fetching market data:', err);
       
-      // Show a more user-friendly message for common errors
-      if (errorMessage.includes('Database connection failed') || errorMessage.includes('MySQL')) {
-        setError('Database connection issue. Please check if MySQL is running and the backend is properly configured.');
-      } else if (errorMessage.includes('No market data available')) {
-        setError('No market data available. The database may be empty or not properly initialized.');
-      } else if (errorMessage.includes('Network error')) {
-        setError('Network error. Please check if the backend server is running on localhost:5000.');
-      } else if (errorMessage.includes('Server error')) {
-        setError('Server error occurred. Please try again later or contact support.');
+      // If refresh failed, try to get existing data
+      if (refresh) {
+        try {
+          console.log('Refresh failed, trying to get existing data...');
+          const existingData = await marketService.getMarketData();
+          setMarketData(existingData);
+          setError(`Refresh failed: ${errorMessage}. Showing existing data.`);
+          toast.error(`Refresh failed: ${errorMessage}. Showing existing data.`, {
+            icon: <AlertTriangle className="text-red-500" />,
+          });
+        } catch (fallbackError: any) {
+          console.error('Fallback data fetch also failed:', fallbackError);
+          setError(`Refresh failed: ${errorMessage}. Could not load existing data either.`);
+          toast.error(`Refresh failed: ${errorMessage}. Could not load existing data either.`, {
+            icon: <AlertTriangle className="text-red-500" />,
+          });
+        }
       }
     } finally {
       setLoading(false);
@@ -144,25 +174,31 @@ const MarketData: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
         <div>
           <h2 className="text-2xl font-bold mb-2">Market Data</h2>
-                      <p className="text-gray-600 dark:text-gray-400 flex items-center">
-              <Clock size={16} className="mr-1" />
-              Last updated: {marketData?.scrape_info?.timestamp 
-                ? new Date(marketData.scrape_info.timestamp).toLocaleString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: false
-                  })
-                : 'Loading...'}
-              {marketData?.scrape_info?.total_stocks && (
-                <span className="ml-2 text-sm text-gray-500">
-                  ({marketData.scrape_info.total_stocks} stocks)
-                </span>
-              )}
-            </p>
+          <div className="text-gray-600 dark:text-gray-400 flex items-center">
+            <Clock size={16} className="mr-1" />
+            Last updated: {marketData?.scrape_info?.timestamp 
+              ? new Date(marketData.scrape_info.timestamp).toLocaleString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  second: '2-digit',
+                  hour12: false
+                })
+              : 'Loading...'}
+            {marketData?.scrape_info?.total_stocks && (
+              <span className="ml-2 text-sm text-gray-500">
+                ({marketData.scrape_info.total_stocks} stocks)
+              </span>
+            )}
+            {marketData?.scrape_info?.timestamp && (
+              <span className="ml-2 text-xs text-green-600 dark:text-green-400 flex items-center">
+                <div className="w-2 h-2 bg-green-500 rounded-full mr-1"></div>
+                Live
+              </span>
+            )}
+          </div>
         </div>
         <div className="mt-4 md:mt-0 flex items-center">
           <button 
@@ -171,8 +207,13 @@ const MarketData: React.FC = () => {
             disabled={loading}
           >
             <RefreshCw size={16} className={`mr-2 ${loading ? 'animate-spin' : ''}`} />
-            Refresh
+            {loading ? 'Refreshing...' : 'Refresh'}
           </button>
+          {loading && (
+            <span className="ml-2 text-sm text-gray-500">
+              Updating market data...
+            </span>
+          )}
         </div>
       </div>
 

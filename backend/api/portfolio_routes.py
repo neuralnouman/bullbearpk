@@ -154,7 +154,7 @@ def get_portfolio(user_id):
                 "moderate",
                 "growth",
                 0.00,
-                10000.00,  # Initial cash balance
+                0.00,  # Initial cash balance - changed from 10000 to 0
                 json.dumps(["Any"]),
                 datetime.now(),
                 datetime.now()
@@ -164,7 +164,7 @@ def get_portfolio(user_id):
                 db_config.execute_query(create_user_query, user_params)
                 
                 # Create initial portfolio
-                portfolio_created = portfolio_manager.create_user_portfolio(user_id, 10000.00)
+                portfolio_created = portfolio_manager.create_user_portfolio(user_id, 0.00)
                 if not portfolio_created:
                     logger.error(f"Failed to create portfolio for user {user_id}")
                     return jsonify({
@@ -203,8 +203,12 @@ def get_portfolio(user_id):
         """
         investments_result = db_config.execute_query(investments_query, (user_id,))
         
+        # Get total_invested from users table (updated by _sync_user_portfolio_data)
+        user_total_invested = float(user_profile.get('total_invested', 0))
+        
         # Calculate portfolio summary with current market prices
-        total_invested = sum(float(inv.get('total_invested', 0)) for inv in investments_result)
+        # Use total_invested from users table, fallback to calculation from investments if not available
+        total_invested = user_total_invested if user_total_invested > 0 else sum(float(inv.get('total_invested', 0)) for inv in investments_result)
         
         # Update current values with live market prices
         updated_investments = []
@@ -437,7 +441,7 @@ def add_investment(user_id):
                 "moderate",
                 "growth",
                 0.00,
-                10000.00,  # Initial cash balance
+                0.00,  # Initial cash balance - changed from 10000 to 0
                 json.dumps(["Any"]),
                 datetime.now(),
                 datetime.now()
@@ -447,7 +451,7 @@ def add_investment(user_id):
                 db_config.execute_query(create_user_query, user_params)
                 
                 # Create initial portfolio
-                portfolio_created = portfolio_manager.create_user_portfolio(user_id, 10000.00)
+                portfolio_created = portfolio_manager.create_user_portfolio(user_id, 0.00)
                 if not portfolio_created:
                     logger.error(f"Failed to create portfolio for user {user_id}")
                     return jsonify({
@@ -492,6 +496,9 @@ def add_investment(user_id):
             logger.info(f"record_investment_transaction result: {success}")
             
             if success:
+                # Force sync portfolio data to user table
+                portfolio_manager._sync_user_portfolio_data(user_id)
+                
                 action_message = 'Investment added successfully' if transaction_type == 'buy' else 'Investment sold successfully'
                 return jsonify({
                     'success': True,

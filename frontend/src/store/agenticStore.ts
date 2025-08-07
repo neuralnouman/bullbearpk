@@ -31,6 +31,9 @@ interface AgenticState {
   loadUserHistory: (userId: string) => Promise<void>;
   submitFeedback: (userId: string, feedback: string, recommendations: any[]) => Promise<void>;
   clearAnalysis: () => void;
+  clearRecommendations: () => void;
+  resetForNewUser: () => void;
+  clearStorageForNewUser: () => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   saveFormData: (formData: any) => void;
@@ -152,8 +155,60 @@ export const useAgenticStore = create<AgenticState>()(
           riskProfile: null,
           portfolioUpdate: null,
           userHistory: null,
+          previousForm: undefined,
+          previousRecommendations: undefined,
+          recommendationChanges: undefined,
+          savedFormData: null,
+          isAnalyzing: false,
           error: null
         });
+      },
+      
+      // Clear recommendations for new users
+      clearRecommendations: () => {
+        set({
+          recommendations: [],
+          currentAnalysis: null,
+          savedFormData: null,
+          stockAnalysis: [],
+          newsAnalysis: {},
+          riskProfile: null,
+          portfolioUpdate: null,
+          userHistory: null,
+          previousForm: undefined,
+          previousRecommendations: undefined,
+          recommendationChanges: undefined,
+          isAnalyzing: false,
+          error: null
+        });
+      },
+      
+      // Reset store for new users
+      resetForNewUser: () => {
+        set({
+          currentAnalysis: null,
+          recommendations: [],
+          stockAnalysis: [],
+          newsAnalysis: {},
+          riskProfile: null,
+          portfolioUpdate: null,
+          userHistory: null,
+          previousForm: undefined,
+          previousRecommendations: undefined,
+          recommendationChanges: undefined,
+          savedFormData: null,
+          pastRecommendations: [],
+          analysisHistory: [],
+          isLoading: false,
+          isAnalyzing: false,
+          error: null
+        });
+      },
+      
+      // Clear localStorage for new users
+      clearStorageForNewUser: () => {
+        // Clear the localStorage entry for this store
+        localStorage.removeItem('agentic-storage');
       },
       
       // Set loading state
@@ -178,20 +233,77 @@ export const useAgenticStore = create<AgenticState>()(
     }),
     {
       name: 'agentic-storage',
+      // Custom storage to handle new users
+      storage: {
+        getItem: (name) => {
+          const stored = localStorage.getItem(name);
+          if (stored) {
+            try {
+              const parsed = JSON.parse(stored);
+              // If no savedFormData, don't restore recommendations
+              if (!parsed.state?.savedFormData) {
+                return JSON.stringify({
+                  state: {
+                    savedFormData: null,
+                    pastRecommendations: [],
+                    analysisHistory: [],
+                    currentAnalysis: null,
+                    recommendations: [],
+                    stockAnalysis: [],
+                    newsAnalysis: {},
+                    riskProfile: null,
+                    portfolioUpdate: null,
+                    userHistory: null,
+                    previousForm: undefined,
+                    previousRecommendations: undefined,
+                    recommendationChanges: undefined
+                  }
+                });
+              }
+            } catch (e) {
+              // If parsing fails, return clean state
+              return JSON.stringify({
+                state: {
+                  savedFormData: null,
+                  pastRecommendations: [],
+                  analysisHistory: [],
+                  currentAnalysis: null,
+                  recommendations: [],
+                  stockAnalysis: [],
+                  newsAnalysis: {},
+                  riskProfile: null,
+                  portfolioUpdate: null,
+                  userHistory: null,
+                  previousForm: undefined,
+                  previousRecommendations: undefined,
+                  recommendationChanges: undefined
+                }
+              });
+            }
+          }
+          return stored;
+        },
+        setItem: (name, value) => localStorage.setItem(name, value),
+        removeItem: (name) => localStorage.removeItem(name)
+      },
+      // Don't persist recommendations for new users
       partialize: (state) => ({
         savedFormData: state.savedFormData,
         pastRecommendations: state.pastRecommendations,
         analysisHistory: state.analysisHistory,
-        currentAnalysis: state.currentAnalysis,
-        recommendations: state.recommendations,
-        stockAnalysis: state.stockAnalysis,
-        newsAnalysis: state.newsAnalysis,
-        riskProfile: state.riskProfile,
-        portfolioUpdate: state.portfolioUpdate,
-        userHistory: state.userHistory,
-        previousForm: state.previousForm,
-        previousRecommendations: state.previousRecommendations,
-        recommendationChanges: state.recommendationChanges
+        // Only persist recommendations if user has submitted a form
+        ...(state.savedFormData ? {
+          currentAnalysis: state.currentAnalysis,
+          recommendations: state.recommendations,
+          stockAnalysis: state.stockAnalysis,
+          newsAnalysis: state.newsAnalysis,
+          riskProfile: state.riskProfile,
+          portfolioUpdate: state.portfolioUpdate,
+          userHistory: state.userHistory,
+          previousForm: state.previousForm,
+          previousRecommendations: state.previousRecommendations,
+          recommendationChanges: state.recommendationChanges
+        } : {})
       })
     }
   )

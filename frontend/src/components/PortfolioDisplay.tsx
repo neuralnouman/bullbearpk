@@ -36,7 +36,7 @@ const PortfolioDisplay: React.FC<PortfolioDisplayProps> = ({
 }) => {
 
   
-  // Always calculate metrics from the latest portfolio data to ensure we have the most up-to-date values
+  // Use metrics from portfolio data (provided by backend) instead of recalculating
   const displayMetrics = (() => {
     if (!portfolio) {
       return {
@@ -50,11 +50,12 @@ const PortfolioDisplay: React.FC<PortfolioDisplayProps> = ({
       };
     }
 
+    // Use values from portfolio data (provided by backend) instead of recalculating
+    const totalInvested = portfolio.totalInvested || 0;
+    const totalValue = portfolio.totalValue || 0;
+    const totalReturns = portfolio.totalReturns || 0;
+    const returnPercentage = portfolio.returnPercentage || 0;
     const activeInvestments = portfolio.investments.filter(inv => inv.status === 'active');
-    const totalInvested = activeInvestments.reduce((sum, inv) => sum + (inv.quantity * inv.purchasePrice), 0);
-    const totalValue = portfolio.totalValue || 0; // Use the totalValue from portfolio which includes cash balance
-    const totalReturns = totalValue - totalInvested;
-    const returnPercentage = totalInvested > 0 ? (totalReturns / totalInvested) * 100 : 0;
 
     return {
       totalInvested,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthStore } from '../store/authStore';
@@ -27,6 +27,7 @@ import {
 const InvestmentFormPage: React.FC = () => {
   const { user } = useAuthStore();
   const navigate = useNavigate();
+  const cleanupRef = useRef<Set<string>>(new Set());
 
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [analysisStep, setAnalysisStep] = useState<'form' | 'analyzing' | 'results'>('form');
@@ -43,11 +44,28 @@ const InvestmentFormPage: React.FC = () => {
     submitForm,
     loadUserHistory,
     clearAnalysis,
+    clearRecommendations,
+    resetForNewUser,
+    clearStorageForNewUser,
     setError,
     previousForm,
     previousRecommendations,
     recommendationChanges
   } = useAgenticStore();
+
+  // Initial cleanup for new users
+  useEffect(() => {
+    if (user?.id && !savedFormData && !cleanupRef.current.has(user.id)) {
+      // Clear any existing data for new users
+      console.log('New user detected, clearing localStorage and store:', user.id);
+      console.log('Current recommendations count:', recommendations?.length || 0);
+      console.log('Current savedFormData:', savedFormData);
+      cleanupRef.current.add(user.id);
+      clearStorageForNewUser();
+      resetForNewUser();
+      setAnalysisStep('form');
+    }
+  }, [user?.id, savedFormData, recommendations]);
 
   useEffect(() => {
     // Check if user has previous data
@@ -55,24 +73,53 @@ const InvestmentFormPage: React.FC = () => {
       setShowOnboarding(false);
       // Load user history if available
       loadUserHistory(user.id);
-    } else if (user?.id) {
+    } else if (user?.id && !cleanupRef.current.has(user.id)) {
       // New user or no saved data
       setShowOnboarding(true);
+      // Clear any existing recommendations for new users
+      cleanupRef.current.add(user.id);
+      clearStorageForNewUser();
+      resetForNewUser();
+      // Force form step for new users
+      setAnalysisStep('form');
     }
     
-    // Check if there are existing recommendations to show
-    if (recommendations && recommendations.length > 0) {
+    // Check for stale data - if recommendations exist without savedFormData, clear everything
+    if (recommendations && recommendations.length > 0 && !savedFormData) {
+      console.log('Stale recommendations detected, clearing data');
+      clearStorageForNewUser();
+      resetForNewUser();
+      setAnalysisStep('form');
+      return;
+    }
+    
+    // Only show recommendations if user has actually submitted a form
+    if (recommendations && recommendations.length > 0 && savedFormData) {
       setAnalysisStep('results');
+    } else if (!savedFormData) {
+      // Ensure new users always see the form
+      setAnalysisStep('form');
     }
   }, [user, savedFormData, loadUserHistory, recommendations]);
 
   // Restore analysis state when component mounts with existing data
   useEffect(() => {
-    if (currentAnalysis && recommendations && recommendations.length > 0) {
+    if (currentAnalysis && recommendations && recommendations.length > 0 && savedFormData) {
       setAnalysisStep('results');
       setDecisionsMade(new Set()); // Reset decisions made
     }
-  }, [currentAnalysis, recommendations]);
+  }, [currentAnalysis, recommendations, savedFormData]);
+
+  // Cleanup effect to clear stale data when user changes
+  useEffect(() => {
+    return () => {
+      // Clear analysis when component unmounts to prevent stale data
+      if (!user?.id) {
+        clearStorageForNewUser();
+        resetForNewUser();
+      }
+    };
+  }, [user?.id]);
 
   const handleFormSubmit = async (formData: InvestmentFormData) => {
     if (!user?.id) {
@@ -345,7 +392,6 @@ const InvestmentFormPage: React.FC = () => {
                     recommendations={recommendations}
                     onBuyClick={(company) => {
                       // Handle buy click
-                      console.log('Buy clicked for:', company);
                     }}
                   />
                 </motion.div>
@@ -375,7 +421,6 @@ const InvestmentFormPage: React.FC = () => {
                         onDecisionComplete={handleDecisionComplete}
                         onRefresh={() => {
                           // Handle refresh
-                          console.log('Refresh recommendations');
                         }}
                       />
                     </motion.div>
